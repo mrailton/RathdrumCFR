@@ -16,5 +16,5 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->name('defibs.')->prefix('defibs')->group(function () {
-    Route::get('/', ListDefibsController::class)->name('list');
+    Route::get('/', ListDefibsController::class)->name('list')->can('defib.list');
 });
