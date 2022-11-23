@@ -1,7 +1,7 @@
 <header class="bg-red-700">
-    <nav class="container px-6 py-8 mx-auto md:flex md:justify-between md:items-center text-gray-100">
+    <nav class="container px-6 py-8 mx-auto text-gray-100 md:flex md:justify-between md:items-center">
         <div class="flex items-center justify-between">
-            <a href="{{ route('index') }}" class="text-md font-semibold md:text-2xl">
+            <a href="{{ route('index') }}" class="font-semibold text-md md:text-2xl">
                 Rathdrum Community First Responders
             </a>
             <!-- Mobile menu button -->
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <ul class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0 text-md font-semibold md:text-lg">
+        <ul class="flex-col mt-8 space-y-4 font-semibold md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0 text-md md:text-lg">
             <li>
                 <a href="{{ route('index') }}">Home</a>
             </li>
