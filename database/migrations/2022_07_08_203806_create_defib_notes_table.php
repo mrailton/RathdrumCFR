@@ -9,13 +9,11 @@ use Illuminate\Support\Facades\Schema;
 return new class () extends Migration {
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('defib_notes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->boolean('receive_reports')->default(false);
+            $table->foreignId('defib_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained();
+            $table->text('note');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -23,6 +21,6 @@ return new class () extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('defib_notes');
     }
 };

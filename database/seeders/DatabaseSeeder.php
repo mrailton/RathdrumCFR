@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Models\Defib;
+use App\Models\Member;
+use App\Models\DefibNote;
 use Illuminate\Database\Seeder;
+use App\Models\DefibInspection;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        //
     }
 }
