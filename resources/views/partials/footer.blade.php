@@ -10,6 +10,12 @@
                 <p class="focus:outline-none">Website by
                     <a href="https://markrailton.com" target="_blank">Mark Railton</a>
                 </p>
+                @guest()
+                    <a href="{{ route('login') }}">Login</a>
+                @endguest
+                @auth()
+                    <a href="#">Logout</a>
+                @endauth
             </div>
         </div>
     </div>
