@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
     protected $levels = [
-        //
+
     ];
 
     protected $dontReport = [
-        //
+
     ];
 
     protected $dontFlash = [
@@ -26,7 +26,6 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
-            //
         });
     }
 }

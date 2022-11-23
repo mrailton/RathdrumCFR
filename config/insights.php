@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'ide' => null,
+    'ide' => 'phpstorm',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,11 +85,23 @@ return [
         PropertyTypeHintSniff::class,
         ReturnTypeHintSniff::class,
         UselessFunctionDocCommentSniff::class,
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowShortTernaryOperatorSniff::class,
+        PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class,
+        \PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting\SpaceAfterNotSniff::class,
+        \SlevomatCodingStandard\Sniffs\Classes\ForbiddenPublicPropertySniff::class,
+        \SlevomatCodingStandard\Sniffs\Functions\UnusedParameterSniff::class,
+        \SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff::class,
     ],
 
     'config' => [
         ForbiddenPrivateMethods::class => [
             'title' => 'The usage of private methods is not idiomatic in Laravel.',
+        ],
+        \PhpCsFixer\Fixer\Import\OrderedImportsFixer::class => [
+            'sort_algorithm' => 'length',
+        ],
+        \SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff::class => [
+            'maxLinesLength' => 25,
         ],
     ],
 
@@ -105,11 +117,11 @@ return [
     */
 
     'requirements' => [
-//        'min-quality' => 0,
-//        'min-complexity' => 0,
-//        'min-architecture' => 0,
-//        'min-style' => 0,
-//        'disable-security-check' => false,
+        'min-quality' => 90,
+        'min-complexity' => 90,
+        'min-architecture' => 90,
+        'min-style' => 90,
+        'disable-security-check' => false,
     ],
 
     /*
