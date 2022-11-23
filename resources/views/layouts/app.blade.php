@@ -11,7 +11,7 @@
 <body class="font-sans antialiased flex flex-col min-h-screen">
 @include('partials.header')
 
-<main class="max-w-7xl min-w-3/4 mx-auto sm:px-6 lg:px-8 flex-grow">
+<main class="max-w-7xl min-w-3/4 mx-auto sm:px-6 lg:px-8 flex-grow w-full pt-12">
     {{ $slot }}
 </main>
 

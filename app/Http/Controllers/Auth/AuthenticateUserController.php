@@ -21,6 +21,6 @@ class AuthenticateUserController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended('/admin');
+        return redirect()->intended('/');
     }
 }

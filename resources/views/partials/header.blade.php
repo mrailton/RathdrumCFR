@@ -18,11 +18,16 @@
 
         <ul class="flex-col mt-8 space-y-4 md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0 text-md font-semibold md:text-lg">
             <li>
-                <a href="#">Home</a>
+                <a href="{{ route('index') }}">Home</a>
             </li>
             <li>
                 <a href="#">Contact Us</a>
             </li>
+            @auth()
+                <li>
+                    <a href="{{ route('defibs.list') }}">Defibs</a>
+                </li>
+            @endauth
         </ul>
     </nav>
 </header>
