@@ -30,6 +30,13 @@
                     </div>
 
                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+                        <label for="display_on_map" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Display On Map</label>
+                        <div class="mt-1 sm:col-span-2 sm:mt-0">
+                            <input type="checkbox" name="display_on_map" id="display_on_map" class="block border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+                        </div>
+                    </div>
+
+                    <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
                         <label for="model" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">Model</label>
                         <div class="mt-1 sm:col-span-2 sm:mt-0">
                             <input type="text" name="model" id="model" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
