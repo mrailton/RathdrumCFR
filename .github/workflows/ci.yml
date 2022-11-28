@@ -46,11 +46,11 @@ jobs:
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
 
-      - name: Run Linter
-        run: composer lint
-
       - name: Run Insights
         run: composer insights
+
+      - name: Run Code Analysis
+        run: composer phpstan
 
   deploy:
     runs-on: ubuntu-latest
