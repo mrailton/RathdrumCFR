@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Defibs\ListDefibsController;
+use App\Http\Controllers\Defibs\StoreDefibController;
+use App\Http\Controllers\Defibs\CreateDefibController;
 use App\Http\Controllers\Auth\AuthenticateUserController;
 
 Route::get('/', IndexController::class)->name('index');
@@ -15,6 +17,10 @@ Route::middleware('guest')->group(function () {
     Route::post('login', AuthenticateUserController::class)->name('login');
 });
 
-Route::middleware('auth')->name('defibs.')->prefix('defibs')->group(function () {
-    Route::get('/', ListDefibsController::class)->name('list')->can('defib.list');
+Route::middleware('auth')->group(function () {
+    Route::prefix('defibs')->name('defibs.')->group(function () {
+        Route::get('/', ListDefibsController::class)->name('list')->can('defib.list');
+        Route::post('/', StoreDefibController::class)->name('store')->can('defib.create');
+        Route::get('/new', CreateDefibController::class)->name('create')->can('defib.create');
+    });
 });
