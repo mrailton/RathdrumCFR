@@ -11,6 +11,7 @@ use App\Http\Controllers\Defibs\ListDefibsController;
 use App\Http\Controllers\Defibs\StoreDefibController;
 use App\Http\Controllers\Defibs\CreateDefibController;
 use App\Http\Controllers\Defibs\UpdateDefibController;
+use App\Http\Controllers\Members\ListMembersController;
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Defibs\Notes\StoreDefibNoteController;
 use App\Http\Controllers\Defibs\Notes\CreateDefibNoteController;
@@ -42,5 +43,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/new', CreateDefibNoteController::class)->name('create')->can('defib.note');
             Route::post('/', StoreDefibNoteController::class)->name('store')->can('defib.note');
         });
+    });
+
+    Route::prefix('members')->name('members.')->group(function () {
+        Route::get('/', ListMembersController::class)->name('list')->can('member.list');
     });
 });

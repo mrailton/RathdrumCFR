@@ -23,11 +23,16 @@
             <li>
                 <a href="#">Contact Us</a>
             </li>
-            @auth()
+            @can('defib.list')
                 <li>
                     <a href="{{ route('defibs.list') }}">Defibs</a>
                 </li>
-            @endauth
+            @endcan
+            @can('member.list')
+                <li>
+                    <a href="{{ route('members.list') }}">Members</a>
+                </li>
+            @endcan
         </ul>
     </nav>
 </header>
