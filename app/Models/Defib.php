@@ -42,4 +42,9 @@ class Defib extends Model
     {
         return $this->hasMany(DefibInspection::class);
     }
+
+    public function notes(): HasMany
+    {
+        return $this->hasMany(DefibNote::class);
+    }
 }
