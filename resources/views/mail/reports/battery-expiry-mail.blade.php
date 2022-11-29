@@ -4,7 +4,7 @@ The battery in the following defibs has either reached it's expiry date, or will
 
 @component('mail::table')
 | Name | Location | Model | Battery Expiry Date |
-| -----|:--------:|:-----:|-------------|
+| ----- |-------- | ----- | ------------- |
 @foreach($defibs as $defib)
 |{{ $defib->name }} | {{ $defib->location }} | {{ $defib->model }} | @if($defib->battery_expires_at) {{ $defib->battery_expires_at->format('d/m/Y') }} @else No Date @endif |
 @endforeach

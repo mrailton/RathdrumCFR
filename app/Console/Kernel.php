@@ -11,7 +11,8 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('generate-battery-expiry-report --queued')->twiceMonthly(1, 15, '09:00');
+        $schedule->command('reports:defib-inspection --queued')->sundays()->at('09:00');
+        $schedule->command('reports:battery-expiry --queued')->twiceMonthly(1, 15, '09:00');
     }
 
     protected function commands(): void
