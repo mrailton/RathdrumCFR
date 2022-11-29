@@ -9,3 +9,4 @@ parameters:
         - ./app/Http/Middleware/RedirectIfAuthenticated.php
 
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

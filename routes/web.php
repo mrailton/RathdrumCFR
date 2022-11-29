@@ -12,6 +12,8 @@ use App\Http\Controllers\Defibs\StoreDefibController;
 use App\Http\Controllers\Defibs\CreateDefibController;
 use App\Http\Controllers\Defibs\UpdateDefibController;
 use App\Http\Controllers\Auth\AuthenticateUserController;
+use App\Http\Controllers\Defibs\Inspections\StoreDefibInspectionController;
+use App\Http\Controllers\Defibs\Inspections\CreateDefibInspectionController;
 
 Route::get('/', IndexController::class)->name('index');
 
@@ -28,5 +30,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', ViewDefibController::class)->name('view')->can('defib.view');
         Route::get('/{id}/update', EditDefibController::class)->name('edit')->can('defib.update');
         Route::put('/{id}', UpdateDefibController::class)->name('update')->can('defib.update');
+
+        Route::prefix('/{id}/inspections')->name('inspections.')->group(function () {
+            Route::get('/new', CreateDefibInspectionController::class)->name('create')->can('defib.inspect');
+            Route::post('/', StoreDefibInspectionController::class)->name('store')->can('defib.inspect');
+        });
     });
 });

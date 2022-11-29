@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DefibInspection extends Model
@@ -20,4 +21,9 @@ class DefibInspection extends Model
         'pads_expire_at' => 'date:Y-m-d',
         'battery_expires_at' => 'date:Y-m-d',
     ];
+
+    public function member(): BelongsTo
+    {
+        return $this->belongsTo(Member::class);
+    }
 }

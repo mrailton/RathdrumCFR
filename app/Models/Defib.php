@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Defib extends Model
@@ -36,4 +37,9 @@ class Defib extends Model
         'serial' => 'string',
         'battery_expires_at' => 'datetime:Y-m-d',
     ];
+
+    public function inspections(): HasMany
+    {
+        return $this->hasMany(DefibInspection::class);
+    }
 }
