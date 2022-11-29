@@ -5,18 +5,16 @@ declare(strict_types=1);
 namespace App\Http\Requests\Defibs;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Auth\Authenticatable;
 
-class StoreDefibRequest extends FormRequest
+class UpsertDefibRequest extends FormRequest
 {
-    public function __construct(private readonly Authenticatable $user)
-    {
-        parent::__construct();
-    }
-
     public function authorize(): bool
     {
-        return $this->user->can('defib.create');
+        return match ($this->server('REQUEST_METHOD')) {
+            'POST' => auth()->user()->can('defib.create'),
+            'PUT' => auth()->user()->can('defib.update'),
+            default => false,
+        };
     }
 
     public function rules(): array

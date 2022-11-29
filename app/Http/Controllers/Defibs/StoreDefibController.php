@@ -7,11 +7,11 @@ namespace App\Http\Controllers\Defibs;
 use App\Models\Defib;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\Defibs\StoreDefibRequest;
+use App\Http\Requests\Defibs\UpsertDefibRequest;
 
 class StoreDefibController extends Controller
 {
-    public function __invoke(StoreDefibRequest $request): RedirectResponse
+    public function __invoke(UpsertDefibRequest $request): RedirectResponse
     {
         $defib = new Defib($request->validated());
         $defib->user_id = auth()->id();
