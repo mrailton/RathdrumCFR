@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Defib;
 use App\Mail\Reports\BatteryExpiryMail;
 
+use App\Jobs\Reports\GenerateBatteryExpiryReport;
+
 use function Pest\Laravel\artisan;
 
 it('sends the battery expiry report to users that want to receive reports', function () {
@@ -18,4 +20,22 @@ it('sends the battery expiry report to users that want to receive reports', func
     artisan('reports:battery-expiry');
 
     Mail::assertSent(BatteryExpiryMail::class);
+});
+
+test('email content renders properly if there are defibs with expiring batteries', function () {
+    Defib::factory()->create(['battery_expires_at' => now()->subMonths(3)]);
+    $defibs = (new GenerateBatteryExpiryReport())->getDefibs();
+
+    $mailable = new BatteryExpiryMail($defibs);
+
+    $mailable->assertSeeInHtml($defibs[0]->name);
+});
+
+test('email content renders properly if there are no defibs with expiring batteries', function () {
+    Defib::factory()->create(['battery_expires_at' => now()->addYears(3)]);
+    $defibs = (new GenerateBatteryExpiryReport())->getDefibs();
+
+    $mailable = new BatteryExpiryMail($defibs);
+
+    $mailable->assertSeeInHtml('There are currently no defibs with an expiring or expired battery.');
 });

@@ -13,6 +13,7 @@ use App\Mail\Reports\DefibPadExpiryMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Database\Eloquent\Collection;
 
 class GenerateDefibPadExpiryReport implements ShouldQueue
 {
@@ -27,17 +28,27 @@ class GenerateDefibPadExpiryReport implements ShouldQueue
 
     public function handle(): void
     {
-        $defibs = Defib::query()
-            ->where('pads_expire_at', '<', now()->addMonths(1))
-            ->orWhereNull('pads_expire_at')
-            ->get();
+        $defibs = $this->getDefibs();
 
-        $users = User::query()
-            ->where('receive_reports', '=', true)
-            ->get();
+        $users = $this->getUsers();
 
         foreach ($users as $user) {
             Mail::to($user->email)->send(new DefibPadExpiryMail($defibs));
         }
+    }
+
+    public function getDefibs(): Collection
+    {
+        return Defib::query()
+            ->where('pads_expire_at', '<', now()->addMonths(1))
+            ->orWhereNull('pads_expire_at')
+            ->get();
+    }
+
+    public function getUsers(): Collection
+    {
+        return User::query()
+            ->where('receive_reports', '=', true)
+            ->get();
     }
 }

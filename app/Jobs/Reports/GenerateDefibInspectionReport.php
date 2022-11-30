@@ -13,6 +13,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Mail\Reports\DefibInspectionMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Database\Eloquent\Collection;
 
 class GenerateDefibInspectionReport implements ShouldQueue
 {
@@ -27,17 +28,26 @@ class GenerateDefibInspectionReport implements ShouldQueue
 
     public function handle(): void
     {
-        $defibs = Defib::query()
-            ->where('last_inspected_at', '<', now()->subMonths(1))
-            ->orWhereNull('last_inspected_at')
-            ->get();
-
-        $users = User::query()
-            ->where('receive_reports', '=', true)
-            ->get();
+        $defibs = $this->getDefibs();
+        $users = $this->getUsers();
 
         foreach ($users as $user) {
             Mail::to($user->email)->send(new DefibInspectionMail($defibs));
         }
+    }
+
+    public function getDefibs(): Collection
+    {
+        return Defib::query()
+            ->where('last_inspected_at', '<', now()->subMonths(1))
+            ->orWhereNull('last_inspected_at')
+            ->get();
+    }
+
+    public function getUsers(): Collection
+    {
+        return User::query()
+            ->where('receive_reports', '=', true)
+            ->get();
     }
 }

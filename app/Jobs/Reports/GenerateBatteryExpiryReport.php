@@ -13,6 +13,7 @@ use App\Mail\Reports\BatteryExpiryMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Database\Eloquent\Collection;
 
 class GenerateBatteryExpiryReport implements ShouldQueue
 {
@@ -27,17 +28,26 @@ class GenerateBatteryExpiryReport implements ShouldQueue
 
     public function handle(): void
     {
-        $defibs = Defib::query()
-            ->where('battery_expires_at', '<', now()->addMonths(1))
-            ->orWhereNull('battery_expires_at')
-            ->get();
-
-        $users = User::query()
-            ->where('receive_reports', '=', true)
-            ->get();
+        $defibs = $this->getDefibs();
+        $users = $this->getUsers();
 
         foreach ($users as $user) {
             Mail::to($user->email)->send(new BatteryExpiryMail($defibs));
         }
+    }
+
+    public function getDefibs(): Collection
+    {
+        return Defib::query()
+            ->where('battery_expires_at', '<', now()->addMonths(1))
+            ->orWhereNull('battery_expires_at')
+            ->get();
+    }
+
+    public function getUsers(): Collection
+    {
+        return User::query()
+            ->where('receive_reports', '=', true)
+            ->get();
     }
 }
