@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -46,5 +47,10 @@ class Defib extends Model
     public function notes(): HasMany
     {
         return $this->hasMany(DefibNote::class);
+    }
+
+    public function scopePublic(Builder $query): Builder
+    {
+        return $query->where('display_on_map', true);
     }
 }
