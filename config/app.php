@@ -214,4 +214,5 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'admin_email' => env('ADMIN_EMAIL'),
 ];

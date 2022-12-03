@@ -21,7 +21,7 @@
                 <a href="{{ route('index') }}">Home</a>
             </li>
             <li>
-                <a href="#">Contact Us</a>
+                <a href="{{ route('contact') }}">Contact Us</a>
             </li>
             @can('defib.list')
                 <li>

@@ -13,12 +13,17 @@ use App\Http\Controllers\Defibs\CreateDefibController;
 use App\Http\Controllers\Defibs\UpdateDefibController;
 use App\Http\Controllers\Members\ListMembersController;
 use App\Http\Controllers\Auth\AuthenticateUserController;
+use App\Http\Controllers\Contact\ContactUsPageController;
+use App\Http\Controllers\Contact\ProcessContactUsController;
 use App\Http\Controllers\Defibs\Notes\StoreDefibNoteController;
 use App\Http\Controllers\Defibs\Notes\CreateDefibNoteController;
 use App\Http\Controllers\Defibs\Inspections\StoreDefibInspectionController;
 use App\Http\Controllers\Defibs\Inspections\CreateDefibInspectionController;
 
 Route::get('/', IndexController::class)->name('index');
+
+Route::get('/contact', ContactUsPageController::class)->name('contact');
+Route::post('/contact', ProcessContactUsController::class)->name('contact');
 
 Route::middleware('guest')->group(function () {
     Route::get('login', LoginController::class)->name('login');
