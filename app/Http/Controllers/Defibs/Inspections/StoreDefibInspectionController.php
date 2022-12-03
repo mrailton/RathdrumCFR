@@ -29,6 +29,6 @@ class StoreDefibInspectionController extends Controller
         $defib->last_inspected_by = $member->name;
         $defib->save();
 
-        return redirect()->route('defibs.view', ['id' => $defib->id]);
+        return redirect()->route('defibs.view', ['id' => $defib->id])->with('success', 'Defib inspection successfully added');
     }
 }

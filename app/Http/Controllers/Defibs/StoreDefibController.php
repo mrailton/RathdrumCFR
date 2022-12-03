@@ -17,6 +17,6 @@ class StoreDefibController extends Controller
         $defib->user_id = auth()->id();
         $defib->save();
 
-        return redirect()->route('defibs.list');
+        return redirect()->route('defibs.list')->with('success', 'Defib successfully added');
     }
 }

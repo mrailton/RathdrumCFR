@@ -16,6 +16,6 @@ class ProcessContactUsController extends Controller
     {
         Mail::to(config('app.admin_email'))->send(new ContactFormMail($request->get('name'), $request->get('email'), $request->get('phone'), $request->get('message')));
 
-        return redirect()->route('index');
+        return redirect()->route('index')->with('success', 'Contact form successfully submitted');
     }
 }

@@ -17,6 +17,6 @@ class UpdateDefibController extends Controller
 
         $defib->update($request->validated());
 
-        return redirect()->route('defibs.view', ['id' => $defib->id]);
+        return redirect()->route('defibs.view', ['id' => $defib->id])->with('success', 'Defib successfully updated');
     }
 }

@@ -9,12 +9,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="flex flex-col min-h-screen font-sans antialiased">
-@include('partials.header')
+<x-header />
+<x-flash />
 
 <main class="flex-grow w-full pt-12 mx-auto max-w-7xl min-w-3/4 sm:px-6 lg:px-8">
     {{ $slot }}
 </main>
 
-@include('partials.footer')
+<x-footer />
 </body>
 </html>
