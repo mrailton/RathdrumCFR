@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="overflow-hidden bg-white px-4 sm:px-6 lg:px-8">
-        <div class="relative mx-auto max-w-xl">
+    <div class="bg-white px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-xl">
             <div class="text-center">
                 <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact Us</h2>
                 <p class="mt-4 text-lg leading-6 text-gray-500">If you'd like to get in touch with us, please fill in the form below and someone will get back to you as soon as possible.</p>
