@@ -1,6 +1,6 @@
-<header class="bg-red-700">
+<header class="bg-red-600">
     <nav class="border-b">
-        <div x-data="{showMenu : false}" class="container max-w-screen-lg mx-auto flex justify-between h-14 sm:text-gray-700 md:text-white">
+        <div x-data="{showMenu : false}" class="container max-w-screen-2xl mx-auto flex justify-between h-14 sm:text-gray-700 md:text-white">
             <a href="{{ route('index') }}" class="flex items-center cursor-pointer hover:bg-white px-2 ml-3">
                 <div class="font-semibold text-md md:text-2xl text-white">Rathdrum Community First Responders</div>
             </a>
@@ -10,22 +10,22 @@
             </button>
 
             <ul class="md:flex text-base mr-3 origin-top" :class="{ 'block absolute top-14 border-b bg-white w-full p-2': showMenu, 'hidden': !showMenu}" id="navbar-main" x-cloak>
-                <li class="{{ (request()->is('/')) ? 'bg-white text-red-800' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-800" :class="showMenu && 'py-1'">
+                <li class="{{ (request()->is('/')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
                     <a href="{{ route('index') }}">Home</a>
                 </li>
 
-                <li class="{{ (request()->is('contact')) ? 'bg-white text-red-800' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-800" :class="showMenu && 'py-1'">
+                <li class="{{ (request()->is('contact')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
                     <a href="{{ route('contact') }}">Contact Us</a>
                 </li>
 
                 @can('defib.list')
-                    <li class="{{ (request()->is('defibs*')) ? 'bg-white text-red-800' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-800" :class="showMenu && 'py-1'">
+                    <li class="{{ (request()->is('defibs*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
                         <a href="{{ route('defibs.list') }}">Defibs</a>
                     </li>
                 @endcan
 
                 @can('member.list')
-                    <li class="{{ (request()->is('members*')) ? 'bg-white text-red-800' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-800" :class="showMenu && 'py-1'">
+                    <li class="{{ (request()->is('members*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
                         <a href="{{ route('members.list') }}">Members</a>
                     </li>
                 @endcan
