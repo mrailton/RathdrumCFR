@@ -1,38 +1,35 @@
 <header class="bg-red-700">
-    <nav class="container px-6 py-8 mx-auto text-gray-100 md:flex md:justify-between md:items-center">
-        <div class="flex items-center justify-between">
-            <a href="{{ route('index') }}" class="font-semibold text-md md:text-2xl">
-                Rathdrum Community First Responders
+    <nav class="border-b">
+        <div x-data="{showMenu : false}" class="container max-w-screen-lg mx-auto flex justify-between h-14 sm:text-gray-700 md:text-white">
+            <a href="{{ route('index') }}" class="flex items-center cursor-pointer hover:bg-white px-2 ml-3">
+                <div class="font-semibold text-md md:text-2xl text-white">Rathdrum Community First Responders</div>
             </a>
-            <!-- Mobile menu button -->
-            <div class="flex md:hidden">
-                <button type="button"
-                        class="focus:outline-none">
-                    <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
-                        <path fill-rule="evenodd"
-                              d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
 
-        <ul class="flex-col mt-8 space-y-4 font-semibold md:flex md:space-y-0 md:flex-row md:items-center md:space-x-10 md:mt-0 text-md md:text-lg">
-            <li>
-                <a href="{{ route('index') }}">Home</a>
-            </li>
-            <li>
-                <a href="{{ route('contact') }}">Contact Us</a>
-            </li>
-            @can('defib.list')
-                <li>
-                    <a href="{{ route('defibs.list') }}">Defibs</a>
+            <button @click="showMenu = !showMenu" class="block md:hidden text-gray-700 p-2 rounded hover:border focus:border focus:bg-gray-400 my-2 mr-5" type="button" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+                <svg class="w-5 h-5" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+
+            <ul class="md:flex text-base mr-3 origin-top" :class="{ 'block absolute top-14 border-b bg-white w-full p-2': showMenu, 'hidden': !showMenu}" id="navbar-main" x-cloak>
+                <li class="{{ (request()->is('/')) ? 'bg-white text-red-800' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-800" :class="showMenu && 'py-1'">
+                    <a href="{{ route('index') }}">Home</a>
                 </li>
-            @endcan
-            @can('member.list')
-                <li>
-                    <a href="{{ route('members.list') }}">Members</a>
+
+                <li class="{{ (request()->is('contact')) ? 'bg-white text-red-800' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-800" :class="showMenu && 'py-1'">
+                    <a href="{{ route('contact') }}">Contact Us</a>
                 </li>
-            @endcan
-        </ul>
+
+                @can('defib.list')
+                    <li class="{{ (request()->is('defibs*')) ? 'bg-white text-red-800' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-800" :class="showMenu && 'py-1'">
+                        <a href="{{ route('defibs.list') }}">Defibs</a>
+                    </li>
+                @endcan
+
+                @can('member.list')
+                    <li class="{{ (request()->is('members*')) ? 'bg-white text-red-800' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-800" :class="showMenu && 'py-1'">
+                        <a href="{{ route('members.list') }}">Members</a>
+                    </li>
+                @endcan
+            </ul>
+        </div>
     </nav>
 </header>
