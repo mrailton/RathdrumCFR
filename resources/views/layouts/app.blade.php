@@ -10,9 +10,10 @@
 </head>
 <body class="flex flex-col min-h-screen font-sans antialiased">
 <x-header />
-<x-flash />
 
 <main class="flex-grow w-full pt-12 mx-auto max-w-7xl min-w-3/4 sm:px-6 lg:px-8">
+    <x-flash />
+
     {{ $slot }}
 </main>
 
