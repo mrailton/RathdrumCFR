@@ -19,7 +19,7 @@ class MemberFactory extends Factory
             'address_1' => $this->faker->address(),
             'address_2' => $this->faker->city(),
             'title' => 'Responder',
-            'status' => $this->faker->randomElement(['Active', 'Inactive']),
+            'status' => $this->faker->randomElement(['active', 'inactive']),
         ];
     }
 }

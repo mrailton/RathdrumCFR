@@ -12,6 +12,8 @@ use App\Http\Controllers\Defibs\StoreDefibController;
 use App\Http\Controllers\Defibs\CreateDefibController;
 use App\Http\Controllers\Defibs\UpdateDefibController;
 use App\Http\Controllers\Members\ListMembersController;
+use App\Http\Controllers\Members\StoreMemberController;
+use App\Http\Controllers\Members\CreateMemberController;
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Contact\ContactUsPageController;
 use App\Http\Controllers\Contact\ProcessContactUsController;
@@ -52,5 +54,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('members')->name('members.')->group(function () {
         Route::get('/', ListMembersController::class)->name('list')->can('member.list');
+        Route::post('/', StoreMemberController::class)->name('store')->can('member.create');
+        Route::get('/new', CreateMemberController::class)->name('create')->can('member.create');
     });
 });
