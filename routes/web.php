@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\IndexController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Defibs\EditDefibController;
-use App\Http\Controllers\Defibs\ViewDefibController;
-use App\Http\Controllers\Defibs\ListDefibsController;
-use App\Http\Controllers\Defibs\StoreDefibController;
-use App\Http\Controllers\Defibs\CreateDefibController;
-use App\Http\Controllers\Defibs\UpdateDefibController;
-use App\Http\Controllers\Members\ListMembersController;
-use App\Http\Controllers\Members\StoreMemberController;
-use App\Http\Controllers\Members\CreateMemberController;
 use App\Http\Controllers\Auth\AuthenticateUserController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Contact\ContactUsPageController;
 use App\Http\Controllers\Contact\ProcessContactUsController;
-use App\Http\Controllers\Defibs\Notes\StoreDefibNoteController;
-use App\Http\Controllers\Defibs\Notes\CreateDefibNoteController;
-use App\Http\Controllers\Defibs\Inspections\StoreDefibInspectionController;
+use App\Http\Controllers\Defibs\CreateDefibController;
+use App\Http\Controllers\Defibs\EditDefibController;
 use App\Http\Controllers\Defibs\Inspections\CreateDefibInspectionController;
+use App\Http\Controllers\Defibs\Inspections\StoreDefibInspectionController;
+use App\Http\Controllers\Defibs\ListDefibsController;
+use App\Http\Controllers\Defibs\Notes\CreateDefibNoteController;
+use App\Http\Controllers\Defibs\Notes\StoreDefibNoteController;
+use App\Http\Controllers\Defibs\StoreDefibController;
+use App\Http\Controllers\Defibs\UpdateDefibController;
+use App\Http\Controllers\Defibs\ViewDefibController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\Members\CreateMemberController;
+use App\Http\Controllers\Members\ListMembersController;
+use App\Http\Controllers\Members\StoreMemberController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
 

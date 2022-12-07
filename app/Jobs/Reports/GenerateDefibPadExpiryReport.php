@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Jobs\Reports;
 
-use App\Models\User;
-use App\Models\Defib;
-use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Queue\SerializesModels;
 use App\Mail\Reports\DefibPadExpiryMail;
-use Illuminate\Queue\InteractsWithQueue;
+use App\Models\Defib;
+use App\Models\User;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class GenerateDefibPadExpiryReport implements ShouldQueue
 {

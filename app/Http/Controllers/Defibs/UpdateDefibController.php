@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Defibs;
 
-use App\Models\Defib;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Defibs\UpsertDefibRequest;
+use App\Models\Defib;
+use Illuminate\Http\RedirectResponse;
 
 class UpdateDefibController extends Controller
 {

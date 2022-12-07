@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Defibs\Notes;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Defibs\Notes\StoreDefibNoteRequest;
 use App\Models\Defib;
 use App\Models\DefibNote;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\Defibs\Notes\StoreDefibNoteRequest;
 
 class StoreDefibNoteController extends Controller
 {

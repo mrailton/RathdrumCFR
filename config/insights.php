@@ -75,6 +75,7 @@ return [
     ],
 
     'remove' => [
+        \PhpCsFixer\Fixer\Import\OrderedImportsFixer::class,
         DisallowMixedTypeHintSniff::class,
         ForbiddenDefineFunctions::class,
         ForbiddenNormalClasses::class,

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Mail\Reports;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Database\Eloquent\Collection;
 
 class DefibPadExpiryMail extends Mailable
 {

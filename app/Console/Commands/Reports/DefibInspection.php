@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console\Commands\Reports;
 
-use Illuminate\Console\Command;
 use App\Jobs\Reports\GenerateDefibInspectionReport;
+use Illuminate\Console\Command;
 
 class DefibInspection extends Command
 {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Members;
 
-use App\Models\Member;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Members\StoreMemberRequest;
+use App\Models\Member;
+use Illuminate\Http\RedirectResponse;
 
 class StoreMemberController extends Controller
 {

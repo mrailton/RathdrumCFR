@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Contact;
 
-use App\Mail\ContactFormMail;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Contact\ProcessContactUsRequest;
+use App\Mail\ContactFormMail;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Mail;
 
 class ProcessContactUsController extends Controller
 {

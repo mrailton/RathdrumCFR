@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Defibs\Inspections;
 
-use App\Models\Defib;
-use App\Models\Member;
-use App\Models\DefibInspection;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Defibs\Inspections\StoreDefibInspectionRequest;
+use App\Models\Defib;
+use App\Models\DefibInspection;
+use App\Models\Member;
+use Illuminate\Http\RedirectResponse;
 
 class StoreDefibInspectionController extends Controller
 {
