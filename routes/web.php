@@ -20,6 +20,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Members\CreateMemberController;
 use App\Http\Controllers\Members\ListMembersController;
 use App\Http\Controllers\Members\StoreMemberController;
+use App\Http\Controllers\Members\ViewMemberController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
@@ -56,5 +57,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/', ListMembersController::class)->name('list')->can('member.list');
         Route::post('/', StoreMemberController::class)->name('store')->can('member.create');
         Route::get('/new', CreateMemberController::class)->name('create')->can('member.create');
+        Route::get('/{id}', ViewMemberController::class)->name('view')->can('member.view');
     });
 });
