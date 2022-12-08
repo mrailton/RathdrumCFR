@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('reports:defib-inspection')->sundays()->at('09:00');
         $schedule->command('reports:battery-expiry')->monthlyOn(1, '09:00');
         $schedule->command('reports:defib-pad-expiry')->monthlyOn(1, '09:00');
+        $schedule->command('reports:cert-expiry')->monthlyOn(1, '09:00');
     }
 
     protected function commands(): void
