@@ -23,7 +23,7 @@ class StoreMemberRequest extends FormRequest
             'address_1' => ['required', 'string'],
             'address_2' => ['required', 'string'],
             'eircode' => ['nullable', 'string'],
-            'status' => ['nullable', 'string', Rule::in(['inactive', 'active'])],
+            'status' => ['required', 'string', Rule::in(['inactive', 'active'])],
         ];
     }
 }

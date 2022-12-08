@@ -18,10 +18,12 @@ use App\Http\Controllers\Defibs\UpdateDefibController;
 use App\Http\Controllers\Defibs\ViewDefibController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Members\CreateMemberController;
+use App\Http\Controllers\Members\EditMemberController;
 use App\Http\Controllers\Members\ListMembersController;
 use App\Http\Controllers\Members\Notes\CreateMemberNoteController;
 use App\Http\Controllers\Members\Notes\StoreMemberNoteController;
 use App\Http\Controllers\Members\StoreMemberController;
+use App\Http\Controllers\Members\UpdateMemberController;
 use App\Http\Controllers\Members\ViewMemberController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +62,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/', StoreMemberController::class)->name('store')->can('member.create');
         Route::get('/new', CreateMemberController::class)->name('create')->can('member.create');
         Route::get('/{id}', ViewMemberController::class)->name('view')->can('member.view');
+        Route::get('/{id}/update', EditMemberController::class)->name('edit')->can('member.update');
+        Route::put('/{id}', UpdateMemberController::class)->name('update')->can('member.update');
 
         Route::prefix('/{id}/notes')->name('notes.')->group(function () {
             Route::get('/new', CreateMemberNoteController::class)->name('create')->can('member.note');
