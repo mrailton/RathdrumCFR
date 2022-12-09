@@ -16,6 +16,14 @@ class StoreMemberNoteController extends Controller
     {
         $member = Member::find($id);
 
+        if (!$member) {
+            abort(404);
+        }
+
+        if (is_null(auth()->user())) {
+            abort(401);
+        }
+
         $note = new MemberNote($request->validated());
         $note->member_id = $member->id;
         $note->user_id = auth()->user()->id;

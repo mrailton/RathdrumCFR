@@ -13,6 +13,10 @@ class StoreMemberController extends Controller
 {
     public function __invoke(StoreMemberRequest $request): RedirectResponse
     {
+        if (is_null(auth()->user())) {
+            abort(401);
+        }
+
         $member = new Member($request->validated());
         $member->user_id = auth()->user()->id;
         $member->save();

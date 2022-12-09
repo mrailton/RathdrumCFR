@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Members;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateMemberRequest extends FormRequest
 {
+    public function __construct(private readonly Authenticatable $user)
+    {
+        parent::__construct();
+    }
     public function authorize(): bool
     {
-        return auth()->user()->can('member.update');
+        return $this->user->can('member.update');
     }
 
     public function rules(): array

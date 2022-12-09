@@ -4,14 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Members;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreMemberRequest extends FormRequest
 {
+    public function __construct(private readonly Authenticatable $user)
+    {
+        parent::__construct();
+    }
+
     public function authorize(): bool
     {
-        return auth()->user()->can('member.create');
+        return $this->user->can('member.create');
     }
 
     public function rules(): array
