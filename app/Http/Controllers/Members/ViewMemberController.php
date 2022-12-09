@@ -13,7 +13,7 @@ class ViewMemberController extends Controller
 {
     public function __invoke(Request $request, int $id): View
     {
-        $member = Member::find($id);
+        $member = Member::with(['notes.author'])->find($id);
 
         return view('members.view', ['member' => $member]);
     }
