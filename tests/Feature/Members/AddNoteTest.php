@@ -2,25 +2,42 @@
 
 declare(strict_types=1);
 
+namespace Tests\Feature\Members;
+
 use App\Models\Member;
+use App\Models\User;
+use Database\Seeders\PermissionsSeeder;
+use Tests\TestCase;
 
-test('an authorised user can add a note to a member record', function () {
-    $data = ['note' => 'Test Note'];
-    $member = Member::factory()->create();
-    $user = authenticatedUser(['member.view', 'member.note']);
+class AddNoteTest extends TestCase
+{
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(PermissionsSeeder::class);
+    }
 
-    $user->get(route('members.view', ['id' => $member->id]))
-        ->assertSee('Add Note');
+    /** @test */
+    public function an_authorised_user_can_add_a_note_to_a_member_record(): void
+    {
+        $data = ['note' => 'Test Note'];
+        $member = Member::factory()->create();
+        $this->actingAs(User::factory()->create()->givePermissionTo(['member.view', 'member.note']));
 
-    $user->get(route('members.notes.create', ['id' => $member->id]))
-        ->assertSee('Note')
-        ->assertSee('Add Member Note');
+        $this->get(route('members.view', ['id' => $member->id]))
+            ->assertSee('Add Note');
 
-    $user->post(route('members.notes.store', ['id' => $member->id]), $data)
-        ->assertSessionDoesntHaveErrors()
-        ->assertRedirectToRoute('members.view', ['id' => $member->id])
-        ->assertSessionHas('success', 'Member note successfully added');;
+        $this->get(route('members.notes.create', ['id' => $member->id]))
+            ->assertSee('Note')
+            ->assertSee('Add Member Note');
 
-    $user->get(route('members.view', ['id' => $member->id]))
-        ->assertSee($data['note']);
-});
+        $this->post(route('members.notes.store', ['id' => $member->id]), $data)
+            ->assertSessionDoesntHaveErrors()
+            ->assertRedirectToRoute('members.view', ['id' => $member->id])
+            ->assertSessionHas('success', 'Member note successfully added');;
+
+        $this->get(route('members.view', ['id' => $member->id]))
+            ->assertSee($data['note']);
+    }
+}
+

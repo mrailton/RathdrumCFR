@@ -2,24 +2,40 @@
 
 declare(strict_types=1);
 
+namespace Tests\Feature\Members;
+
 use App\Models\Member;
+use App\Models\User;
+use Database\Seeders\PermissionsSeeder;
+use Tests\TestCase;
 
-test('an authorised user can create a new member', function () {
-    $data = Member::factory()->make();
-    $request = authenticatedUser(['member.create', 'member.list']);
+class AddMemberTest extends TestCase
+{
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->seed(PermissionsSeeder::class);
+    }
 
-    $request->get(route('members.list'))
-        ->assertSee('Add Member');
+    /** @test */
+    public function an_authorised_user_can_create_a_new_member(): void
+    {
+        $data = Member::factory()->make();
+        $this->actingAs(User::factory()->create()->givePermissionTo(['member.create', 'member.list']));
 
-    $request->get(route('members.create'))
-        ->assertSee('Add Member')
-        ->assertSee('Role');
+        $this->get(route('members.list'))
+            ->assertSee('Add Member');
 
-    $request->post(route('members.store'), $data->toArray())
-        ->assertSessionDoesntHaveErrors()
-        ->assertRedirectToRoute('members.list')
-        ->assertSessionHas('success', 'New member successfully added');
+        $this->get(route('members.create'))
+            ->assertSee('Add Member')
+            ->assertSee('Role');
 
-    expect(Member::count())->toBe(1)
-        ->and(Member::first()->name)->toBe($data->name);
-});
+        $this->post(route('members.store'), $data->toArray())
+            ->assertSessionDoesntHaveErrors()
+            ->assertRedirectToRoute('members.list')
+            ->assertSessionHas('success', 'New member successfully added');
+
+        $this->assertEquals(1, Member::count());
+        $this->assertEquals($data->name, Member::first()->name);
+    }
+}
