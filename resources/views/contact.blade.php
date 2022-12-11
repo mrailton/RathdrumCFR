@@ -8,7 +8,7 @@
                 <p class="mt-4 text-lg leading-6 text-gray-500">Remember, in a medical emergency you should call 999 or 112!</p>
             </div>
             <div class="mt-12">
-                <form action="#" method="POST" class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
+                <form action="{{ route('contact.store') }}" method="POST" class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                     @csrf
                     <div class="sm:col-span-2">
                         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>

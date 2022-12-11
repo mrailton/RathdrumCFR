@@ -29,8 +29,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
 
-Route::get('/contact', ContactUsPageController::class)->name('contact');
-Route::post('/contact', ProcessContactUsController::class)->name('contact');
+Route::get('/contact', ContactUsPageController::class)->name('contact.create');
+Route::post('/contact', ProcessContactUsController::class)->name('contact.store');
 
 Route::middleware('guest')->group(function () {
     Route::get('login', LoginController::class)->name('login');
