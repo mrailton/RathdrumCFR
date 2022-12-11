@@ -20,7 +20,7 @@ test('a guest can not view a list of defibs', function () {
     guest()
         ->get(route('defibs.list'))
         ->assertStatus(302)
-        ->assertRedirectToRoute('login');
+        ->assertRedirectToRoute('login.create');
 });
 
 test('a user without permission can not view a list of defibs', function () {

@@ -33,8 +33,8 @@ Route::get('/contact', ContactUsPageController::class)->name('contact.create');
 Route::post('/contact', ProcessContactUsController::class)->name('contact.store');
 
 Route::middleware('guest')->group(function () {
-    Route::get('login', LoginController::class)->name('login');
-    Route::post('login', AuthenticateUserController::class)->name('login');
+    Route::get('login', LoginController::class)->name('login.create');
+    Route::post('login', AuthenticateUserController::class)->name('login.store');
 });
 
 Route::middleware('auth')->group(function () {

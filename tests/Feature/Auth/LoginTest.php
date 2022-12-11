@@ -8,7 +8,7 @@ use function Pest\Laravel\get;
 
 test('login page renders', function () {
     guest()
-        ->get(route('login'))
+        ->get(route('login.create'))
         ->assertSee('Rathdrum Community First Responders')
         ->assertSee('Sign in to your account')
         ->assertSee('Email address');
@@ -16,7 +16,7 @@ test('login page renders', function () {
 
 test('an authenticated user can not visit the login page', function () {
     authenticatedUser()
-        ->get(route('login'))
+        ->get(route('login.create'))
         ->assertStatus(302)
         ->assertRedirectToRoute('index');
 });
@@ -25,7 +25,7 @@ it('allows a user to login', function () {
     $user = User::factory()->create();
 
     guest()
-        ->post(route('login'), ['email' => $user->email, 'password' => 'password'])
+        ->post(route('login.store'), ['email' => $user->email, 'password' => 'password'])
         ->assertStatus(302)
         ->assertSessionDoesntHaveErrors();
 
@@ -37,7 +37,7 @@ it('allows a user to login', function () {
 
 it('does not allow a non-registered user to login', function () {
     guest()
-        ->post(route('login'), ['email' => 'guest@user.com', 'password' => 'nope'])
+        ->post(route('login.store'), ['email' => 'guest@user.com', 'password' => 'nope'])
         ->assertStatus(302)
         ->assertSessionHasErrors('email');
 });

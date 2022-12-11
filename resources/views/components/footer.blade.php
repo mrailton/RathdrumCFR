@@ -11,7 +11,7 @@
                     <a href="https://markrailton.com" target="_blank">Mark Railton</a>
                 </p>
                 @guest()
-                    <a href="{{ route('login') }}">Login</a>
+                    <a href="{{ route('login.create') }}">Login</a>
                 @endguest
                 @auth()
                     <a href="#">Logout</a>
