@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model
@@ -50,4 +51,9 @@ class Member extends Model
         'covid_return_completed' => 'date:Y-m-d',
         'ppe_assessment_completed' => 'date:Y-m-d',
     ];
+
+    public function notes(): HasMany
+    {
+        return $this->hasMany(MemberNote::class);
+    }
 }

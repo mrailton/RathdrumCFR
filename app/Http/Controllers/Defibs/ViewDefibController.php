@@ -13,7 +13,7 @@ class ViewDefibController extends Controller
 {
     public function __invoke(Request $request, int $id): View
     {
-        $defib = Defib::find($id);
+        $defib = Defib::with(['notes.author', 'inspections.member'])->find($id);
 
         if (!$defib) {
             abort(404);

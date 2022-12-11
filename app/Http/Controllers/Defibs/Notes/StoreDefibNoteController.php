@@ -16,6 +16,14 @@ class StoreDefibNoteController extends Controller
     {
         $defib = Defib::find($id);
 
+        if (!$defib) {
+            abort(404);
+        }
+
+        if (is_null(auth()->user())) {
+            abort(401);
+        }
+
         $note = new DefibNote($request->validated());
         $note->defib_id = $defib->id;
         $note->user_id = auth()->user()->id;

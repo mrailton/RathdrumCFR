@@ -24,5 +24,6 @@ test('an authorised user can create a new defib note', function () {
         ->assertRedirectToRoute('defibs.view', ['id' => $defib->id]);
 
     $request->get(route('defibs.view', ['id' => $defib->id]))
-        ->assertSee($noteData['note']);
+        ->assertSee($noteData['note'])
+        ->assertSee(auth()->user()->name);
 });

@@ -16,7 +16,19 @@ class StoreDefibInspectionController extends Controller
     public function __invoke(StoreDefibInspectionRequest $request, int $id): RedirectResponse
     {
         $defib = Defib::find($id);
-        $member = Member::find($request->get('member_id'));
+        $member = Member::query()->where('id', '=', $request->get('member_id'))->first();
+
+        if (!$defib) {
+            abort(404);
+        }
+
+        if (is_null(auth()->user())) {
+            abort(401);
+        }
+
+        if (!$member) {
+            abort(422);
+        }
 
         $inspection = new DefibInspection($request->validated());
         $inspection->user_id = auth()->user()->id;

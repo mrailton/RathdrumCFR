@@ -13,8 +13,12 @@ class StoreDefibController extends Controller
 {
     public function __invoke(UpsertDefibRequest $request): RedirectResponse
     {
+        if (is_null(auth()->user())) {
+            abort(401);
+        }
+
         $defib = new Defib($request->validated());
-        $defib->user_id = auth()->id();
+        $defib->user_id = auth()->user()->id;
         $defib->save();
 
         return redirect()->route('defibs.list')->with('success', 'Defib successfully added');

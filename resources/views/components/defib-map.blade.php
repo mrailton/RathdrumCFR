@@ -2,7 +2,6 @@
     <div id="defibMapCanvas"></div>
 </div>
 
-<script async src="https://maps.googleapis.com/maps/api/js?key={{ $googleMapsAPIKey }}&callback=initMap"></script>
 <script>
     function initMap() {
         const locations = {!! json_encode($locations) !!};
@@ -34,3 +33,5 @@
         });
     }
 </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ $googleMapsAPIKey }}&callback=initMap"></script>
