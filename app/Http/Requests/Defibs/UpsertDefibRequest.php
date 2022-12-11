@@ -29,7 +29,7 @@ class UpsertDefibRequest extends FormRequest
             'name' => ['string', 'required'],
             'location' => ['string', 'required'],
             'coordinates' => ['string', 'nullable'],
-            'display_on_map' => ['sometimes', 'boolean'],
+            'display_on_map' => ['boolean', 'required'],
             'model' => ['string', 'required'],
             'serial' => ['string', 'nullable'],
             'owner' => ['string', 'required'],

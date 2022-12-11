@@ -28,7 +28,12 @@
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500"><label for="display_on_map">Display On Map</label></dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><input type="checkbox" name="display_on_map" id="display_on_map" class="block rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></dd>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <select name="display_on_map" id="display_on_map" class="block rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
