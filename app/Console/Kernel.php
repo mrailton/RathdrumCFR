@@ -11,7 +11,8 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('backup:run')->dailyAt('02:30');
+        $schedule->command('backup:clean')->dailyAt('03:15');
+        $schedule->command('backup:run')->dailyAt('03:30');
         $schedule->command('reports:battery-expiry')->monthlyOn(1, '09:00');
         $schedule->command('reports:cert-expiry')->monthlyOn(1, '09:00');
         $schedule->command('reports:defib-inspection')->sundays()->at('09:00');
