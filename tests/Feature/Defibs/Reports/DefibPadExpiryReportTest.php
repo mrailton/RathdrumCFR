@@ -20,7 +20,7 @@ it('sends the defib expiry report to users that want to receive reports', functi
 
     artisan('reports:defib-pad-expiry');
 
-    Mail::assertSent(DefibPadExpiryMail::class);
+    Mail::assertQueued(DefibPadExpiryMail::class);
 });
 
 test('email content renders properly if there are defibs that pads expiring in the next month', function () {

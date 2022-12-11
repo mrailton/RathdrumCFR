@@ -32,7 +32,7 @@ class GenerateBatteryExpiryReport implements ShouldQueue
         $users = $this->getUsers();
 
         foreach ($users as $user) {
-            Mail::to($user->email)->send(new BatteryExpiryMail($defibs));
+            Mail::to($user->email)->queue(new BatteryExpiryMail($defibs));
         }
     }
 

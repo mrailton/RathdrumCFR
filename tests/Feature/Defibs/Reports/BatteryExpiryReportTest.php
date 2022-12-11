@@ -19,7 +19,7 @@ it('sends the battery expiry report to users that want to receive reports', func
 
     artisan('reports:battery-expiry');
 
-    Mail::assertSent(BatteryExpiryMail::class);
+    Mail::assertQueued(BatteryExpiryMail::class);
 });
 
 test('email content renders properly if there are defibs with expiring batteries', function () {
