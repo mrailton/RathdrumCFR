@@ -32,7 +32,7 @@ class GenerateDefibInspectionReport implements ShouldQueue
         $users = $this->getUsers();
 
         foreach ($users as $user) {
-            Mail::to($user->email)->send(new DefibInspectionMail($defibs));
+            Mail::to($user->email)->queue(new DefibInspectionMail($defibs));
         }
     }
 

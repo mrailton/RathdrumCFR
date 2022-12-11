@@ -33,7 +33,7 @@ class GenerateDefibPadExpiryReport implements ShouldQueue
         $users = $this->getUsers();
 
         foreach ($users as $user) {
-            Mail::to($user->email)->send(new DefibPadExpiryMail($defibs));
+            Mail::to($user->email)->queue(new DefibPadExpiryMail($defibs));
         }
     }
 

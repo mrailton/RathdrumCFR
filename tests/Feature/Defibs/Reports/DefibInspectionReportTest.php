@@ -20,7 +20,7 @@ it('sends the defib inspection report to users that want to receive reports', fu
 
     artisan('reports:defib-inspection');
 
-    Mail::assertSent(DefibInspectionMail::class);
+    Mail::assertQueued(DefibInspectionMail::class);
 });
 
 test('email content renders properly if there are defibs that have not been inspected in the last month', function () {
