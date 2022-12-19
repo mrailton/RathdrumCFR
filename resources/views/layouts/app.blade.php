@@ -8,10 +8,6 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    @production
-        <script defer data-domain="rathdrumcfr.com" src="https://analytics.markrailton.com/js/plausible.js"></script>
-    @endproduction
-
     <title>Rathdrum Community First Responders</title>
 </head>
 <body class="flex flex-col min-h-screen font-sans antialiased">
