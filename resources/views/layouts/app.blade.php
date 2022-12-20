@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @production
-        <script async defer data-website-id="218b5f8d-d87f-43ea-922a-36accb23700c" src="https://analytics.markrailton.com/umami.js"></script>
+        <script async src="https://analytics.markrailton.com/tracker.js" data-ackee-server="https://analytics.markrailton.com" data-ackee-domain-id="39924ae7-430b-485a-8f35-626703a8af3a"></script>
     @endproduction
 
     <title>Rathdrum Community First Responders</title>
