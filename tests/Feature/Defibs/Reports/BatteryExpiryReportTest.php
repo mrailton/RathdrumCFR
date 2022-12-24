@@ -2,40 +2,49 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
-use App\Models\Defib;
-use App\Mail\Reports\BatteryExpiryMail;
+namespace Tests\Feature\Defibs\Reports;
 
 use App\Jobs\Reports\GenerateBatteryExpiryReport;
+use App\Mail\Reports\BatteryExpiryMail;
+use App\Models\Defib;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Tests\TestCase;
 
-use function Pest\Laravel\artisan;
+class BatteryExpiryReportTest extends TestCase
+{
+    /** @test */
+    public function sends_the_battery_expiry_report_to_users_that_want_to_receive_reports(): void
+    {
+        Mail::fake();
+        User::factory(['receive_reports' => true])->count(2)->create();
+        User::factory(['receive_reports' => false])->count(2)->create();
+        Defib::factory()->count(10)->create();
 
-it('sends the battery expiry report to users that want to receive reports', function () {
-    Mail::fake();
+        $this->artisan('reports:battery-expiry');
 
-    User::factory(['receive_reports' => true])->count(2)->create();
-    User::factory(['receive_reports' => false])->count(2)->create();
-    Defib::factory()->count(10)->create();
+        Mail::assertQueued(BatteryExpiryMail::class);
+    }
 
-    artisan('reports:battery-expiry');
+    /** @test */
+    public function email_content_renders_properly_if_there_are_defibs_with_expiring_batteries(): void
+    {
+        Defib::factory()->create(['battery_expires_at' => now()->subMonths(3)]);
+        $defibs = (new GenerateBatteryExpiryReport())->getDefibs();
 
-    Mail::assertQueued(BatteryExpiryMail::class);
-});
+        $mailable = new BatteryExpiryMail($defibs);
 
-test('email content renders properly if there are defibs with expiring batteries', function () {
-    Defib::factory()->create(['battery_expires_at' => now()->subMonths(3)]);
-    $defibs = (new GenerateBatteryExpiryReport())->getDefibs();
+        $mailable->assertSeeInHtml($defibs[0]->name);
+    }
 
-    $mailable = new BatteryExpiryMail($defibs);
+    /** @test */
+    public function email_content_renders_properly_if_there_are_no_defibs_with_expiring_batteries(): void
+    {
+        Defib::factory()->create(['battery_expires_at' => now()->addYears(3)]);
+        $defibs = (new GenerateBatteryExpiryReport())->getDefibs();
 
-    $mailable->assertSeeInHtml($defibs[0]->name);
-});
+        $mailable = new BatteryExpiryMail($defibs);
 
-test('email content renders properly if there are no defibs with expiring batteries', function () {
-    Defib::factory()->create(['battery_expires_at' => now()->addYears(3)]);
-    $defibs = (new GenerateBatteryExpiryReport())->getDefibs();
-
-    $mailable = new BatteryExpiryMail($defibs);
-
-    $mailable->assertSeeInHtml('There are currently no defibs with an expiring or expired battery.');
-});
+        $mailable->assertSeeInHtml('There are currently no defibs with an expiring or expired battery.');
+    }
+}
