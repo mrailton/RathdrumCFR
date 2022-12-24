@@ -59,7 +59,7 @@
             "@php artisan key:generate --ansi"
         ],
         "phpstan": [
-            "./vendor/bin/phpstan analyse --xdebug"
+            "./vendor/bin/phpstan analyse --xdebug --memory-limit 256M"
         ],
         "insights": [
             "@php artisan insights"
