@@ -21,7 +21,7 @@ class LoginTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_not_visit_the_login_page(): void
     {
-        $this->actingAs(User::factory()->create())
+        $this->actingAs($this->user())
             ->get(route('login.create'))
             ->assertStatus(302)
             ->assertRedirectToRoute('index');
@@ -30,9 +30,9 @@ class LoginTest extends TestCase
     /** @test */
     public function allows_a_user_to_login(): void
     {
-        $user = User::factory()->create();
+        User::factory(['email' => 'new@user.com'])->create();
 
-        $this->post(route('login.store'), ['email' => $user->email, 'password' => 'password'])
+        $this->post(route('login.store'), ['email' => 'new@user.com', 'password' => 'password'])
             ->assertStatus(302)
             ->assertSessionDoesntHaveErrors();
 

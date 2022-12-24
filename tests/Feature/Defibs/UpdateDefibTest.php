@@ -1,29 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Tests\Feature\Defibs;
+
 use App\Models\Defib;
+use Tests\TestCase;
 
-test('an authorised user can update a defib', function () {
-    $defib = Defib::factory()->create();
-    $data = $defib->toArray();
-    $data['name'] = 'Updated Defib';
-    $request = authenticatedUser(['defib.update', 'defib.view']);
+class UpdateDefibTest extends TestCase
+{
+    /** @test */
+    public function an_authorised_user_can_update_a_defib(): void
+    {
+        $defib = Defib::factory()->create();
+        $data = $defib->toArray();
+        $data['name'] = 'Updated Defib';
+        $this->actingAs($this->user(['defib.update', 'defib.view']));
 
-    $request
-        ->get(route('defibs.view', ['id' => $defib->id]))
-        ->assertSee('Update Defib');
+        $this->get(route('defibs.view', ['id' => $defib->id]))
+            ->assertSee('Update Defib');
 
-    $request
-        ->get(route('defibs.edit', ['id' => $defib->id]))
-        ->assertSee($defib->name);
+        $this->get(route('defibs.edit', ['id' => $defib->id]))
+            ->assertSee($defib->name);
 
-    $request
-        ->put(route('defibs.update', ['id' => $defib->id]), $data)
-        ->assertSessionDoesntHaveErrors()
-        ->assertRedirectToRoute('defibs.view', ['id' => $defib->id]);
+        $this->put(route('defibs.update', ['id' => $defib->id]), $data)
+            ->assertSessionDoesntHaveErrors()
+            ->assertRedirectToRoute('defibs.view', ['id' => $defib->id]);
 
-    $request
-        ->get(route('defibs.edit', ['id' => $defib->id]))
-        ->assertSee($data['name']);
+        $this->get(route('defibs.edit', ['id' => $defib->id]))
+            ->assertSee($data['name']);
 
-    expect($defib->fresh())->name->toBe($data['name']);
-});
+        $this->assertEquals($data['name'], $defib->fresh()->name);
+    }
+}

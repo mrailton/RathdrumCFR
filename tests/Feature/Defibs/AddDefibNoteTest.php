@@ -1,29 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
+namespace Tests\Feature\Defibs;
+
 use App\Models\Defib;
+use Tests\TestCase;
 
-use function Pest\Faker\faker;
+class AddDefibNoteTest extends TestCase
+{
+    /** @test */
+    public function an_authorised_user_can_create_a_new_defib_note(): void
+    {
+        $defib = Defib::factory()->create();
+        $this->actingAs($this->user(['defib.view', 'defib.note', 'defib.list']));
 
-test('an authorised user can create a new defib note', function () {
-    $defib = Defib::factory()->create();
-    $request = authenticatedUser(['defib.view', 'defib.note', 'defib.list']);
+        $noteData = [
+            'note' => fake()->sentence(),
+        ];
 
-    $noteData = [
-        'note' => faker()->sentence(),
-    ];
+        $this->get(route('defibs.view', ['id' => $defib->id]))
+            ->assertSee('Add Note');
 
-    $request->get(route('defibs.view', ['id' => $defib->id]))
-        ->assertSee('Add Note');
+        $this->get(route('defibs.notes.create', ['id' => $defib->id]))
+            ->assertSee('Add Defib Note')
+            ->assertSee('Add Note');
 
-    $request->get(route('defibs.notes.create', ['id' => $defib->id]))
-        ->assertSee('Add Defib Note')
-        ->assertSee('Add Note');
+        $this->post(route('defibs.notes.store', ['id' => $defib->id]), $noteData)
+            ->assertSessionDoesntHaveErrors()
+            ->assertRedirectToRoute('defibs.view', ['id' => $defib->id]);
 
-    $request->post(route('defibs.notes.store', ['id' => $defib->id]), $noteData)
-        ->assertSessionDoesntHaveErrors()
-        ->assertRedirectToRoute('defibs.view', ['id' => $defib->id]);
-
-    $request->get(route('defibs.view', ['id' => $defib->id]))
-        ->assertSee($noteData['note'])
-        ->assertSee(auth()->user()->name);
-});
+        $this->get(route('defibs.view', ['id' => $defib->id]))
+            ->assertSee($noteData['note'])
+            ->assertSee(auth()->user()->name);
+    }
+}
