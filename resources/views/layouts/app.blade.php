@@ -5,8 +5,14 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rathdrum Community First Responders</title>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @production
+        <script async defer data-website-id="df5d9067-7a10-4827-847b-d4384cd64eaa" src="https://analytics.markrailton.com/umami.js"></script>
+    @endproduction
+
+    <title>Rathdrum Community First Responders</title>
 </head>
 <body class="flex flex-col min-h-screen font-sans antialiased">
 <x-header />
