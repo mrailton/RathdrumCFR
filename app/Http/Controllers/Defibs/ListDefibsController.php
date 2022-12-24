@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Defibs;
 
 use App\Http\Controllers\Controller;
 use App\Models\Defib;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class ListDefibsController extends Controller
 {
