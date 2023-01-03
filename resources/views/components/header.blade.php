@@ -2,7 +2,7 @@
     <nav class="border-b">
         <div x-data="{showMenu : false}" class="container max-w-screen-2xl mx-auto flex justify-between h-14 sm:text-gray-700 md:text-white">
             <a href="{{ route('index') }}" class="flex items-center cursor-pointer hover:bg-white px-2 ml-3">
-                <div class="font-semibold text-md md:text-2xl text-white">Rathdrum Community First Responders</div>
+                <div class="font-semibold text-md md:text-2xl text-white hover:text-red-600">Rathdrum Community First Responders</div>
             </a>
 
             <button @click="showMenu = !showMenu" class="block md:hidden text-gray-700 p-2 rounded hover:border focus:border focus:bg-gray-400 my-2 mr-5" type="button" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,6 +27,12 @@
                 @can('member.list')
                     <li class="{{ (request()->is('members*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
                         <a href="{{ route('members.list') }}">Members</a>
+                    </li>
+                @endcan
+
+                @can('callout.list')
+                    <li class="{{ (request()->is('callouts*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
+                        <a href="{{ route('callouts.list') }}">Callouts</a>
                     </li>
                 @endcan
             </ul>

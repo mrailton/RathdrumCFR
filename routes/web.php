@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Callouts\CreateCalloutController;
+use App\Http\Controllers\Callouts\ListCalloutsController;
+use App\Http\Controllers\Callouts\ShowCalloutController;
+use App\Http\Controllers\Callouts\StoreCalloutController;
 use App\Http\Controllers\Contact\ContactUsPageController;
 use App\Http\Controllers\Contact\ProcessContactUsController;
 use App\Http\Controllers\Defibs\CreateDefibController;
@@ -69,5 +73,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/new', CreateMemberNoteController::class)->name('create')->can('member.note');
             Route::post('/', StoreMemberNoteController::class)->name('store')->can('member.note');
         });
+    });
+
+    Route::prefix('callouts')->name('callouts.')->group(function () {
+        Route::get('/', ListCalloutsController::class)->name('list')->can('callout.list');
+        Route::post('/', StoreCalloutController::class)->name('store')->can('callout.create');
+        Route::get('/new', CreateCalloutController::class)->name('create')->can('callout.create');
+        Route::get('/{callout}', ShowCalloutController::class)->name('show')->can('callout.view');
     });
 });
