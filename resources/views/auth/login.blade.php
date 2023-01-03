@@ -22,13 +22,6 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500">
-                            <label for="remember-me" class="ml-2 block text-sm text-gray-900">Remember me</label>
-                        </div>
-                    </div>
-
                     <div>
                         <button type="submit" class="flex w-full justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Sign in</button>
                     </div>

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Callouts\CreateCalloutController;
 use App\Http\Controllers\Callouts\ListCalloutsController;
 use App\Http\Controllers\Callouts\ShowCalloutController;
@@ -42,6 +43,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::post('logout', LogoutController::class)->name('auth.logout');
+
     Route::prefix('defibs')->name('defibs.')->group(function () {
         Route::get('/', ListDefibsController::class)->name('list')->can('defib.list');
         Route::post('/', StoreDefibController::class)->name('store')->can('defib.create');
