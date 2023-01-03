@@ -30,6 +30,11 @@ class PermissionsSeeder extends Seeder
         ['name' => 'user.delete'],
         ['name' => 'telescope'],
         ['name' => 'horizon'],
+        ['name' => 'callout.list'],
+        ['name' => 'callout.view'],
+        ['name' => 'callout.create'],
+        ['name' => 'callout.update'],
+        ['name' => 'callout.delete'],
     ];
 
 
