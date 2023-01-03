@@ -14,9 +14,13 @@
                     <a href="{{ route('login.create') }}">Login</a>
                 @endguest
                 @auth()
-                    <a href="#">Logout</a>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                 @endauth
             </div>
         </div>
     </div>
+
+    <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
 </footer>
