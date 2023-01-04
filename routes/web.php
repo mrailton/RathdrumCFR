@@ -31,6 +31,7 @@ use App\Http\Controllers\Members\StoreMemberController;
 use App\Http\Controllers\Members\UpdateMemberController;
 use App\Http\Controllers\Members\ViewMemberController;
 use App\Http\Controllers\Users\ListUsersController;
+use App\Http\Controllers\Users\ShowUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
@@ -88,5 +89,6 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', ListUsersController::class)->name('list')->can('user.list');
+        Route::get('/{user}', ShowUserController::class)->name('show')->can('user.view');
     });
 });
