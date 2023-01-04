@@ -30,6 +30,7 @@ use App\Http\Controllers\Members\Notes\StoreMemberNoteController;
 use App\Http\Controllers\Members\StoreMemberController;
 use App\Http\Controllers\Members\UpdateMemberController;
 use App\Http\Controllers\Members\ViewMemberController;
+use App\Http\Controllers\Users\ListUsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
@@ -83,5 +84,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/', StoreCalloutController::class)->name('store')->can('callout.create');
         Route::get('/new', CreateCalloutController::class)->name('create')->can('callout.create');
         Route::get('/{callout}', ShowCalloutController::class)->name('show')->can('callout.view');
+    });
+
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', ListUsersController::class)->name('list')->can('user.list');
     });
 });

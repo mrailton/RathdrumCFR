@@ -35,6 +35,12 @@
                         <a href="{{ route('callouts.list') }}">Callouts</a>
                     </li>
                 @endcan
+
+                @can('user.list')
+                    <li class="{{ (request()->is('users*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
+                        <a href="{{ route('users.list') }}">Users</a>
+                    </li>
+                @endcan
             </ul>
         </div>
     </nav>
