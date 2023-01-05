@@ -1,4 +1,4 @@
-name: CI
+name: Tests
 on: [push, pull_request]
 
 jobs:
@@ -51,14 +51,3 @@ jobs:
 
       - name: Run Code Analysis
         run: composer phpstan
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: test
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Deploy
-        uses: Glennmen/ploi-deploy-action@v1.2.0
-        with:
-          webhook_url: ${{ secrets.WEBHOOK_URL }}
