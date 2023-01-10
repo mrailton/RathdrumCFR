@@ -8,6 +8,8 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    {!! RecaptchaV3::initJs() !!}
+
     @production
         <script async defer data-website-id="df5d9067-7a10-4827-847b-d4384cd64eaa" src="https://analytics.markrailton.com/umami.js"></script>
     @endproduction
