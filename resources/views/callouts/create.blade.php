@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <form action="{{ route('callouts.store') }}" method="post">
+            <form action="{{ route('callouts.store') }}" method="post" x-data="{ showAdditionalFields: 'No' }">
                 @csrf
                 <dl class="sm:divide-y sm:divide-gray-200">
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
@@ -27,6 +27,16 @@
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500"><label for="attended">Attended?</label></dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <select x-model="showAdditionalFields" name="attended" id="attended" class="block rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6" x-show="showAdditionalFields === 'Yes'">
                         <dt class="text-sm font-medium text-gray-500"><label for="ohca_at_scene">OHCA At Scene</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <select name="ohca_at_scene" id="ohca_at_scene" class="block rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
@@ -37,7 +47,7 @@
                         </dd>
                     </div>
 
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6" x-show="showAdditionalFields === 'Yes'">
                         <dt class="text-sm font-medium text-gray-500"><label for="bystander_cpr">Bystander CPR</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <select name="bystander_cpr" id="bystander_cpr" class="block rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
@@ -48,7 +58,7 @@
                         </dd>
                     </div>
 
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6" x-show="showAdditionalFields === 'Yes'">
                         <dt class="text-sm font-medium text-gray-500"><label for="source_of_aed">AED Source</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <select name="source_of_aed" id="source_of_aed" class="block rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
@@ -62,12 +72,12 @@
                         </dd>
                     </div>
 
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6" x-show="showAdditionalFields === 'Yes'">
                         <dt class="text-sm font-medium text-gray-500"><label for="number_of_shocks_given">Number of Shocks Given</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><input type="number" name="number_of_shocks_given" id="number_of_shocks_given" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></dd>
                     </div>
 
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6" x-show="showAdditionalFields === 'Yes'">
                         <dt class="text-sm font-medium text-gray-500"><label for="rosc_achieved">ROSC Achieved</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <select name="rosc_achieved" id="rosc_achieved" class="block rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
@@ -78,7 +88,7 @@
                         </dd>
                     </div>
 
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6" x-show="showAdditionalFields === 'Yes'">
                         <dt class="text-sm font-medium text-gray-500"><label for="patient_transported">Patient Transported</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <select name="patient_transported" id="patient_transported" class="block rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
@@ -89,17 +99,17 @@
                         </dd>
                     </div>
 
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6" x-show="showAdditionalFields === 'Yes'">
                         <dt class="text-sm font-medium text-gray-500"><label for="responders_at_scene">Responders At Scene</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><input type="number" name="responders_at_scene" id="responders_at_scene" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></dd>
                     </div>
 
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6" x-show="showAdditionalFields === 'Yes'">
                         <dt class="text-sm font-medium text-gray-500"><label for="ppe_kits_used">PPE Kits Used</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><input type="number" name="ppe_kits_used" id="ppe_kits_used" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></dd>
                     </div>
 
-                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6" x-show="showAdditionalFields === 'Yes'">
                         <dt class="text-sm font-medium text-gray-500"><label for="waste_disposal">Waste Disposal</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <select name="waste_disposal" id="waste_disposal" class="block rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
