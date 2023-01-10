@@ -20,6 +20,7 @@ class ProcessContactUsRequest extends FormRequest
             'email' => ['required', 'email'],
             'phone' => ['required', 'string'],
             'message' => ['required', 'string'],
+            'g-recaptcha-response' => ['required', 'recaptchav3:contact,0.5'],
         ];
     }
 }
