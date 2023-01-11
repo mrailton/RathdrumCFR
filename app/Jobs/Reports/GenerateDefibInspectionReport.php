@@ -6,7 +6,7 @@ namespace App\Jobs\Reports;
 
 use App\Mail\Reports\DefibInspectionMail;
 use App\Models\Defib;
-use App\Models\User;
+use App\Traits\GetsReportRecipients;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,22 +17,21 @@ use Illuminate\Support\Facades\Mail;
 
 class GenerateDefibInspectionReport implements ShouldQueue
 {
-    use Queueable;
     use Dispatchable;
-    use SerializesModels;
+    use GetsReportRecipients;
     use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
-    public function __construct()
-    {
-    }
+    public string $key = 'defib_inspection';
 
     public function handle(): void
     {
         $defibs = $this->getDefibs();
-        $users = $this->getUsers();
+        $recipients = $this->getRecipients();
 
-        foreach ($users as $user) {
-            Mail::to($user->email)->queue(new DefibInspectionMail($defibs));
+        foreach ($recipients as $recipient) {
+            Mail::to($recipient->user->email)->queue(new DefibInspectionMail($defibs));
         }
     }
 
@@ -41,13 +40,6 @@ class GenerateDefibInspectionReport implements ShouldQueue
         return Defib::query()
             ->where('last_inspected_at', '<', now()->subMonths(1))
             ->orWhereNull('last_inspected_at')
-            ->get();
-    }
-
-    public function getUsers(): Collection
-    {
-        return User::query()
-            ->where('receive_reports', '=', true)
             ->get();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Members\Reports;
+namespace Tests\Feature\Reports;
 
 use App\Jobs\Reports\GenerateGardaVettingExpiryReport;
 use App\Mail\Reports\GardaVettingExpiryMail;
@@ -12,16 +12,27 @@ use Tests\TestCase;
 class GardaVettingReportTest extends TestCase
 {
     /** @test */
-    public function it_sends_the_cert_expiry_report_to_users_that_want_to_receive_reports(): void
+    public function it_sends_the_cert_expiry_report_to_users_that_want_to_receive_it(): void
     {
         Mail::fake();
-        User::factory(['receive_reports' => true])->count(2)->create();
-        User::factory(['receive_reports' => false])->count(2)->create();
+        User::factory()->create()->reports()->create(['garda_vetting_expiry' => true]);
         Member::factory()->count(10)->create();
 
         $this->artisan('reports:garda-vetting-expiry');
 
         Mail::assertQueued(GardaVettingExpiryMail::class);
+    }
+
+    /** @test */
+    public function it_does_not_send_the_cert_expiry_report_to_users_that_do_not_want_to_receive_it(): void
+    {
+        Mail::fake();
+        User::factory()->create()->reports()->create(['garda_vetting_expiry' => false]);
+        Member::factory()->count(10)->create();
+
+        $this->artisan('reports:garda-vetting-expiry');
+
+        Mail::assertNotQueued(GardaVettingExpiryMail::class);
     }
 
     /** @test */

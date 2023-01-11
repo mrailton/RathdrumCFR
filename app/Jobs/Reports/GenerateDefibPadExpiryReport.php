@@ -6,7 +6,7 @@ namespace App\Jobs\Reports;
 
 use App\Mail\Reports\DefibPadExpiryMail;
 use App\Models\Defib;
-use App\Models\User;
+use App\Traits\GetsReportRecipients;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,22 +18,20 @@ use Illuminate\Support\Facades\Mail;
 class GenerateDefibPadExpiryReport implements ShouldQueue
 {
     use Dispatchable;
+    use GetsReportRecipients;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
 
-    public function __construct()
-    {
-    }
+    public string $key = 'defib_pad_expiry';
 
     public function handle(): void
     {
         $defibs = $this->getDefibs();
+        $recipients = $this->getRecipients();
 
-        $users = $this->getUsers();
-
-        foreach ($users as $user) {
-            Mail::to($user->email)->queue(new DefibPadExpiryMail($defibs));
+        foreach ($recipients as $recipient) {
+            Mail::to($recipient->user->email)->queue(new DefibPadExpiryMail($defibs));
         }
     }
 
@@ -42,13 +40,6 @@ class GenerateDefibPadExpiryReport implements ShouldQueue
         return Defib::query()
             ->where('pads_expire_at', '<', now()->addMonths(1))
             ->orWhereNull('pads_expire_at')
-            ->get();
-    }
-
-    public function getUsers(): Collection
-    {
-        return User::query()
-            ->where('receive_reports', '=', true)
             ->get();
     }
 }
