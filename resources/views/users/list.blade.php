@@ -23,18 +23,22 @@
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                            @foreach($users as $user)
-                                <tr>
-                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $user->name }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->email }}</td>
-                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                        <a href="{{ route('users.show', ['user' => $user]) }}" class="text-red-600 hover:text-red-900">View<span class="sr-only">, {{ $user->name }}</span></a>
-                                    </td>
-                                </tr>
-                            @endforeach
-
+                                @foreach($users as $user)
+                                    <tr>
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $user->name }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->email }}</td>
+                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                            <a href="{{ route('users.show', ['user' => $user]) }}" class="text-red-600 hover:text-red-900">View<span class="sr-only">, {{ $user->name }}</span></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ $users->links('pagination::tailwind') }}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -13,7 +13,7 @@ class ListUsersController extends Controller
 {
     public function __invoke(Request $request): View
     {
-        $users = User::all();
+        $users = User::paginate(10);
 
         return view('users.list', ['users' => $users]);
     }

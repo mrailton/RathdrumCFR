@@ -30,21 +30,25 @@
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                            @foreach($defibs as $defib)
-                                <tr>
-                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $defib->name }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->display_on_map ? 'Yes' : 'No' }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->last_inspected_at ? $defib->last_inspected_at->format('l jS F Y') : 'No Date' }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->pads_expire_at ? $defib->pads_expire_at->format('l jS F Y') : 'No Date' }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->battery_expires_at ? $defib->battery_expires_at->format('l jS F Y') : 'No Date' }}</td>
-                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                        <a href="{{ route('defibs.view', ['id' => $defib->id]) }}" class="text-red-600 hover:text-red-900">View<span class="sr-only">, {{ $defib->name }}</span></a>
-                                    </td>
-                                </tr>
-                            @endforeach
-
+                                @foreach($defibs as $defib)
+                                    <tr>
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $defib->name }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->display_on_map ? 'Yes' : 'No' }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->last_inspected_at ? $defib->last_inspected_at->format('l jS F Y') : 'No Date' }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->pads_expire_at ? $defib->pads_expire_at->format('l jS F Y') : 'No Date' }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->battery_expires_at ? $defib->battery_expires_at->format('l jS F Y') : 'No Date' }}</td>
+                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                            <a href="{{ route('defibs.view', ['id' => $defib->id]) }}" class="text-red-600 hover:text-red-900">View<span class="sr-only">, {{ $defib->name }}</span></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ $defibs->links('pagination::tailwind') }}
+                        </div>
                     </div>
                 </div>
             </div>

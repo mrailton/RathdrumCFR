@@ -13,7 +13,7 @@ class ListMembersController extends Controller
 {
     public function __invoke(Request $request): View
     {
-        $members = Member::all();
+        $members = Member::paginate(10);
 
         return view('members.list', ['members' => $members]);
     }

@@ -13,7 +13,7 @@ class ListCalloutsController extends Controller
 {
     public function __invoke(Request $request): View
     {
-        $callouts = Callout::all();
+        $callouts = Callout::orderBy('incident_date')->paginate(2);
 
         return view('callouts.list', ['callouts' => $callouts]);
     }

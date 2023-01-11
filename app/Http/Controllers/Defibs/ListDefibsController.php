@@ -13,7 +13,7 @@ class ListDefibsController extends Controller
 {
     public function __invoke(Request $request): View
     {
-        $defibs = Defib::all();
+        $defibs = Defib::paginate(10);
 
         return view('defibs.list', ['defibs' => $defibs]);
     }
