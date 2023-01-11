@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,4 +33,9 @@ class User extends Authenticatable
     ];
 
     protected $rememberTokenName = '';
+
+    public function reports(): HasOne
+    {
+        return $this->hasOne(UserReport::class);
+    }
 }
