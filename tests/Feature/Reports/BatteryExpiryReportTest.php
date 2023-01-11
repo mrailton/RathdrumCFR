@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Defibs\Reports;
+namespace Tests\Feature\Reports;
 
 use App\Jobs\Reports\GenerateBatteryExpiryReport;
 use App\Mail\Reports\BatteryExpiryMail;
@@ -14,16 +14,27 @@ use Tests\TestCase;
 class BatteryExpiryReportTest extends TestCase
 {
     /** @test */
-    public function sends_the_battery_expiry_report_to_users_that_want_to_receive_reports(): void
+    public function sends_the_battery_expiry_report_to_users_that_want_to_receive_it(): void
     {
         Mail::fake();
-        User::factory(['receive_reports' => true])->count(2)->create();
-        User::factory(['receive_reports' => false])->count(2)->create();
+        User::factory()->create()->reports()->create(['defib_battery_expiry' => true]);
         Defib::factory()->count(10)->create();
 
         $this->artisan('reports:battery-expiry');
 
         Mail::assertQueued(BatteryExpiryMail::class);
+    }
+
+    /** @test */
+    public function does_not_send_the_battery_expiry_report_to_users_that_do_not_want_to_receive_ir(): void
+    {
+        Mail::fake();
+        User::factory()->create()->reports()->create(['defib_battery_expiry' => false]);
+        Defib::factory()->count(10)->create();
+
+        $this->artisan('reports:battery-expiry');
+
+        Mail::assertNotQueued(BatteryExpiryMail::class);
     }
 
     /** @test */

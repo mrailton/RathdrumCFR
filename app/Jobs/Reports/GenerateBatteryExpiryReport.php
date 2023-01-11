@@ -6,7 +6,7 @@ namespace App\Jobs\Reports;
 
 use App\Mail\Reports\BatteryExpiryMail;
 use App\Models\Defib;
-use App\Models\User;
+use App\Traits\GetsReportRecipients;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,19 +20,18 @@ class GenerateBatteryExpiryReport implements ShouldQueue
     use Dispatchable;
     use InteractsWithQueue;
     use Queueable;
+    use GetsReportRecipients;
     use SerializesModels;
 
-    public function __construct()
-    {
-    }
+    public string $key = 'defib_battery_expiry';
 
     public function handle(): void
     {
         $defibs = $this->getDefibs();
-        $users = $this->getUsers();
+        $recipients = $this->getRecipients();
 
-        foreach ($users as $user) {
-            Mail::to($user->email)->queue(new BatteryExpiryMail($defibs));
+        foreach ($recipients as $recipient) {
+            Mail::to($recipient->user->email)->queue(new BatteryExpiryMail($defibs));
         }
     }
 
@@ -41,13 +40,6 @@ class GenerateBatteryExpiryReport implements ShouldQueue
         return Defib::query()
             ->where('battery_expires_at', '<', now()->addMonths(1))
             ->orWhereNull('battery_expires_at')
-            ->get();
-    }
-
-    public function getUsers(): Collection
-    {
-        return User::query()
-            ->where('receive_reports', '=', true)
             ->get();
     }
 }

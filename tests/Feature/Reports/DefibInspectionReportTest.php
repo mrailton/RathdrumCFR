@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Defibs\Reports;
+namespace Tests\Feature\Reports;
 
 use App\Jobs\Reports\GenerateDefibInspectionReport;
 use App\Mail\Reports\DefibInspectionMail;
@@ -14,17 +14,27 @@ use Tests\TestCase;
 class DefibInspectionReportTest extends TestCase
 {
     /** @test */
-    public function send_the_defib_inspection_report_to_users_that_want_to_receive_reports(): void
+    public function sends_the_defib_inspection_report_to_users_that_want_to_receive_it(): void
     {
         Mail::fake();
-
-        User::factory(['receive_reports' => true])->count(2)->create();
-        User::factory(['receive_reports' => false])->count(2)->create();
+        User::factory()->create()->reports()->create(['defib_inspection' => true]);
         Defib::factory()->count(10)->create();
 
         $this->artisan('reports:defib-inspection');
 
         Mail::assertQueued(DefibInspectionMail::class);
+    }
+
+    /** @test */
+    public function does_not_send_the_defib_inspection_report_to_users_that_do_not_want_to_receive_it(): void
+    {
+        Mail::fake();
+        User::factory()->create()->reports()->create(['defib_inspection' => false]);
+        Defib::factory()->count(10)->create();
+
+        $this->artisan('reports:defib-inspection');
+
+        Mail::assertNotQueued(DefibInspectionMail::class);
     }
 
     /** @test */

@@ -6,7 +6,7 @@ namespace App\Jobs\Reports;
 
 use App\Mail\Reports\CertExpiryMail;
 use App\Models\Member;
-use App\Models\User;
+use App\Traits\GetsReportRecipients;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -18,17 +18,20 @@ use Illuminate\Support\Facades\Mail;
 class GenerateCertExpiryReport implements ShouldQueue
 {
     use Dispatchable;
+    use GetsReportRecipients;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
 
+    public string $key = 'cfr_cert_expiry';
+
     public function handle(): void
     {
         $members = $this->getMembers();
-        $users = $this->getUsers();
+        $recipients = $this->getRecipients();
 
-        foreach ($users as $user) {
-            Mail::to($user->email)->queue(new CertExpiryMail($members));
+        foreach ($recipients as $recipient) {
+            Mail::to($recipient->user->email)->queue(new CertExpiryMail($members));
         }
     }
 
@@ -36,13 +39,6 @@ class GenerateCertExpiryReport implements ShouldQueue
     {
         return Member::query()
             ->where('cfr_certificate_expiry', '<', now()->addMonths(2))
-            ->get();
-    }
-
-    public function getUsers(): Collection
-    {
-        return User::query()
-            ->where('receive_reports', '=', true)
             ->get();
     }
 }
