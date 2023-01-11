@@ -27,6 +27,8 @@ class StoreCalloutRequest extends FormRequest
             'ampds_code' => ['required', 'string'],
             'attended' => ['required', Rule::in(['Yes', 'No'])],
             'notes' => ['sometimes', 'string', 'nullable'],
+            'gender' => ['required', 'string', Rule::in(['Male', 'Female', 'Unknown'])],
+            'age' => ['sometimes', 'string', 'nullable'],
         ];
 
         if ($this->get('attended') === 'Yes') {

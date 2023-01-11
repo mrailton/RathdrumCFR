@@ -16,6 +16,8 @@ class CalloutFactory extends Factory
             'incident_number' => $this->faker->randomNumber(9),
             'incident_date' => $this->faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
             'ampds_code' => $this->faker->randomElement(['10D02', '09E01', '10C02', '11D01']),
+            'gender' => $this->faker->randomElement(['Male', 'Female']),
+            'age' => $this->faker->randomNumber(2),
             'notes' => $this->faker->sentence(),
         ];
     }
