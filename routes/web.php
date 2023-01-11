@@ -31,7 +31,9 @@ use App\Http\Controllers\Members\StoreMemberController;
 use App\Http\Controllers\Members\UpdateMemberController;
 use App\Http\Controllers\Members\ViewMemberController;
 use App\Http\Controllers\Users\ListUsersController;
+use App\Http\Controllers\Users\ShowRequestedReportsController;
 use App\Http\Controllers\Users\ShowUserController;
+use App\Http\Controllers\Users\StoreRequestedReportsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
@@ -90,5 +92,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', ListUsersController::class)->name('list')->can('user.list');
         Route::get('/{user}', ShowUserController::class)->name('show')->can('user.view');
+        Route::get('/{user}/reports', ShowRequestedReportsController::class)->name('reports.show')->can('user.update');
+        Route::put('/{user}/reports', StoreRequestedReportsController::class)->name('reports.store')->can('user.update');
     });
 });
