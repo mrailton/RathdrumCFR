@@ -26,7 +26,7 @@ class HorizonServiceProvider extends HorizonApplicationServiceProvider
                 return true;
             }
 
-            return $user->can('horizon');
+            return $user && $user->can('horizon');
         });
     }
 }
