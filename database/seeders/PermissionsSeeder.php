@@ -35,6 +35,7 @@ class PermissionsSeeder extends Seeder
         ['name' => 'callout.create'],
         ['name' => 'callout.update'],
         ['name' => 'callout.delete'],
+        ['name' => 'user.permissions'],
     ];
 
 
