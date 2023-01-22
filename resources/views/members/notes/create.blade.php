@@ -13,7 +13,12 @@
                 <dl class="sm:divide-y sm:divide-gray-200">
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500"><label for="note">Note</label></dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><textarea rows="5" name="note" id="note" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></textarea></dd>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <textarea rows="5" name="note" id="note" class="block @error('note') border-red-500 @enderror w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></textarea>
+                            @error('note')
+                                <div class="text-sm text-red-600">{{ $message }}</div>
+                            @enderror
+                        </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
