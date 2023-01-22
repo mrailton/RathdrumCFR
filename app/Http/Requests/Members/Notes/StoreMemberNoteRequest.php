@@ -22,7 +22,7 @@ class StoreMemberNoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'note' => ['string', 'required'],
+            'note' => ['required', 'string'],
         ];
     }
 }
