@@ -26,18 +26,18 @@ class UpsertDefibRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['string', 'required'],
-            'location' => ['string', 'required'],
-            'coordinates' => ['string', 'nullable'],
-            'display_on_map' => ['boolean', 'required'],
-            'model' => ['string', 'required'],
-            'serial' => ['string', 'nullable'],
-            'owner' => ['string', 'required'],
-            'last_inspected_by' => ['string', 'nullable'],
-            'last_inspected_at' => ['date', 'nullable'],
-            'last_serviced_at' => ['date', 'nullable'],
-            'pads_expire_at' => ['date', 'nullable'],
-            'battery_expires_at' => ['date', 'nullable'],
+            'name' => ['required', 'string'],
+            'location' => ['required', 'string'],
+            'coordinates' => ['nullable', 'string'],
+            'display_on_map' => ['required', 'boolean'],
+            'model' => ['required', 'string'],
+            'serial' => ['required', 'string'],
+            'owner' => ['required', 'string'],
+            'last_inspected_by' => ['nullable', 'string'],
+            'last_inspected_at' => ['nullable', 'date'],
+            'last_serviced_at' => ['nullable', 'date'],
+            'pads_expire_at' => ['nullable', 'date'],
+            'battery_expires_at' => ['nullable', 'date'],
         ];
     }
 }

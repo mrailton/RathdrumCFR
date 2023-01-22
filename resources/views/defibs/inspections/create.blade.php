@@ -14,32 +14,55 @@
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500"><label for="member_id">Inspected By</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                            <select type="text" name="member_id" id="member_id" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+                            <select type="text" name="member_id" id="member_id" class="block @error('member_id') border-red-500 @enderror w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
                                 @foreach($members as $member)
                                     <option value="{{ $member->id }}">{{ $member->name }}</option>
                                 @endforeach
                             </select>
+                            @error('member_id')
+                                <div class="text-sm text-red-600">{{ $message }}</div>
+                            @enderror
                         </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500"><label for="inspected_at">Inspected On</label></dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><input type="date" name="inspected_at" id="inspected_at" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></dd>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <input type="date" name="inspected_at" id="inspected_at" class="block @error('inspected_at') border-red-500 @enderror w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+                            @error('inspected_at')
+                                <div class="text-sm text-red-600">{{ $message }}</div>
+                            @enderror
+                        </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500"><label for="pads_expire_at">Pads Expire On</label></dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><input type="date" name="pads_expire_at" id="pads_expire_at" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></dd>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <input type="date" name="pads_expire_at" id="pads_expire_at" class="block @error('pads_expire_at') border-red-500 @enderror w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+                            @error('pads_expire_at')
+                                <div class="text-sm text-red-600">{{ $message }}</div>
+                            @enderror
+                        </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500"><label for="battery_expires_at">Battery Expires On</label></dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><input type="date" name="battery_expires_at" id="battery_expires_at" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></dd>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <input type="date" name="battery_expires_at" id="battery_expires_at" class="block @error('battery_expires_at') border-red-500 @enderror w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+                            @error('battery_expires_at')
+                                <div class="text-sm text-red-600">{{ $message }}</div>
+                            @enderror
+                        </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500"><label for="notes">Notes</label></dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><textarea rows="5" name="notes" id="notes" class="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></textarea></dd>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <textarea rows="5" name="notes" id="notes" class="block @error('notes') border-red-500 @enderror w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></textarea>
+                            @error('notes')
+                                <div class="text-sm text-red-600">{{ $message }}</div>
+                            @enderror
+                        </dd>
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
