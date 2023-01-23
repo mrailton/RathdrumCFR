@@ -5,6 +5,8 @@ declare(strict_types=1);
 use App\Http\Controllers\Auth\AuthenticateUserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\Auth\StoreRegistrationController;
 use App\Http\Controllers\Callouts\CreateCalloutController;
 use App\Http\Controllers\Callouts\ListCalloutsController;
 use App\Http\Controllers\Callouts\ShowCalloutController;
@@ -30,11 +32,13 @@ use App\Http\Controllers\Members\Notes\StoreMemberNoteController;
 use App\Http\Controllers\Members\StoreMemberController;
 use App\Http\Controllers\Members\UpdateMemberController;
 use App\Http\Controllers\Members\ViewMemberController;
+use App\Http\Controllers\Users\InviteUserController;
 use App\Http\Controllers\Users\ListUsersController;
 use App\Http\Controllers\Users\ShowRequestedReportsController;
 use App\Http\Controllers\Users\ShowUserController;
 use App\Http\Controllers\Users\ShowUserPermissionsController;
 use App\Http\Controllers\Users\StoreRequestedReportsController;
+use App\Http\Controllers\Users\StoreUserInvitationController;
 use App\Http\Controllers\Users\UpdateUserPermissionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,8 +48,10 @@ Route::get('/contact', ContactUsPageController::class)->name('contact.create');
 Route::post('/contact', ProcessContactUsController::class)->name('contact.store');
 
 Route::middleware('guest')->group(function () {
-    Route::get('login', LoginController::class)->name('login.create');
-    Route::post('login', AuthenticateUserController::class)->name('login.store');
+    Route::get('/login', LoginController::class)->name('login.create');
+    Route::post('/login', AuthenticateUserController::class)->name('login.store');
+    Route::get('/register/{invite:token}', RegistrationController::class)->name('register.create');
+    Route::post('/register', StoreRegistrationController::class)->name('register.store');
 });
 
 Route::middleware('auth')->group(function () {
@@ -93,6 +99,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', ListUsersController::class)->name('list')->can('user.list');
+        Route::get('/invite', InviteUserController::class)->name('invite.create')->can('user.invite');
+        Route::post('/invite', StoreUserInvitationController::class)->name('invite.store')->can('user.invite');
         Route::get('/{user}', ShowUserController::class)->name('show')->can('user.view');
         Route::get('/{user}/reports', ShowRequestedReportsController::class)->name('reports.show')->can('user.update');
         Route::put('/{user}/reports', StoreRequestedReportsController::class)->name('reports.store')->can('user.update');
