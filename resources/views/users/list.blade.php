@@ -2,10 +2,14 @@
     <div class="overflow-hidden bg-white shadow sm:rounded-lg px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center py-5">
             <div class="sm:flex-auto">
-                <h1 class="text-xl font-semibold text-gray-900">Callouts</h1>
+                <h1 class="text-xl font-semibold text-gray-900">Users</h1>
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-
+                @can('user.invite')
+                    <a href="{{ route('users.invite.create') }}">
+                        <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">Invite User</button>
+                    </a>
+                @endcan
             </div>
         </div>
         <div class="flex flex-col">
