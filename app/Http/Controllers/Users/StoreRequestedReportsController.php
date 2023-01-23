@@ -23,6 +23,7 @@ class StoreRequestedReportsController extends Controller
             'defib_inspection' => $request->get('defib_inspection') === 'Yes',
             'defib_pad_expiry' => $request->get('defib_pad_expiry') === 'Yes',
             'garda_vetting_expiry' => $request->get('garda_vetting_expiry') === 'Yes',
+            'defib_inspected' => $request->get('defib_inspected') === 'Yes',
         ]);
 
         return redirect()->route('users.show', ['user' => $user])->with('success', 'Requested Reports Updated Successfully');

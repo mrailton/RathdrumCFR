@@ -28,6 +28,7 @@ class StoreRequestedReportsRequest extends FormRequest
             'defib_inspection' => ['required' => Rule::in('Yes', 'No')],
             'defib_pad_expiry' => ['required' => Rule::in('Yes', 'No')],
             'garda_vetting_expiry' => ['required' => Rule::in('Yes', 'No')],
+            'defib_inspected' => ['required' => Rule::in('Yes', 'No')],
         ];
     }
 }
