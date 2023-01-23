@@ -96,6 +96,23 @@
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                        <label class="text-base font-medium text-gray-900">Defib Inspected</label>
+                        <fieldset class="mt-4">
+                            <div class="space-y-4">
+                                <div class="flex items-center">
+                                    <input id="yes" name="defib_inspected" type="radio" value="Yes"  @checked($user->reports->defib_inspected === 1) class="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-500">
+                                    <label for="yes" class="ml-3 block text-sm font-medium text-gray-700">Yes</label>
+                                </div>
+
+                                <div class="flex items-center">
+                                    <input id="no" name="defib_inspected" type="radio" value="No" @checked($user->reports->defib_inspected === 0) class="h-4 w-4 border-gray-300 text-red-600 focus:ring-red-500">
+                                    <label for="no" class="ml-3 block text-sm font-medium text-gray-700">No</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">
                             <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Update</button>
                         </dt>

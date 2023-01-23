@@ -12,7 +12,7 @@ class UserReport extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cfr_cert_expiry', 'defib_battery_expiry', 'defib_inspection', 'defib_pad_expiry', 'garda_vetting_expiry'];
+    protected $fillable = ['cfr_cert_expiry', 'defib_battery_expiry', 'defib_inspection', 'defib_pad_expiry', 'garda_vetting_expiry', 'defib_inspected'];
 
     public function user(): BelongsTo
     {

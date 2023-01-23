@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Defibs\Inspections;
 
+use App\Events\DefibInspected;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Defibs\Inspections\StoreDefibInspectionRequest;
 use App\Models\Defib;
@@ -40,6 +41,8 @@ class StoreDefibInspectionController extends Controller
         $defib->last_inspected_at = $request->get('inspected_at');
         $defib->last_inspected_by = $member->name;
         $defib->save();
+
+        DefibInspected::dispatch($defib, $inspection);
 
         return redirect()->route('defibs.view', ['id' => $defib->id])->with('success', 'Defib inspection successfully added');
     }
