@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Users;
 
+use App\Rules\NoPendingInvites;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,7 +24,7 @@ class StoreUserInvitationRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:users', new NoPendingInvites()],
         ];
     }
 }

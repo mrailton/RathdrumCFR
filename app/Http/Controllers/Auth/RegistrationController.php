@@ -13,6 +13,10 @@ class RegistrationController extends Controller
 {
     public function __invoke(Request $request, Invite $invite): View
     {
+        if ($invite->expires_at < now()) {
+            abort(404);
+        }
+
         return view('auth.register', ['invite' => $invite]);
     }
 }

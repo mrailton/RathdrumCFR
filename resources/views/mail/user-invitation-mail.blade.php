@@ -7,6 +7,8 @@ You have been invited to create an account at {{ config('app.name') }}. Click on
 Create Account
 </x-mail::button>
 
+Please note that this invitation is only valid for the next 48 hours
+
 Thanks,<br>
 {{ config('app.name') }}
 </x-mail::message>
