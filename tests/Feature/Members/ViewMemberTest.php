@@ -23,7 +23,7 @@ class ViewMemberTest extends TestCase
         $member = Member::factory()->create();
         $this->actingAs(User::factory()->create()->givePermissionTo(['member.view']));
 
-        $this->get(route('members.view', ['id' => $member->id]))
+        $this->get(route('members.view', ['member' => $member]))
             ->assertViewIs('members.view')
             ->assertSee($member->name)
             ->assertSee(ucfirst($member->status));

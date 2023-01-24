@@ -26,20 +26,20 @@ class UpdateMemberTest extends TestCase
         $data['cfr_certificate_number'] = 'GG1374372';
         $this->actingAs(User::factory()->create()->givePermissionTo(['member.view', 'member.update']));
 
-        $this->get(route('members.view', ['id' => $member->id]))
+        $this->get(route('members.view', ['member' => $member]))
             ->assertSee($member->email)
             ->assertSee('Update Member');
 
-        $this->get(route('members.edit', ['id' => $member->id]))
+        $this->get(route('members.edit', ['member' => $member]))
             ->assertSee($member->email)
             ->assertSee('Update');
 
-        $this->put(route('members.update', ['id' => $member->id]), $data)
+        $this->put(route('members.update', ['member' => $member]), $data)
             ->assertSessionDoesntHaveErrors()
             ->assertSessionHas('success', 'Member successfully updated')
-            ->assertRedirectToRoute('members.view', ['id' => $member->id]);
+            ->assertRedirectToRoute('members.view', ['member' => $member]);
 
-        $this->get(route('members.view', ['id' => $member->id]))
+        $this->get(route('members.view', ['member' => $member]))
             ->assertSee($data['email'])
             ->assertSee($data['cfr_certificate_number']);
     }

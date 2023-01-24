@@ -24,19 +24,19 @@ class AddNoteTest extends TestCase
         $member = Member::factory()->create();
         $this->actingAs(User::factory()->create()->givePermissionTo(['member.view', 'member.note']));
 
-        $this->get(route('members.view', ['id' => $member->id]))
+        $this->get(route('members.view', ['member' => $member]))
             ->assertSee('Add Note');
 
-        $this->get(route('members.notes.create', ['id' => $member->id]))
+        $this->get(route('members.notes.create', ['member' => $member]))
             ->assertSee('Note')
             ->assertSee('Add Member Note');
 
-        $this->post(route('members.notes.store', ['id' => $member->id]), $data)
+        $this->post(route('members.notes.store', ['member' => $member]), $data)
             ->assertSessionDoesntHaveErrors()
-            ->assertRedirectToRoute('members.view', ['id' => $member->id])
+            ->assertRedirectToRoute('members.view', ['member' => $member])
             ->assertSessionHas('success', 'Member note successfully added');;
 
-        $this->get(route('members.view', ['id' => $member->id]))
+        $this->get(route('members.view', ['member' => $member]))
             ->assertSee($data['note']);
     }
 }

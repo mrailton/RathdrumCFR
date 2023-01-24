@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="border-t border-gray-200 px-4 py-5 sm:p-0">
-            <form action="{{ route('members.notes.store', ['id' => $member->id]) }}" method="post">
+            <form action="{{ route('members.notes.store', ['member' => $member]) }}" method="post">
                 @csrf
                 <dl class="sm:divide-y sm:divide-gray-200">
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
@@ -26,7 +26,7 @@
                             <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Add Note</button>
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                            <a href="{{ route('members.view', ['id' => $member->id]) }}">
+                            <a href="{{ route('members.view', ['member' => $member]) }}">
                                 <button type="button" class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Cancel</button>
                             </a>
                         </dd>

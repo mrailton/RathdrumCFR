@@ -80,11 +80,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/', ListMembersController::class)->name('list')->can('member.list');
         Route::post('/', StoreMemberController::class)->name('store')->can('member.create');
         Route::get('/new', CreateMemberController::class)->name('create')->can('member.create');
-        Route::get('/{id}', ViewMemberController::class)->name('view')->can('member.view');
-        Route::get('/{id}/update', EditMemberController::class)->name('edit')->can('member.update');
-        Route::put('/{id}', UpdateMemberController::class)->name('update')->can('member.update');
+        Route::get('/{member}', ViewMemberController::class)->name('view')->can('member.view');
+        Route::get('/{member}/update', EditMemberController::class)->name('edit')->can('member.update');
+        Route::put('/{member}', UpdateMemberController::class)->name('update')->can('member.update');
 
-        Route::prefix('/{id}/notes')->name('notes.')->group(function () {
+        Route::prefix('/{member}/notes')->name('notes.')->group(function () {
             Route::get('/new', CreateMemberNoteController::class)->name('create')->can('member.note');
             Route::post('/', StoreMemberNoteController::class)->name('store')->can('member.note');
         });
