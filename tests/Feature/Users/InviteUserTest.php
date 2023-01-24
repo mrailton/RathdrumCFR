@@ -96,9 +96,14 @@ class InviteUserTest extends TestCase
         $invite = Invite::factory()->create();
         $invite->expires_at = now()->subHours(2);
         $invite->save();
+        $this->assertDatabaseCount(User::class, 1);
 
         $this->get(route('register.create', ['invite' => $invite->token]))
             ->assertStatus(404)
             ->assertDontSee('Register');
+
+        $this->post(route('register.store'), ['name' => 'Test User', 'email' => 'test@user.com', 'password' => 'password_123', 'password_confirmation' => 'password_123', 'token' => $invite->token])
+            ->assertStatus(400);
+        $this->assertDatabaseCount(User::class, 1);
     }
 }
