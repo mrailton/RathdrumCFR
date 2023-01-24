@@ -58,7 +58,17 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "insights": [
+            "php artisan insights -n"
+        ],
+        "test": [
+            "XDEBUG_MODE=coverage php artisan test --parallel --coverage"
         ]
+    },
+    "scripts-descriptions": {
+        "insights": "Run PHP Insights against the application",
+        "test": "Run Testsuite"
     },
     "extra": {
         "laravel": {

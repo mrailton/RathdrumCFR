@@ -42,9 +42,9 @@ jobs:
         run: npm run build
 
       - name: Execute tests
-        run: php artisan test
+        run: composer test
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
 
       - name: Run Insights
-        run: php artisan insights -n
+        run: composer insights
