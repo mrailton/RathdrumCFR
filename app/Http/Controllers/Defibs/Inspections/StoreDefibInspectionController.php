@@ -23,10 +23,6 @@ class StoreDefibInspectionController extends Controller
             abort(404);
         }
 
-        if (is_null(auth()->user())) {
-            abort(401);
-        }
-
         if (!$member) {
             abort(422);
         }

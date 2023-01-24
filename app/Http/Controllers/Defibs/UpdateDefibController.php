@@ -15,10 +15,6 @@ class UpdateDefibController extends Controller
     {
         $defib = Defib::find($id);
 
-        if (!$defib) {
-            abort(404);
-        }
-
         $defib->update($request->validated());
 
         return redirect()->route('defibs.view', ['id' => $defib->id])->with('success', 'Defib successfully updated');

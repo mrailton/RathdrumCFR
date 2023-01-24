@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Callouts;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class StoreCalloutRequest extends FormRequest
 {
-    public function __construct(private readonly Authenticatable $user)
-    {
-        parent::__construct();
-    }
     public function authorize(): bool
     {
-        return $this->user->can('callout.create');
+        return auth()->user()->can('callout.create');
     }
 
     public function rules(): array

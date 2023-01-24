@@ -10,7 +10,7 @@ class StoreLoginRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return auth()->guest();
     }
 
     public function rules(): array
