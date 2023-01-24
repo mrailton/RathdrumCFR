@@ -11,10 +11,8 @@ use Illuminate\Http\Request;
 
 class EditDefibController extends Controller
 {
-    public function __invoke(Request $request, int $id): View
+    public function __invoke(Request $request, Defib $defib): View
     {
-        $defib = Defib::find($id);
-
         return view('defibs.update', ['defib' => $defib]);
     }
 }

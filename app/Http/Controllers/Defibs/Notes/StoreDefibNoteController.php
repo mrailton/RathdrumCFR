@@ -25,6 +25,6 @@ class StoreDefibNoteController extends Controller
         $note->user_id = auth()->user()->id;
         $note->save();
 
-        return redirect()->route('defibs.view', ['id' => $defib->id])->with('success', 'Defib note successfully added');
+        return redirect()->route('defibs.view', ['defib' => $defib->id])->with('success', 'Defib note successfully added');
     }
 }

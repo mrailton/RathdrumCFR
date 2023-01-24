@@ -17,17 +17,17 @@ class UpdateDefibTest extends TestCase
         $data['name'] = 'Updated Defib';
         $this->actingAs($this->user(['defib.update', 'defib.view']));
 
-        $this->get(route('defibs.view', ['id' => $defib->id]))
+        $this->get(route('defibs.view', ['defib' => $defib->id]))
             ->assertSee('Update Defib');
 
-        $this->get(route('defibs.edit', ['id' => $defib->id]))
+        $this->get(route('defibs.edit', ['defib' => $defib->id]))
             ->assertSee($defib->name);
 
-        $this->put(route('defibs.update', ['id' => $defib->id]), $data)
+        $this->put(route('defibs.update', ['defib' => $defib->id]), $data)
             ->assertSessionDoesntHaveErrors()
-            ->assertRedirectToRoute('defibs.view', ['id' => $defib->id]);
+            ->assertRedirectToRoute('defibs.view', ['defib' => $defib->id]);
 
-        $this->get(route('defibs.edit', ['id' => $defib->id]))
+        $this->get(route('defibs.edit', ['defib' => $defib->id]))
             ->assertSee($data['name']);
 
         $this->assertEquals($data['name'], $defib->fresh()->name);

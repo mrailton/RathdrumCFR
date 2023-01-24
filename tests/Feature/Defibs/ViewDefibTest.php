@@ -15,17 +15,17 @@ class ViewDefibTest extends TestCase
         $defib = Defib::factory()->create();
         $this->actingAs($this->user(['defib.view']));
 
-        $this->get(route('defibs.view', ['id' => $defib->id]))
+        $this->get(route('defibs.view', ['defib' => $defib->id]))
             ->assertSee($defib->name)
             ->assertSee($defib->location);
     }
 
     /** @test */
-    public function an_auhtorised_user_can_not_view_a_defib_that_does_not_exist(): void
+    public function an_authorised_user_can_not_view_a_defib_that_does_not_exist(): void
     {
         $this->actingAs($this->user(['defib.view']));
 
-        $this->get(route('defibs.view', ['id' => 124343]))
+        $this->get(route('defibs.view', ['defib' => 124343]))
             ->assertStatus(404);
     }
 }

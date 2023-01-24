@@ -38,7 +38,7 @@
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->pads_expire_at ? $defib->pads_expire_at->format('l jS F Y') : 'No Date' }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $defib->battery_expires_at ? $defib->battery_expires_at->format('l jS F Y') : 'No Date' }}</td>
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <a href="{{ route('defibs.view', ['id' => $defib->id]) }}" class="text-red-600 hover:text-red-900">View<span class="sr-only">, {{ $defib->name }}</span></a>
+                                            <a href="{{ route('defibs.view', ['defib' => $defib->id]) }}" class="text-red-600 hover:text-red-900">View<span class="sr-only">, {{ $defib->name }}</span></a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -19,18 +19,18 @@ class AddDefibNoteTest extends TestCase
             'note' => fake()->sentence(),
         ];
 
-        $this->get(route('defibs.view', ['id' => $defib->id]))
+        $this->get(route('defibs.view', ['defib' => $defib->id]))
             ->assertSee('Add Note');
 
-        $this->get(route('defibs.notes.create', ['id' => $defib->id]))
+        $this->get(route('defibs.notes.create', ['defib' => $defib->id]))
             ->assertSee('Add Defib Note')
             ->assertSee('Add Note');
 
-        $this->post(route('defibs.notes.store', ['id' => $defib->id]), $noteData)
+        $this->post(route('defibs.notes.store', ['defib' => $defib->id]), $noteData)
             ->assertSessionDoesntHaveErrors()
-            ->assertRedirectToRoute('defibs.view', ['id' => $defib->id]);
+            ->assertRedirectToRoute('defibs.view', ['defib' => $defib->id]);
 
-        $this->get(route('defibs.view', ['id' => $defib->id]))
+        $this->get(route('defibs.view', ['defib' => $defib->id]))
             ->assertSee($noteData['note'])
             ->assertSee(auth()->user()->name);
     }

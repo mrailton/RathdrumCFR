@@ -11,13 +11,9 @@ use Illuminate\Http\Request;
 
 class ViewDefibController extends Controller
 {
-    public function __invoke(Request $request, int $id): View
+    public function __invoke(Request $request, Defib $defib): View
     {
-        $defib = Defib::with(['notes.author', 'inspections.member'])->find($id);
-
-        if (!$defib) {
-            abort(404);
-        }
+        $defib->load(['notes.author', 'inspections.member']);
 
         return view('defibs.view', ['defib' => $defib]);
     }

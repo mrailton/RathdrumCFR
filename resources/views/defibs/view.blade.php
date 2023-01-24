@@ -6,7 +6,7 @@
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 @can('defib.update')
-                    <a href="{{ route('defibs.edit', ['id' => $defib->id]) }}">
+                    <a href="{{ route('defibs.edit', ['defib' => $defib->id]) }}">
                         <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">Update Defib</button>
                     </a>
                 @endcan
@@ -82,7 +82,7 @@
                     </div>
                     <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                         @can('defib.inspect')
-                            <a href="{{ route('defibs.inspections.create', ['id' => $defib->id]) }}">
+                            <a href="{{ route('defibs.inspections.create', ['defib' => $defib->id]) }}">
                                 <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:w-auto">Add Inspection</button>
                             </a>
                         @endcan
@@ -125,7 +125,7 @@
                     </div>
                     <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                         @can('defib.note')
-                            <a href="{{ route('defibs.notes.create', ['id' => $defib->id]) }}">
+                            <a href="{{ route('defibs.notes.create', ['defib' => $defib->id]) }}">
                                 <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:w-auto">Add Note</button>
                             </a>
                         @endcan

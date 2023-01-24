@@ -29,18 +29,18 @@ class AddDefibInspectionTest extends TestCase
             'notes' => fake()->sentence(),
         ];
 
-        $this->get(route('defibs.view', ['id' => $defib->id]))
+        $this->get(route('defibs.view', ['defib' => $defib->id]))
             ->assertSee('Add Inspection');
 
-        $this->get(route('defibs.inspections.create', ['id' => $defib->id]))
+        $this->get(route('defibs.inspections.create', ['defib' => $defib->id]))
             ->assertSee('Add Defib Inspection')
             ->assertSee('Add Inspection');
 
-        $this->post(route('defibs.inspections.store', ['id' => $defib->id]), $inspectionData)
+        $this->post(route('defibs.inspections.store', ['defib' => $defib->id]), $inspectionData)
             ->assertSessionDoesntHaveErrors()
-            ->assertRedirectToRoute('defibs.view', ['id' => $defib->id]);
+            ->assertRedirectToRoute('defibs.view', ['defib' => $defib->id]);
 
-        $this->get(route('defibs.view', ['id' => $defib->id]))
+        $this->get(route('defibs.view', ['defib' => $defib->id]))
             ->assertSee($member->name)
             ->assertSee($padExpiry->format('l jS F Y'))
             ->assertSee($batteryExpiry->format('l jS F Y'))
