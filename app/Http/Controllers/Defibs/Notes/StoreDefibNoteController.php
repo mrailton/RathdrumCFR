@@ -12,14 +12,8 @@ use Illuminate\Http\RedirectResponse;
 
 class StoreDefibNoteController extends Controller
 {
-    public function __invoke(StoreDefibNoteRequest $request, int $id): RedirectResponse
+    public function __invoke(StoreDefibNoteRequest $request, Defib $defib): RedirectResponse
     {
-        $defib = Defib::find($id);
-
-        if (!$defib) {
-            abort(404);
-        }
-
         $note = new DefibNote($request->validated());
         $note->defib_id = $defib->id;
         $note->user_id = auth()->user()->id;

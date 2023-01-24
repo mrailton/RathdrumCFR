@@ -18,10 +18,6 @@ class StoreDefibInspectionController extends Controller
     {
         $member = Member::query()->where('id', '=', $request->get('member_id'))->first();
 
-        if (!$member) {
-            abort(422);
-        }
-
         $inspection = new DefibInspection($request->validated());
         $inspection->user_id = auth()->user()->id;
         $inspection->defib_id = $defib->id;
