@@ -2,30 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Defibs;
-
 use App\Models\Defib;
-use Tests\TestCase;
 
-class ViewDefibTest extends TestCase
-{
-    /** @test */
-    public function an_authorised_user_can_view_a_defib(): void
-    {
-        $defib = Defib::factory()->create();
-        $this->actingAs($this->user(['defib.view']));
+test('an authorised user can view a defib', function () {
+    authenticatedUser(['defib.view']);
+    $defib = Defib::factory()->create();
 
-        $this->get(route('defibs.view', ['defib' => $defib->id]))
-            ->assertSee($defib->name)
-            ->assertSee($defib->location);
-    }
+    $this->get(route('defibs.view', ['defib' => $defib->id]))
+        ->assertSee($defib->name)
+        ->assertSee($defib->location);
+});
 
-    /** @test */
-    public function an_authorised_user_can_not_view_a_defib_that_does_not_exist(): void
-    {
-        $this->actingAs($this->user(['defib.view']));
+test('an authorised user can not view a defib that does not exist', function () {
+    authenticatedUser(['defib.view']);
 
-        $this->get(route('defibs.view', ['defib' => 124343]))
-            ->assertStatus(404);
-    }
-}
+    $this->get(route('defibs.view', ['defib' => 124343]))
+        ->assertStatus(404);
+});
