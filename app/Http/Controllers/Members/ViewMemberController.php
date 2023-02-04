@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 
 class ViewMemberController extends Controller
 {
-    public function __invoke(Request $request, int $id): View
+    public function __invoke(Request $request, Member $member): View
     {
-        $member = Member::with(['notes.author'])->find($id);
+        $member->load(['notes.author']);
 
         return view('members.view', ['member' => $member]);
     }

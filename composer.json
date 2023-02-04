@@ -13,7 +13,6 @@
         "laravel/horizon": "^5.10",
         "laravel/sanctum": "^3.0",
         "laravel/slack-notification-channel": "^2.4",
-        "laravel/telescope": "^4.10",
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.0",
         "predis/predis": "^2.0",
@@ -21,6 +20,7 @@
         "spatie/laravel-permission": "^5.7"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.8",
         "barryvdh/laravel-ide-helper": "^2.12",
         "brianium/paratest": "^6.6",
         "fakerphp/faker": "^1.21",
@@ -29,6 +29,9 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "nunomaduro/phpinsights": "^2.6",
+        "pestphp/pest": "^1.22",
+        "pestphp/pest-plugin-laravel": "^1.4",
+        "pestphp/pest-plugin-parallel": "^1.2",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
     },
@@ -58,18 +61,7 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ],
-        "insights": [
-            "@php artisan insights"
-        ],
-        "test": [
-            "XDEBUG_MODE=coverage php artisan test --parallel --coverage"
         ]
-    },
-    "scripts-descriptions": {
-        "phpstan": "Run PHPStan static analysis against your application.",
-        "insights": "Run PHP Insights against the application",
-        "test": "Run Testsuite"
     },
     "extra": {
         "laravel": {

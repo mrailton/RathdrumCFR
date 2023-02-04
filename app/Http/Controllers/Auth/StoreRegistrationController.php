@@ -15,7 +15,7 @@ class StoreRegistrationController extends Controller
 {
     public function __invoke(StoreRegistrationRequest $request): RedirectResponse
     {
-        $invite = Invite::query()->where('token', '=', $request->get('token'))->first();
+        $invite = Invite::query()->where('token', '=', $request->get('token'))->where('expires_at', '>=', now())->first();
 
         if (!$invite) {
             abort(400);

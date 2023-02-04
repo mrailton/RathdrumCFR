@@ -61,16 +61,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/', ListDefibsController::class)->name('list')->can('defib.list');
         Route::post('/', StoreDefibController::class)->name('store')->can('defib.create');
         Route::get('/new', CreateDefibController::class)->name('create')->can('defib.create');
-        Route::get('/{id}', ViewDefibController::class)->name('view')->can('defib.view');
-        Route::get('/{id}/update', EditDefibController::class)->name('edit')->can('defib.update');
-        Route::put('/{id}', UpdateDefibController::class)->name('update')->can('defib.update');
+        Route::get('/{defib}', ViewDefibController::class)->name('view')->can('defib.view');
+        Route::get('/{defib}/update', EditDefibController::class)->name('edit')->can('defib.update');
+        Route::put('/{defib}', UpdateDefibController::class)->name('update')->can('defib.update');
 
-        Route::prefix('/{id}/inspections')->name('inspections.')->group(function () {
+        Route::prefix('/{defib}/inspections')->name('inspections.')->group(function () {
             Route::get('/new', CreateDefibInspectionController::class)->name('create')->can('defib.inspect');
             Route::post('/', StoreDefibInspectionController::class)->name('store')->can('defib.inspect');
         });
 
-        Route::prefix('/{id}/notes')->name('notes.')->group(function () {
+        Route::prefix('/{defib}/notes')->name('notes.')->group(function () {
             Route::get('/new', CreateDefibNoteController::class)->name('create')->can('defib.note');
             Route::post('/', StoreDefibNoteController::class)->name('store')->can('defib.note');
         });
@@ -80,11 +80,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/', ListMembersController::class)->name('list')->can('member.list');
         Route::post('/', StoreMemberController::class)->name('store')->can('member.create');
         Route::get('/new', CreateMemberController::class)->name('create')->can('member.create');
-        Route::get('/{id}', ViewMemberController::class)->name('view')->can('member.view');
-        Route::get('/{id}/update', EditMemberController::class)->name('edit')->can('member.update');
-        Route::put('/{id}', UpdateMemberController::class)->name('update')->can('member.update');
+        Route::get('/{member}', ViewMemberController::class)->name('view')->can('member.view');
+        Route::get('/{member}/update', EditMemberController::class)->name('edit')->can('member.update');
+        Route::put('/{member}', UpdateMemberController::class)->name('update')->can('member.update');
 
-        Route::prefix('/{id}/notes')->name('notes.')->group(function () {
+        Route::prefix('/{member}/notes')->name('notes.')->group(function () {
             Route::get('/new', CreateMemberNoteController::class)->name('create')->can('member.note');
             Route::post('/', StoreMemberNoteController::class)->name('store')->can('member.note');
         });

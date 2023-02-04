@@ -12,9 +12,8 @@ use Illuminate\Http\Request;
 
 class CreateDefibInspectionController extends Controller
 {
-    public function __invoke(Request $request, int $id): View
+    public function __invoke(Request $request, Defib $defib): View
     {
-        $defib = Defib::find($id);
         $members = Member::all();
 
         return view('defibs.inspections.create', ['defib' => $defib, 'members' => $members]);

@@ -12,23 +12,13 @@ use Illuminate\Http\RedirectResponse;
 
 class StoreDefibNoteController extends Controller
 {
-    public function __invoke(StoreDefibNoteRequest $request, int $id): RedirectResponse
+    public function __invoke(StoreDefibNoteRequest $request, Defib $defib): RedirectResponse
     {
-        $defib = Defib::find($id);
-
-        if (!$defib) {
-            abort(404);
-        }
-
-        if (is_null(auth()->user())) {
-            abort(401);
-        }
-
         $note = new DefibNote($request->validated());
         $note->defib_id = $defib->id;
         $note->user_id = auth()->user()->id;
         $note->save();
 
-        return redirect()->route('defibs.view', ['id' => $defib->id])->with('success', 'Defib note successfully added');
+        return redirect()->route('defibs.view', ['defib' => $defib->id])->with('success', 'Defib note successfully added');
     }
 }

@@ -12,23 +12,13 @@ use Illuminate\Http\RedirectResponse;
 
 class StoreMemberNoteController extends Controller
 {
-    public function __invoke(StoreMemberNoteRequest $request, int $id): RedirectResponse
+    public function __invoke(StoreMemberNoteRequest $request, Member $member): RedirectResponse
     {
-        $member = Member::find($id);
-
-        if (!$member) {
-            abort(404);
-        }
-
-        if (is_null(auth()->user())) {
-            abort(401);
-        }
-
         $note = new MemberNote($request->validated());
         $note->member_id = $member->id;
         $note->user_id = auth()->user()->id;
         $note->save();
 
-        return redirect()->route('members.view', ['id' => $member->id])->with('success', 'Member note successfully added');
+        return redirect()->route('members.view', ['member' => $member])->with('success', 'Member note successfully added');
     }
 }

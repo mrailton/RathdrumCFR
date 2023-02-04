@@ -14,22 +14,9 @@ use Illuminate\Http\RedirectResponse;
 
 class StoreDefibInspectionController extends Controller
 {
-    public function __invoke(StoreDefibInspectionRequest $request, int $id): RedirectResponse
+    public function __invoke(StoreDefibInspectionRequest $request, Defib $defib): RedirectResponse
     {
-        $defib = Defib::find($id);
         $member = Member::query()->where('id', '=', $request->get('member_id'))->first();
-
-        if (!$defib) {
-            abort(404);
-        }
-
-        if (is_null(auth()->user())) {
-            abort(401);
-        }
-
-        if (!$member) {
-            abort(422);
-        }
 
         $inspection = new DefibInspection($request->validated());
         $inspection->user_id = auth()->user()->id;
@@ -44,6 +31,6 @@ class StoreDefibInspectionController extends Controller
 
         DefibInspected::dispatch($defib, $inspection);
 
-        return redirect()->route('defibs.view', ['id' => $defib->id])->with('success', 'Defib inspection successfully added');
+        return redirect()->route('defibs.view', ['defib' => $defib->id])->with('success', 'Defib inspection successfully added');
     }
 }

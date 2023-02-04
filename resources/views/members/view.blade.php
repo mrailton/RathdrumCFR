@@ -6,7 +6,7 @@
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 @can('member.update')
-                    <a href="{{ route('members.edit', ['id' => $member->id]) }}">
+                    <a href="{{ route('members.edit', ['member' => $member]) }}">
                         <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">Update Member</button>
                     </a>
                 @endcan
@@ -127,7 +127,7 @@
                     </div>
                     <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                         @can('member.note')
-                            <a href="{{ route('members.notes.create', ['id' => $member->id]) }}">
+                            <a href="{{ route('members.notes.create', ['member' => $member]) }}">
                                 <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:w-auto">Add Note</button>
                             </a>
                         @endcan

@@ -11,10 +11,8 @@ use Illuminate\Http\Request;
 
 class EditMemberController extends Controller
 {
-    public function __invoke(Request $request, int $id): View
+    public function __invoke(Request $request, Member $member): View
     {
-        $member = Member::find($id);
-
         return view('members.update', ['member' => $member]);
     }
 }

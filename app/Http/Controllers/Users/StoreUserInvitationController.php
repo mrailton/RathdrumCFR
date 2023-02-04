@@ -15,10 +15,6 @@ class StoreUserInvitationController extends Controller
 {
     public function __invoke(StoreUserInvitationRequest $request): RedirectResponse
     {
-        if (is_null(auth()->user())) {
-            abort(401);
-        }
-
         $invite = new Invite($request->validated());
         $invite->user_id = auth()->user()->id;
         $invite->token = substr(md5(rand(0, 9) . $invite->email . time()), 0, 32);
