@@ -29,6 +29,8 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "nunomaduro/phpinsights": "^2.6",
+        "pestphp/pest": "^1.22",
+        "pestphp/pest-plugin-laravel": "^1.4",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
     },
@@ -58,17 +60,7 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ],
-        "insights": [
-            "php artisan insights -n"
-        ],
-        "test": [
-            "XDEBUG_MODE=coverage php artisan test --parallel --coverage"
         ]
-    },
-    "scripts-descriptions": {
-        "insights": "Run PHP Insights against the application",
-        "test": "Run Testsuite"
     },
     "extra": {
         "laravel": {
