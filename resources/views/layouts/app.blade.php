@@ -10,10 +10,6 @@
 
     {!! RecaptchaV3::initJs() !!}
 
-    @production
-        <script async defer data-website-id="df5d9067-7a10-4827-847b-d4384cd64eaa" src="https://analytics.markrailton.com/umami.js"></script>
-    @endproduction
-
     <title>Rathdrum Community First Responders</title>
 </head>
 <body class="flex flex-col min-h-screen font-sans antialiased">
