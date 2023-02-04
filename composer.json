@@ -28,7 +28,6 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
-        "nunomaduro/larastan": "^2.2",
         "nunomaduro/phpinsights": "^2.6",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
@@ -59,9 +58,6 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ],
-        "phpstan": [
-            "./vendor/bin/phpstan analyse --xdebug --memory-limit 256M"
         ],
         "insights": [
             "@php artisan insights"
