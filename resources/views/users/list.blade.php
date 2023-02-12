@@ -24,6 +24,8 @@
                             <tr>
                                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8">Name</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email Address</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last Login At</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last Login From</th>
                                 <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8">
                                     <span class="sr-only">View</span>
                                 </th>
@@ -34,6 +36,8 @@
                                     <tr>
                                         <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $user->name }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->email }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->last_login_at?->format('Y-m-d H:i:s') }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->last_login_from }}</td>
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                             <a href="{{ route('users.show', ['user' => $user]) }}" class="text-red-600 hover:text-red-900">View<span class="sr-only">, {{ $user->name }}</span></a>
                                         </td>
@@ -76,7 +80,6 @@
                         <h1 class="text-xl font-semibold text-gray-900">Invites</h1>
                     </div>
 
-                    <p class="mt-2 text-sm text-gray-500 ">
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead class="bg-gray-50">
                         <tr>
@@ -99,7 +102,6 @@
                         @endforeach
                         </tbody>
                     </table>
-                    </p>
                 </div>
             </div>
         </div>
