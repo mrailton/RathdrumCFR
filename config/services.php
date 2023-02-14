@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
 
     /*
@@ -46,4 +44,5 @@ return [
     'horizon' => [
         'token' => env('HORIZON_TOKEN'),
     ],
+
 ];
