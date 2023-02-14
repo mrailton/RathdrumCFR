@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
-    public function handle(Request $request, Closure $next, ...$guards): \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\Http\Response
+    public function handle(Request $request, Closure $next, string ...$guards): \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\Http\Response
     {
         $guards = empty($guards) ? [null] : $guards;
 
