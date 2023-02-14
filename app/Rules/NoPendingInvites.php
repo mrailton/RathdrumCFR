@@ -17,7 +17,6 @@ class NoPendingInvites implements InvokableRule
      * @param  string  $attribute
      * @param  mixed  $value
      * @param  Closure(string): PotentiallyTranslatedString  $fail
-     *
      * @return void
      */
     public function __invoke($attribute, $value, $fail): void

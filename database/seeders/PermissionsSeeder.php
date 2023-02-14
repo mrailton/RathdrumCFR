@@ -37,7 +37,6 @@ class PermissionsSeeder extends Seeder
         ['name' => 'user.permissions'],
     ];
 
-
     public function run(): void
     {
         foreach ($this->permissions as $permission) {

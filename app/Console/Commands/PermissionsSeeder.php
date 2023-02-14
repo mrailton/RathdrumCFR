@@ -10,6 +10,7 @@ use Illuminate\Console\Command;
 class PermissionsSeeder extends Command
 {
     protected $signature = 'permission:seed';
+
     protected $description = 'Seeds permissions to database';
 
     public function handle(): int

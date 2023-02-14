@@ -17,7 +17,7 @@ class StoreUserInvitationController extends Controller
     {
         $invite = new Invite($request->validated());
         $invite->user_id = auth()->user()->id;
-        $invite->token = substr(md5(rand(0, 9) . $invite->email . time()), 0, 32);
+        $invite->token = substr(md5(rand(0, 9).$invite->email.time()), 0, 32);
         $invite->expires_at = now()->addHours(48);
         $invite->save();
 

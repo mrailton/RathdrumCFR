@@ -14,6 +14,7 @@ class UserInvitationMail extends Mailable implements ShouldQueue
 {
     use Queueable;
     use SerializesModels;
+
     public function __construct(protected Invite $invite)
     {
     }
