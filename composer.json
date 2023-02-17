@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2.0",
+        "ext-pdo": "*",
         "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
         "josiasmontag/laravel-recaptchav3": "dev-master",
