@@ -14,13 +14,9 @@ class NoPendingInvites implements InvokableRule
     /**
      * Run the validation rule.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
      * @param  Closure(string): PotentiallyTranslatedString  $fail
-     *
-     * @return void
      */
-    public function __invoke($attribute, $value, $fail): void
+    public function __invoke(string $attribute, mixed $value, Closure $fail): void
     {
         $existing = Invite::query()->where('email', '=', $value)->where('expires_at', '>', now())->first();
 

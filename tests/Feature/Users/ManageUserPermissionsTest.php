@@ -13,7 +13,7 @@ test('an authorised user can update a users permissions', function () {
         ->assertSee('Manage Permissions');
 
     $this->get(route('users.permissions.show', ['user' => $user]))
-        ->assertSee('Manage Permissions for ' . $user->name);
+        ->assertSee('Manage Permissions for '.$user->name);
 
     $permissions = Permission::inRandomOrder()->limit(5)->get()->map(function ($permission) {
         return $permission->id;

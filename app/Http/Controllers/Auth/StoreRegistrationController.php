@@ -17,7 +17,7 @@ class StoreRegistrationController extends Controller
     {
         $invite = Invite::query()->where('token', '=', $request->get('token'))->where('expires_at', '>=', now())->first();
 
-        if (!$invite) {
+        if (! $invite) {
             abort(400);
         }
 

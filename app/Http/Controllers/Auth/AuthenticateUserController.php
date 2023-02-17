@@ -14,7 +14,7 @@ class AuthenticateUserController extends Controller
 {
     public function __invoke(StoreLoginRequest $request): RedirectResponse
     {
-        if (!Auth::attempt($request->only(['email', 'password']))) {
+        if (! Auth::attempt($request->only(['email', 'password']))) {
             return back()->withErrors([
                 'email' => 'The provided credentials do not match our records',
             ])->withInput();

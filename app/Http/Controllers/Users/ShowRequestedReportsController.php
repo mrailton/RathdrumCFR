@@ -15,7 +15,7 @@ class ShowRequestedReportsController extends Controller
     {
         $user->with('reports');
 
-        if (!$user->reports) {
+        if (! $user->reports) {
             $user->reports()->create();
             $user->refresh();
         }

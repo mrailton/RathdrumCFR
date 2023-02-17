@@ -25,7 +25,7 @@ test('the contact form can be submitted', function () {
         'email' => 'test@user.com',
         'phone' => '0831234567',
         'message' => 'This is a test',
-        'g-recaptcha-response' => '1'
+        'g-recaptcha-response' => '1',
     ];
 
     $this->post(route('contact.store'), $formData)

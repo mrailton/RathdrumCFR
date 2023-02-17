@@ -13,7 +13,7 @@ class StoreRequestedReportsController extends Controller
 {
     public function __invoke(StoreRequestedReportsRequest $request, User $user): RedirectResponse
     {
-        if (!$user->reports) {
+        if (! $user->reports) {
             abort(500);
         }
 

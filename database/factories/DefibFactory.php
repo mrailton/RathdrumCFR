@@ -23,8 +23,8 @@ class DefibFactory extends Factory
             'pads_expire_at' => $this->faker->dateTimeThisDecade()->format('Y-m-d'),
             'battery_expires_at' => $this->faker->dateTimeThisDecade()->format('Y-m-d'),
             'last_serviced_at' => $this->faker->dateTimeThisDecade()->format('Y-m-d'),
-            'display_on_map' => $this->faker->boolean,
-            'coordinates' => $this->faker->latitude . ', ' . $this->faker->longitude,
+            'display_on_map' => $this->faker->boolean(),
+            'coordinates' => $this->faker->latitude().', '.$this->faker->longitude(),
         ];
     }
 

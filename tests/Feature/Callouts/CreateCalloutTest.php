@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Models\Callout;
 
-
 test('an authorised user can log a callout that was attended', function () {
     authenticatedUser(['callout.list', 'callout.create']);
     $callout = Callout::factory()->attended(true)->make();

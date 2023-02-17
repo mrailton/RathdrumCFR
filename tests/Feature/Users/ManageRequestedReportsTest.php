@@ -18,5 +18,4 @@ test('an authorised user can modify the reports they receive', function () {
     $this->put(route('users.reports.store', ['user' => $user]), ['cfr_cert_expiry' => 'Yes'])
         ->assertSessionDoesntHaveErrors()
         ->assertRedirectToRoute('users.show', ['user' => $user]);
-
 });
