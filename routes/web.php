@@ -13,6 +13,7 @@ use App\Http\Controllers\DefibController;
 use App\Http\Controllers\DefibInspectionController;
 use App\Http\Controllers\DefibNoteController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\InviteUsersController;
 use App\Http\Controllers\Members\CreateMemberController;
 use App\Http\Controllers\Members\EditMemberController;
 use App\Http\Controllers\Members\ListMembersController;
@@ -21,14 +22,9 @@ use App\Http\Controllers\Members\Notes\StoreMemberNoteController;
 use App\Http\Controllers\Members\StoreMemberController;
 use App\Http\Controllers\Members\UpdateMemberController;
 use App\Http\Controllers\Members\ViewMemberController;
-use App\Http\Controllers\Users\InviteUserController;
-use App\Http\Controllers\Users\ListUsersController;
-use App\Http\Controllers\Users\ShowRequestedReportsController;
-use App\Http\Controllers\Users\ShowUserController;
-use App\Http\Controllers\Users\ShowUserPermissionsController;
-use App\Http\Controllers\Users\StoreRequestedReportsController;
-use App\Http\Controllers\Users\StoreUserInvitationController;
-use App\Http\Controllers\Users\UpdateUserPermissionsController;
+use App\Http\Controllers\UserRequestedReportsController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UsersPermissionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
@@ -87,13 +83,13 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('users')->name('users.')->group(function () {
-        Route::get('/', ListUsersController::class)->name('list')->can('user.list');
-        Route::get('/invite', InviteUserController::class)->name('invite.create')->can('user.invite');
-        Route::post('/invite', StoreUserInvitationController::class)->name('invite.store')->can('user.invite');
-        Route::get('/{user}', ShowUserController::class)->name('show')->can('user.view');
-        Route::get('/{user}/reports', ShowRequestedReportsController::class)->name('reports.show')->can('user.update');
-        Route::put('/{user}/reports', StoreRequestedReportsController::class)->name('reports.store')->can('user.update');
-        Route::get('/{user}/permissions', ShowUserPermissionsController::class)->name('permissions.show')->can('user.permissions');
-        Route::put('/{user}/permissions', UpdateUserPermissionsController::class)->name('permissions.update')->can('user.permissions');
+        Route::get('/', [UsersController::class, 'list'])->name('list')->can('user.list');
+        Route::get('/invite', [InviteUsersController::class, 'create'])->name('invite.create')->can('user.invite');
+        Route::post('/invite', [InviteUsersController::class, 'store'])->name('invite.store')->can('user.invite');
+        Route::get('/{user}', [UsersController::class, 'show'])->name('show')->can('user.view');
+        Route::get('/{user}/reports', [UserRequestedReportsController::class, 'show'])->name('reports.show')->can('user.update');
+        Route::put('/{user}/reports', [UserRequestedReportsController::class, 'store'])->name('reports.store')->can('user.update');
+        Route::get('/{user}/permissions', [UsersPermissionsController::class, 'show'])->name('permissions.show')->can('user.permissions');
+        Route::put('/{user}/permissions', [UsersPermissionsController::class, 'update'])->name('permissions.update')->can('user.permissions');
     });
 });

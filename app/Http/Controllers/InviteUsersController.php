@@ -2,18 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\StoreUserInvitationRequest;
 use App\Mail\UserInvitationMail;
 use App\Models\Invite;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class StoreUserInvitationController extends Controller
+class InviteUsersController extends Controller
 {
-    public function __invoke(StoreUserInvitationRequest $request): RedirectResponse
+    public function create(Request $request): View
+    {
+        return view('users.invite');
+    }
+
+    public function store(StoreUserInvitationRequest $request): RedirectResponse
     {
         $invite = new Invite($request->validated());
         $invite->user_id = auth()->user()->id;

@@ -2,16 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\StoreRequestedReportsRequest;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
-class StoreRequestedReportsController extends Controller
+class UserRequestedReportsController extends Controller
 {
-    public function __invoke(StoreRequestedReportsRequest $request, User $user): RedirectResponse
+    public function show(Request $request, User $user): View
+    {
+        $user->with('reports');
+
+        if (! $user->reports) {
+            $user->reports()->create();
+            $user->refresh();
+        }
+
+        return view('users.reports', ['user' => $user]);
+    }
+
+    public function store(StoreRequestedReportsRequest $request, User $user): RedirectResponse
     {
         if (! $user->reports) {
             abort(500);
