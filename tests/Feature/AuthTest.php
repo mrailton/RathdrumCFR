@@ -35,3 +35,15 @@ test('a user can not login with an invalid email address', function () {
         ->assertStatus(302)
         ->assertSessionHasErrors('email');
 });
+
+test('an authenticated user can logout', function () {
+    $this->actingAs(User::factory()->create());
+
+    $this->assertAuthenticated();
+
+    $this->post(route('auth.logout'))
+        ->assertRedirectToRoute('index')
+        ->assertSessionHas('Success', 'You have been successfully logged out');
+
+    $this->assertGuest();
+});
