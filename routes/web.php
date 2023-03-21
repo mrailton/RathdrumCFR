@@ -2,11 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\Auth\AuthenticateUserController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Auth\RegistrationController;
-use App\Http\Controllers\Auth\StoreRegistrationController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalloutController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\DefibController;
@@ -14,14 +10,9 @@ use App\Http\Controllers\DefibInspectionController;
 use App\Http\Controllers\DefibNoteController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InviteUsersController;
-use App\Http\Controllers\Members\CreateMemberController;
-use App\Http\Controllers\Members\EditMemberController;
-use App\Http\Controllers\Members\ListMembersController;
-use App\Http\Controllers\Members\Notes\CreateMemberNoteController;
-use App\Http\Controllers\Members\Notes\StoreMemberNoteController;
-use App\Http\Controllers\Members\StoreMemberController;
-use App\Http\Controllers\Members\UpdateMemberController;
-use App\Http\Controllers\Members\ViewMemberController;
+use App\Http\Controllers\MemberNotesController;
+use App\Http\Controllers\MembersController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\UserRequestedReportsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UsersPermissionsController;
@@ -33,14 +24,14 @@ Route::get('/contact', [ContactFormController::class, 'show'])->name('contact.cr
 Route::post('/contact', [ContactFormController::class, 'process'])->name('contact.store');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/login', LoginController::class)->name('login.create');
-    Route::post('/login', AuthenticateUserController::class)->name('login.store');
-    Route::get('/register/{invite:token}', RegistrationController::class)->name('register.create');
-    Route::post('/register', StoreRegistrationController::class)->name('register.store');
+    Route::get('/login', [AuthController::class, 'create'])->name('login.create');
+    Route::post('/login', [AuthController::class, 'store'])->name('login.store');
+    Route::get('/register/{invite:token}', [RegistrationController::class, 'create'])->name('register.create');
+    Route::post('/register', [RegistrationController::class, 'store'])->name('register.store');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('logout', LogoutController::class)->name('auth.logout');
+    Route::post('logout', [AuthController::class, 'destroy'])->name('auth.logout');
 
     Route::prefix('defibs')->name('defibs.')->group(function () {
         Route::get('/', [DefibController::class, 'list'])->name('list')->can('defib.list');
@@ -62,16 +53,16 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('members')->name('members.')->group(function () {
-        Route::get('/', ListMembersController::class)->name('list')->can('member.list');
-        Route::post('/', StoreMemberController::class)->name('store')->can('member.create');
-        Route::get('/new', CreateMemberController::class)->name('create')->can('member.create');
-        Route::get('/{member}', ViewMemberController::class)->name('view')->can('member.view');
-        Route::get('/{member}/update', EditMemberController::class)->name('edit')->can('member.update');
-        Route::put('/{member}', UpdateMemberController::class)->name('update')->can('member.update');
+        Route::get('/', [MembersController::class, 'list'])->name('list')->can('member.list');
+        Route::post('/', [MembersController::class, 'store'])->name('store')->can('member.create');
+        Route::get('/new', [MembersController::class, 'create'])->name('create')->can('member.create');
+        Route::get('/{member}', [MembersController::class, 'show'])->name('view')->can('member.view');
+        Route::get('/{member}/update', [MembersController::class, 'edit'])->name('edit')->can('member.update');
+        Route::put('/{member}', [MembersController::class, 'update'])->name('update')->can('member.update');
 
         Route::prefix('/{member}/notes')->name('notes.')->group(function () {
-            Route::get('/new', CreateMemberNoteController::class)->name('create')->can('member.note');
-            Route::post('/', StoreMemberNoteController::class)->name('store')->can('member.note');
+            Route::get('/new', [MemberNotesController::class, 'create'])->name('create')->can('member.note');
+            Route::post('/', [MemberNotesController::class, 'store'])->name('store')->can('member.note');
         });
     });
 

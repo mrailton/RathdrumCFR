@@ -2,18 +2,28 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\StoreRegistrationRequest;
 use App\Models\Invite;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class StoreRegistrationController extends Controller
+class RegistrationController extends Controller
 {
-    public function __invoke(StoreRegistrationRequest $request): RedirectResponse
+    public function create(Request $request, Invite $invite): View
+    {
+        if ($invite->expires_at < now()) {
+            abort(404);
+        }
+
+        return view('auth.register', ['invite' => $invite]);
+    }
+
+    public function store(StoreRegistrationRequest $request): RedirectResponse
     {
         $invite = Invite::query()->where('token', '=', $request->get('token'))->where('expires_at', '>=', now())->first();
 

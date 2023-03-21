@@ -2,17 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Members\Notes;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Members\Notes\StoreMemberNoteRequest;
 use App\Models\Member;
 use App\Models\MemberNote;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
-class StoreMemberNoteController extends Controller
+class MemberNotesController extends Controller
 {
-    public function __invoke(StoreMemberNoteRequest $request, Member $member): RedirectResponse
+    public function create(Request $request, Member $member): View
+    {
+        return view('members.notes.create', ['member' => $member]);
+    }
+
+    public function store(StoreMemberNoteRequest $request, Member $member): RedirectResponse
     {
         $note = new MemberNote($request->validated());
         $note->member_id = $member->id;
