@@ -2,19 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Defibs\Inspections;
+namespace App\Http\Controllers;
 
+use App\Enums\BatteryCondition;
 use App\Events\DefibInspected;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Defibs\Inspections\StoreDefibInspectionRequest;
 use App\Models\Defib;
 use App\Models\DefibInspection;
 use App\Models\Member;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
-class StoreDefibInspectionController extends Controller
+class DefibInspectionController extends Controller
 {
-    public function __invoke(StoreDefibInspectionRequest $request, Defib $defib): RedirectResponse
+    public function create(Request $request, Defib $defib): View
+    {
+        return view('defibs.inspections.create', [
+            'defib' => $defib,
+            'members' => Member::all(),
+            'batteryConditions' => BatteryCondition::toArray(),
+        ]);
+    }
+
+    public function store(StoreDefibInspectionRequest $request, Defib $defib): RedirectResponse
     {
         $member = Member::query()->where('id', '=', $request->get('member_id'))->first();
 

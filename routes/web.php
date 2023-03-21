@@ -13,16 +13,9 @@ use App\Http\Controllers\Callouts\ShowCalloutController;
 use App\Http\Controllers\Callouts\StoreCalloutController;
 use App\Http\Controllers\Contact\ContactUsPageController;
 use App\Http\Controllers\Contact\ProcessContactUsController;
-use App\Http\Controllers\Defibs\CreateDefibController;
-use App\Http\Controllers\Defibs\EditDefibController;
-use App\Http\Controllers\Defibs\Inspections\CreateDefibInspectionController;
-use App\Http\Controllers\Defibs\Inspections\StoreDefibInspectionController;
-use App\Http\Controllers\Defibs\ListDefibsController;
-use App\Http\Controllers\Defibs\Notes\CreateDefibNoteController;
-use App\Http\Controllers\Defibs\Notes\StoreDefibNoteController;
-use App\Http\Controllers\Defibs\StoreDefibController;
-use App\Http\Controllers\Defibs\UpdateDefibController;
-use App\Http\Controllers\Defibs\ViewDefibController;
+use App\Http\Controllers\DefibController;
+use App\Http\Controllers\DefibInspectionController;
+use App\Http\Controllers\DefibNoteController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Members\CreateMemberController;
 use App\Http\Controllers\Members\EditMemberController;
@@ -58,21 +51,21 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', LogoutController::class)->name('auth.logout');
 
     Route::prefix('defibs')->name('defibs.')->group(function () {
-        Route::get('/', ListDefibsController::class)->name('list')->can('defib.list');
-        Route::post('/', StoreDefibController::class)->name('store')->can('defib.create');
-        Route::get('/new', CreateDefibController::class)->name('create')->can('defib.create');
-        Route::get('/{defib}', ViewDefibController::class)->name('view')->can('defib.view');
-        Route::get('/{defib}/update', EditDefibController::class)->name('edit')->can('defib.update');
-        Route::put('/{defib}', UpdateDefibController::class)->name('update')->can('defib.update');
+        Route::get('/', [DefibController::class, 'list'])->name('list')->can('defib.list');
+        Route::post('/', [DefibController::class, 'store'])->name('store')->can('defib.create');
+        Route::get('/new', [DefibController::class, 'create'])->name('create')->can('defib.create');
+        Route::get('/{defib}', [DefibController::class, 'show'])->name('view')->can('defib.view');
+        Route::get('/{defib}/update', [DefibController::class, 'edit'])->name('edit')->can('defib.update');
+        Route::put('/{defib}', [DefibController::class, 'update'])->name('update')->can('defib.update');
 
         Route::prefix('/{defib}/inspections')->name('inspections.')->group(function () {
-            Route::get('/new', CreateDefibInspectionController::class)->name('create')->can('defib.inspect');
-            Route::post('/', StoreDefibInspectionController::class)->name('store')->can('defib.inspect');
+            Route::get('/new', [DefibInspectionController::class, 'create'])->name('create')->can('defib.inspect');
+            Route::post('/', [DefibInspectionController::class, 'store'])->name('store')->can('defib.inspect');
         });
 
         Route::prefix('/{defib}/notes')->name('notes.')->group(function () {
-            Route::get('/new', CreateDefibNoteController::class)->name('create')->can('defib.note');
-            Route::post('/', StoreDefibNoteController::class)->name('store')->can('defib.note');
+            Route::get('/new', [DefibNoteController::class, 'create'])->name('create')->can('defib.note');
+            Route::post('/', [DefibNoteController::class, 'store'])->name('store')->can('defib.note');
         });
     });
 
