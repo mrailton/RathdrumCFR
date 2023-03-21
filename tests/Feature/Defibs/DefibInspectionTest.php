@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\BatteryCondition;
 use App\Mail\DefibInspectedMail;
 use App\Models\Defib;
 use App\Models\Member;
@@ -24,6 +25,7 @@ test('an authorised user can create a new defib inspection', function () {
         'inspected_at' => $inspectionDate->format('Y-m-d H:i:s'),
         'pads_expire_at' => $padExpiry->format('Y-m-d'),
         'battery_expires_at' => $batteryExpiry->format('Y-m-d'),
+        'battery_condition' => 'High',
         'notes' => fake()->sentence(),
     ];
 
@@ -42,7 +44,8 @@ test('an authorised user can create a new defib inspection', function () {
         ->assertSee($member->name)
         ->assertSee($padExpiry->format('l jS F Y'))
         ->assertSee($batteryExpiry->format('l jS F Y'))
-        ->assertSee($inspectionData['notes']);
+        ->assertSee($inspectionData['notes'])
+        ->assertSee($inspectionData['battery_condition']);
 
     Mail::assertQueued(DefibInspectedMail::class);
 });

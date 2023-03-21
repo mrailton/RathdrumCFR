@@ -56,6 +56,21 @@
                     </div>
 
                     <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500"><label for="battery_condition">Battery Condition</label></dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                            <select type="text" name="battery_condition" id="battery_condition" class="block @error('battery_condition') border-red-500 @enderror w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm">
+                                <option disabled selected>Select Battery Condition</option>
+                                @foreach($batteryConditions as $value)
+                                    <option @if(old('battery_condition') == $value) selected @endif value="{{ $value }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
+                            @error('battery_condition')
+                            <div class="text-sm text-red-600">{{ $message }}</div>
+                            @enderror
+                        </dd>
+                    </div>
+
+                    <div class="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500"><label for="notes">Notes</label></dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                             <textarea rows="5" name="notes" id="notes" class="block @error('notes') border-red-500 @enderror w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm"></textarea>
