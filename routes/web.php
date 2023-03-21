@@ -8,8 +8,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\Auth\StoreRegistrationController;
 use App\Http\Controllers\CalloutController;
-use App\Http\Controllers\Contact\ContactUsPageController;
-use App\Http\Controllers\Contact\ProcessContactUsController;
+use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\DefibController;
 use App\Http\Controllers\DefibInspectionController;
 use App\Http\Controllers\DefibNoteController;
@@ -34,8 +33,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
 
-Route::get('/contact', ContactUsPageController::class)->name('contact.create');
-Route::post('/contact', ProcessContactUsController::class)->name('contact.store');
+Route::get('/contact', [ContactFormController::class, 'show'])->name('contact.create');
+Route::post('/contact', [ContactFormController::class, 'process'])->name('contact.store');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', LoginController::class)->name('login.create');
