@@ -9,11 +9,10 @@ use App\Models\Member;
 use App\Models\MemberNote;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class MemberNotesController extends Controller
 {
-    public function create(Request $request, Member $member): View
+    public function create(Member $member): View
     {
         return view('members.notes.create', ['member' => $member]);
     }
@@ -25,6 +24,6 @@ class MemberNotesController extends Controller
         $note->user_id = auth()->user()->id;
         $note->save();
 
-        return redirect()->route('members.view', ['member' => $member])->with('success', 'Member note successfully added');
+        return redirect()->route('members.view', ['member' => $member])->success('Member note successfully added');
     }
 }

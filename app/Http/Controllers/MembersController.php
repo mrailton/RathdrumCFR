@@ -9,18 +9,17 @@ use App\Http\Requests\Members\UpdateMemberRequest;
 use App\Models\Member;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class MembersController extends Controller
 {
-    public function list(Request $request): View
+    public function list(): View
     {
         $members = Member::paginate(10);
 
         return view('members.list', ['members' => $members]);
     }
 
-    public function create(Request $request): View
+    public function create(): View
     {
         return view('members.create');
     }
@@ -31,17 +30,17 @@ class MembersController extends Controller
         $member->user_id = auth()->user()->id;
         $member->save();
 
-        return redirect()->route('members.list')->with('success', 'New member successfully added');
+        return redirect()->route('members.list')->success('New member successfully added');
     }
 
-    public function show(Request $request, Member $member): View
+    public function show(Member $member): View
     {
         $member->load(['notes.author']);
 
         return view('members.view', ['member' => $member]);
     }
 
-    public function edit(Request $request, Member $member): View
+    public function edit(Member $member): View
     {
         return view('members.update', ['member' => $member]);
     }
@@ -50,6 +49,6 @@ class MembersController extends Controller
     {
         $member->update($request->validated());
 
-        return redirect()->route('members.view', ['member' => $member])->with('success', 'Member successfully updated');
+        return redirect()->route('members.view', ['member' => $member])->success('Member successfully updated');
     }
 }

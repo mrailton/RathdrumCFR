@@ -16,7 +16,11 @@ test('an authorised user can log a callout that was attended', function () {
     $this->post(route('callouts.store', $callout->toArray()))
         ->assertSessionDoesntHaveErrors()
         ->assertRedirectToRoute('callouts.list')
-        ->assertSessionHas('success', 'Callout successfully logged');
+        ->assertSessionHas('toasts', [[
+            'message' => 'Callout successfully logged',
+            'duration' => 3000,
+            'type' => 'success'
+        ]]);
 
     $this->assertDatabaseCount(Callout::class, 1);
 
@@ -38,7 +42,11 @@ test('an authorised user can log a callout that was not attended', function () {
     $this->post(route('callouts.store', $callout->toArray()))
         ->assertSessionDoesntHaveErrors()
         ->assertRedirectToRoute('callouts.list')
-        ->assertSessionHas('success', 'Callout successfully logged');
+        ->assertSessionHas('toasts', [[
+            'message' => 'Callout successfully logged',
+            'duration' => 3000,
+            'type' => 'success'
+        ]]);
 
     $this->assertDatabaseCount(Callout::class, 1);
 

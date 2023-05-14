@@ -8,13 +8,12 @@ use App\Http\Requests\Auth\StoreLoginRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function create(Request $request): View
+    public function create(): View
     {
         return view('auth.login');
     }
@@ -34,15 +33,15 @@ class AuthController extends Controller
         $user->last_login_from = $request->ip();
         $user->save();
 
-        return redirect()->intended('/')->with('success', 'You have successfully logged in');
+        return redirect()->intended('/')->success('You have successfully logged in');
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(): RedirectResponse
     {
         Auth::logout();
 
         Session::regenerate();
 
-        return redirect()->route('index')->with('Success', 'You have been successfully logged out');
+        return redirect()->route('index')->success('You have been successfully logged out');
     }
 }

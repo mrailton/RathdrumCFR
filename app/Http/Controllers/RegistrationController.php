@@ -9,12 +9,11 @@ use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class RegistrationController extends Controller
 {
-    public function create(Request $request, Invite $invite): View
+    public function create(Invite $invite): View
     {
         if ($invite->expires_at < now()) {
             abort(404);
@@ -43,6 +42,6 @@ class RegistrationController extends Controller
 
         $user->givePermissionTo(['defib.list', 'defib.view', 'defib.note', 'defib.inspect']);
 
-        return redirect()->route('login.create')->with('success', 'You are now registered and can login');
+        return redirect()->route('login.create')->success('You are now registered and can login');
     }
 }

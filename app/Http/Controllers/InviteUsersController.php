@@ -9,12 +9,11 @@ use App\Mail\UserInvitationMail;
 use App\Models\Invite;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class InviteUsersController extends Controller
 {
-    public function create(Request $request): View
+    public function create(): View
     {
         return view('users.invite');
     }
@@ -29,6 +28,6 @@ class InviteUsersController extends Controller
 
         Mail::to($invite->email)->queue(new UserInvitationMail($invite));
 
-        return redirect()->route('users.list')->with('success', 'User Successfully Invited');
+        return redirect()->route('users.list')->success('User Successfully Invited');
     }
 }

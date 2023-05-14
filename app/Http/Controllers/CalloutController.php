@@ -8,18 +8,17 @@ use App\Http\Requests\Callouts\StoreCalloutRequest;
 use App\Models\Callout;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class CalloutController extends Controller
 {
-    public function list(Request $request): View
+    public function list(): View
     {
         $callouts = Callout::orderBy('incident_date')->paginate(10);
 
         return view('callouts.list', ['callouts' => $callouts]);
     }
 
-    public function create(Request $request): View
+    public function create(): View
     {
         return view('callouts.create');
     }
@@ -30,10 +29,10 @@ class CalloutController extends Controller
         $callout->user_id = auth()->id();
         $callout->save();
 
-        return redirect()->route('callouts.list')->with('success', 'Callout successfully logged');
+        return redirect()->route('callouts.list')->success('Callout successfully logged');
     }
 
-    public function show(Request $request, Callout $callout): View
+    public function show(Callout $callout): View
     {
         return view('callouts.show', ['callout' => $callout]);
     }

@@ -8,12 +8,11 @@ use App\Http\Requests\Users\UpdateUserPermissionsRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 
 class UsersPermissionsController extends Controller
 {
-    public function show(Request $request, User $user): View
+    public function show(User $user): View
     {
         $user->with('permissions');
 
@@ -26,6 +25,6 @@ class UsersPermissionsController extends Controller
     {
         $user->permissions()->sync($request->get('permissions'));
 
-        return redirect()->route('users.show', ['user' => $user])->with('success', 'User Permissions Successfully Updated');
+        return redirect()->route('users.show', ['user' => $user])->success('User Permissions Successfully Updated');
     }
 }

@@ -17,12 +17,11 @@
     <x-header />
 
     <main class="flex-grow w-full pt-12 mx-auto max-w-7xl min-w-3/4 sm:px-6 lg:px-8">
-        <x-flash />
-
         {{ $slot }}
     </main>
 
     <x-footer />
-@livewireScripts
+    @livewireScripts
+    <x-toaster-hub />
 </body>
 </html>
