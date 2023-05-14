@@ -1,4 +1,4 @@
-<x-app-layout>
+<div>
     <div class="overflow-hidden bg-white shadow sm:rounded-lg px-4 sm:px-6 lg:px-8">
         <div class="sm:flex sm:items-center py-5">
             <div class="sm:flex-auto">
@@ -29,17 +29,17 @@
                             </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                                @foreach($callouts as $callout)
-                                    <tr>
-                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $callout->incident_number }}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $callout->ampds_code }}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $callout->incident_date }}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $callout->attended }}</td>
-                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <a href="{{ route('callouts.show', ['callout' => $callout]) }}" class="text-red-600 hover:text-red-900">View<span class="sr-only">, {{ $callout->incident_number }}</span></a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach($callouts as $callout)
+                                <tr>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $callout->incident_number }}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $callout->ampds_code }}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $callout->incident_date }}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $callout->attended }}</td>
+                                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                        <a href="{{ route('callouts.show', ['callout' => $callout]) }}" class="text-red-600 hover:text-red-900">View<span class="sr-only">, {{ $callout->incident_number }}</span></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -52,4 +52,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</div>

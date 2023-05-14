@@ -11,13 +11,6 @@ use Illuminate\Http\RedirectResponse;
 
 class CalloutController extends Controller
 {
-    public function list(): View
-    {
-        $callouts = Callout::orderBy('incident_date')->paginate(10);
-
-        return view('callouts.list', ['callouts' => $callouts]);
-    }
-
     public function create(): View
     {
         return view('callouts.create');
