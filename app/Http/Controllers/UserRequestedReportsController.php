@@ -8,11 +8,10 @@ use App\Http\Requests\Users\StoreRequestedReportsRequest;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class UserRequestedReportsController extends Controller
 {
-    public function show(Request $request, User $user): View
+    public function show(User $user): View
     {
         $user->with('reports');
 
@@ -39,6 +38,6 @@ class UserRequestedReportsController extends Controller
             'defib_inspected' => $request->get('defib_inspected') === 'Yes',
         ]);
 
-        return redirect()->route('users.show', ['user' => $user])->with('success', 'Requested Reports Updated Successfully');
+        return redirect()->route('users.show', ['user' => $user])->success('Requested Reports Updated Successfully');
     }
 }

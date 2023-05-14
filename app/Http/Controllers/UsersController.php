@@ -7,11 +7,10 @@ namespace App\Http\Controllers;
 use App\Models\Invite;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    public function list(Request $request): View
+    public function list(): View
     {
         $users = User::paginate(10);
         $invites = Invite::all();
@@ -19,7 +18,7 @@ class UsersController extends Controller
         return view('users.list', ['users' => $users, 'invites' => $invites]);
     }
 
-    public function show(Request $request, User $user): View
+    public function show(User $user): View
     {
         return view('users.show', ['user' => $user]);
     }

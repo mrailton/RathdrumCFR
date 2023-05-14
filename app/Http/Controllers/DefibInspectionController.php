@@ -12,11 +12,10 @@ use App\Models\DefibInspection;
 use App\Models\Member;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class DefibInspectionController extends Controller
 {
-    public function create(Request $request, Defib $defib): View
+    public function create(Defib $defib): View
     {
         return view('defibs.inspections.create', [
             'defib' => $defib,
@@ -42,6 +41,6 @@ class DefibInspectionController extends Controller
 
         DefibInspected::dispatch($defib, $inspection);
 
-        return redirect()->route('defibs.view', ['defib' => $defib->id])->with('success', 'Defib inspection successfully added');
+        return redirect()->route('defibs.view', ['defib' => $defib->id])->success('Defib inspection successfully added');
     }
 }

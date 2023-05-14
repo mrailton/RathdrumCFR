@@ -40,10 +40,13 @@ test('an authenticated user can logout', function () {
     $this->actingAs(User::factory()->create());
 
     $this->assertAuthenticated();
-
     $this->post(route('auth.logout'))
         ->assertRedirectToRoute('index')
-        ->assertSessionHas('Success', 'You have been successfully logged out');
+        ->assertSessionHas('toasts', [[
+            'message' => 'You have been successfully logged out',
+            'duration' => 3000,
+            'type' => 'success'
+        ]]);
 
     $this->assertGuest();
 });
