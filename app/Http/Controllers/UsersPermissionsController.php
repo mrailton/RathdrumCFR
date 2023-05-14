@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Spatie\Permission\Models\Permission;
+use function toast;
 
 class UsersPermissionsController extends Controller
 {
@@ -25,6 +26,8 @@ class UsersPermissionsController extends Controller
     {
         $user->permissions()->sync($request->get('permissions'));
 
-        return redirect()->route('users.show', ['user' => $user])->success('User Permissions Successfully Updated');
+        toast()->success('User Permissions Successfully Updated')->pushOnNextPage();
+
+        return redirect()->route('users.show', ['user' => $user]);
     }
 }

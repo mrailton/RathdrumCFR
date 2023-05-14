@@ -29,7 +29,9 @@ class DefibController extends Controller
         $defib->user_id = auth()->user()->id;
         $defib->save();
 
-        return redirect()->route('defibs.list')->success('Defib successfully added');
+        toast()->success('Defib successfully added')->pushOnNextPage();
+
+        return redirect()->route('defibs.list');
     }
 
     public function show(Defib $defib): View
@@ -48,6 +50,8 @@ class DefibController extends Controller
     {
         $defib->update($request->validated());
 
-        return redirect()->route('defibs.view', ['defib' => $defib->id])->success('Defib successfully updated');
+        toast()->success('Defib successfully updated');
+
+        return redirect()->route('defibs.view', ['defib' => $defib->id]);
     }
 }

@@ -29,10 +29,11 @@ test('an authorised user can create a new member', function () {
     $this->post(route('members.store'), $data->toArray())
         ->assertSessionDoesntHaveErrors()
         ->assertRedirectToRoute('members.list')
-        ->assertSessionHas('toasts', [[
+        ->assertSessionHas('toasts-next', [[
             'message' => 'New member successfully added',
-            'duration' => 3000,
-            'type' => 'success'
+            'duration' => 5000,
+            'type' => 'success',
+            'title' => null,
         ]]);
 
     $this->assertEquals(1, Member::count());
@@ -66,10 +67,11 @@ test('an authorised user can update a member', function () {
 
     $this->put(route('members.update', ['member' => $member]), $data)
         ->assertSessionDoesntHaveErrors()
-        ->assertSessionHas('toasts', [[
+        ->assertSessionHas('toasts-next', [[
             'message' => 'Member successfully updated',
-            'duration' => 3000,
-            'type' => 'success'
+            'duration' => 5000,
+            'type' => 'success',
+            'title' => null,
         ]])
         ->assertRedirectToRoute('members.view', ['member' => $member]);
 

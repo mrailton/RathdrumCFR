@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use function toast;
 
 class AuthController extends Controller
 {
@@ -33,7 +34,9 @@ class AuthController extends Controller
         $user->last_login_from = $request->ip();
         $user->save();
 
-        return redirect()->intended('/')->success('You have successfully logged in');
+        toast()->success('You have successfully logged in')->pushOnNextPage();
+
+        return redirect()->intended('/');
     }
 
     public function destroy(): RedirectResponse
@@ -42,6 +45,8 @@ class AuthController extends Controller
 
         Session::regenerate();
 
-        return redirect()->route('index')->success('You have been successfully logged out');
+        toast()->success('You have been successfully logged out')->pushOnNextPage();
+
+        return redirect()->route('index');
     }
 }

@@ -1,7 +1,7 @@
 import Alpine from 'alpinejs';
-import Toaster from '../../vendor/masmerise/livewire-toaster/resources/js';
+import ToastComponent from '../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts'
 
-Alpine.plugin(Toaster);
+Alpine.data('ToastComponent', ToastComponent);
 
 window.Alpine = Alpine;
 

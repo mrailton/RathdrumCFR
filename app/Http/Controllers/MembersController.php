@@ -9,6 +9,7 @@ use App\Http\Requests\Members\UpdateMemberRequest;
 use App\Models\Member;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use function toast;
 
 class MembersController extends Controller
 {
@@ -30,7 +31,9 @@ class MembersController extends Controller
         $member->user_id = auth()->user()->id;
         $member->save();
 
-        return redirect()->route('members.list')->success('New member successfully added');
+        toast()->success('New member successfully added')->pushOnNextPage();
+
+        return redirect()->route('members.list');
     }
 
     public function show(Member $member): View
@@ -49,6 +52,8 @@ class MembersController extends Controller
     {
         $member->update($request->validated());
 
-        return redirect()->route('members.view', ['member' => $member])->success('Member successfully updated');
+        toast()->success('Member successfully updated')->pushOnNextPage();
+
+        return redirect()->route('members.view', ['member' => $member]);
     }
 }

@@ -41,6 +41,8 @@ class DefibInspectionController extends Controller
 
         DefibInspected::dispatch($defib, $inspection);
 
-        return redirect()->route('defibs.view', ['defib' => $defib->id])->success('Defib inspection successfully added');
+        toast()->success('Defib inspection successfully added')->pushOnNextPage();
+
+        return redirect()->route('defibs.view', ['defib' => $defib->id]);
     }
 }

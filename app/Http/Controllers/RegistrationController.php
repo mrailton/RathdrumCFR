@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
+use function toast;
 
 class RegistrationController extends Controller
 {
@@ -42,6 +43,8 @@ class RegistrationController extends Controller
 
         $user->givePermissionTo(['defib.list', 'defib.view', 'defib.note', 'defib.inspect']);
 
-        return redirect()->route('login.create')->success('You are now registered and can login');
+        toast()->success('You are now registered and can login')->pushOnNextPage();
+
+        return redirect()->route('login.create');
     }
 }

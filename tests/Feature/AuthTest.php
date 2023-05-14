@@ -42,10 +42,11 @@ test('an authenticated user can logout', function () {
     $this->assertAuthenticated();
     $this->post(route('auth.logout'))
         ->assertRedirectToRoute('index')
-        ->assertSessionHas('toasts', [[
+        ->assertSessionHas('toasts-next', [[
             'message' => 'You have been successfully logged out',
-            'duration' => 3000,
-            'type' => 'success'
+            'duration' => 5000,
+            'type' => 'success',
+            'title' => null,
         ]]);
 
     $this->assertGuest();

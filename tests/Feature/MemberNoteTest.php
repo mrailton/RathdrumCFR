@@ -19,10 +19,11 @@ test('an authorised user can add a note to a member', function () {
     $this->post(route('members.notes.store', ['member' => $member]), $data)
         ->assertSessionDoesntHaveErrors()
         ->assertRedirectToRoute('members.view', ['member' => $member])
-        ->assertSessionHas('toasts', [[
+        ->assertSessionHas('toasts-next', [[
             'message' => 'Member note successfully added',
-            'duration' => 3000,
-            'type' => 'success'
+            'duration' => 5000,
+            'type' => 'success',
+            'title' => null,
         ]]);
 
     $this->get(route('members.view', ['member' => $member]))

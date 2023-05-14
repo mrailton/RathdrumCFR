@@ -29,7 +29,9 @@ class CalloutController extends Controller
         $callout->user_id = auth()->id();
         $callout->save();
 
-        return redirect()->route('callouts.list')->success('Callout successfully logged');
+        toast()->success('Callout successfully logged')->pushOnNextPage();
+
+        return redirect()->route('callouts.list');
     }
 
     public function show(Callout $callout): View

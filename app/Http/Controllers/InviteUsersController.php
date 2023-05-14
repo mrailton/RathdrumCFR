@@ -28,6 +28,8 @@ class InviteUsersController extends Controller
 
         Mail::to($invite->email)->queue(new UserInvitationMail($invite));
 
-        return redirect()->route('users.list')->success('User Successfully Invited');
+        toast()->success('User Successfully Invited')->pushOnNextPage();
+
+        return redirect()->route('users.list');
     }
 }

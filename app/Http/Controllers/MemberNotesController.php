@@ -24,6 +24,8 @@ class MemberNotesController extends Controller
         $note->user_id = auth()->user()->id;
         $note->save();
 
-        return redirect()->route('members.view', ['member' => $member])->success('Member note successfully added');
+        toast()->success('Member note successfully added')->pushOnNextPage();
+
+        return redirect()->route('members.view', ['member' => $member]);
     }
 }

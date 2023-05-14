@@ -38,6 +38,8 @@ class UserRequestedReportsController extends Controller
             'defib_inspected' => $request->get('defib_inspected') === 'Yes',
         ]);
 
-        return redirect()->route('users.show', ['user' => $user])->success('Requested Reports Updated Successfully');
+        toast()->success('Requested Reports Updated Successfully')->pushOnNextPage();
+
+        return redirect()->route('users.show', ['user' => $user]);
     }
 }

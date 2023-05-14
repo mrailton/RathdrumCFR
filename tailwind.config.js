@@ -3,7 +3,8 @@ module.exports = {
   content: [
       './resources/**/*.blade.php',
       './resources/**/*.js',
-      './vendor/masmerise/livewire-toaster/resources/views/*.blade.php',
+      './vendor/usernotnull/tall-toasts/config/**/*.php',
+      './vendor/usernotnull/tall-toasts/resources/views/**/*.blade.php',
   ],
   theme: {
     extend: {},
