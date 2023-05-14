@@ -27,6 +27,27 @@
                                     <span class="sr-only">View</span>
                                 </th>
                             </tr>
+                            <tr>
+                                <td class="px-2 py-2">
+                                    <input wire:model="searchColumns.incident_number" type="text" placeholder="Search..." class="w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                                </td>
+                                <td class="px-2 py-1">
+                                    <input wire:model="searchColumns.ampds_code" type="text" placeholder="Search..."
+                                           class="w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                                </td>
+                                <td class="px-2 py-1">
+                                    <input wire:model="searchColumns.incident_date" type="text" placeholder="Search..." class="w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                                </td>
+                                <td class="px-2 py-1 text-sm">
+                                    <select wire:model="searchColumns.attended"
+                                            class="w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                        <option value="">-- attended --</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </td>
+                                <td></td>
+                            </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
                             @foreach($callouts as $callout)
@@ -45,7 +66,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            {{ $callouts->links('pagination::tailwind') }}
+                            {{ $callouts->links() }}
                         </div>
                     </div>
                 </div>
