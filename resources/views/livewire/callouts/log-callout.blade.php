@@ -1,16 +1,18 @@
 <div>
-    <button wire:click.prevent="openCreateModal" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">
-        Log Callout
-    </button>
+    @can('defib.create')
+        <button wire:click.prevent="openModal" type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:w-auto">
+            Log Callout
+        </button>
+    @endcan
 
-    <div class="@if (!$showCreateModal) hidden @endif fixed inset-0 z-50 overflow-y-auto" role="dialog">
+    <div class="@if (!$showModal) hidden @endif fixed inset-0 z-50 overflow-y-auto" role="dialog">
         <div class="flex items-end justify-center min-h-screen px-4 text-center md:items-center sm:block sm:p-0">
             <div
                 class="inline-block w-full max-w-xl p-8 my-20 overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl 2xl:max-w-2xl">
                 <div class="flex items-center justify-between space-x-4">
                     <h1 class="text-xl font-medium text-gray-800 ">Log Callout</h1>
 
-                    <button wire:click="closeCreateModal"
+                    <button wire:click="closeModal"
                             class="text-gray-600 focus:outline-none hover:text-gray-700">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                              stroke="currentColor">
@@ -20,7 +22,7 @@
                     </button>
                 </div>
 
-                <form wire:submit.prevent="saveCallout" class="w-full">
+                <form wire:submit.prevent="save" class="w-full">
                     <div class="flex flex-col items-start p-4">
                         <div class="mb-2 w-full">
                             <label class="block text-sm font-medium text-gray-700" for="callout.incident_number">
@@ -316,7 +318,7 @@
                             <button class="px-4 py-2 font-bold text-white bg-red-500 rounded hover:bg-red-700" type="submit">
                                 Create
                             </button>
-                            <button wire:click.prevent="$set('showCreateModal', false)" class="px-4 py-2 font-bold text-white bg-gray-500 rounded" type="button" data-dismiss="modal">
+                            <button wire:click.prevent="closeModal" class="px-4 py-2 font-bold text-white bg-gray-500 rounded" type="button" data-dismiss="modal">
                                 Close
                             </button>
                         </div>

@@ -17,9 +17,8 @@ class LogCallout extends Component
     use WireToast;
 
     public Callout $callout;
-    public bool $showCreateModal = false;
+    public bool $showModal = false;
     public bool $showAdditionalFormFields = false;
-
     public array $aedSources = [];
     public array $wasteDisposalMethods = [];
 
@@ -29,7 +28,7 @@ class LogCallout extends Component
         $this->wasteDisposalMethods = WasteDisposalMethods::toArray();
     }
 
-    public function openCreateModal(): void
+    public function openModal(): void
     {
         $defaults = [
             'attended' => '',
@@ -37,22 +36,24 @@ class LogCallout extends Component
         ];
 
         $this->callout = new Callout($defaults);
-        $this->showCreateModal = true;
+        $this->showAdditionalFormFields = false;
+        $this->showModal = true;
     }
 
-    public function closeCreateModal(): void
+    public function closeModal(): void
     {
-        $this->showCreateModal = false;
+        $this->showAdditionalFormFields = false;
+        $this->showModal = false;
     }
 
-    public function saveCallout(): void
+    public function save(): void
     {
         $this->validate();
 
         $this->callout->user_id = auth()->user()->id;
         $this->callout->save();
 
-        $this->reset('showCreateModal');
+        $this->reset('showModal');
 
         toast()->success('Callout Logged')->push();
     }

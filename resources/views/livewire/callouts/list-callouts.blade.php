@@ -5,9 +5,7 @@
                 <h1 class="text-xl font-semibold text-gray-900">Callouts</h1>
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-                @can('defib.create')
-                    <livewire:callouts.log-callout />
-                @endcan
+                <livewire:callouts.log-callout />
             </div>
         </div>
         <div class="flex flex-col">
