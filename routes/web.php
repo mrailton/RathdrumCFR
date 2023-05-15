@@ -16,7 +16,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\UserRequestedReportsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UsersPermissionsController;
-use App\Http\Livewire\Callouts;
+use App\Http\Livewire\Callouts\ListCallouts;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', IndexController::class)->name('index');
@@ -68,9 +68,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('callouts')->name('callouts.')->group(function () {
-        Route::get('/', Callouts::class)->name('list')->can('callout.list');
-        Route::post('/', [CalloutController::class, 'store'])->name('store')->can('callout.create');
-        Route::get('/new', [CalloutController::class, 'create'])->name('create')->can('callout.create');
+        Route::get('/', ListCallouts::class)->name('list')->can('callout.list');
         Route::get('/{callout}', [CalloutController::class, 'show'])->name('show')->can('callout.view');
     });
 
