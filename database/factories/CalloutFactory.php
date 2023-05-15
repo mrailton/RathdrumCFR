@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\AedSource;
+use App\Enums\WasteDisposalMethods;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -30,13 +32,13 @@ class CalloutFactory extends Factory
                     'attended' => 'Yes',
                     'ohca_at_scene' => $this->faker->randomElement(['Yes', 'No', 'Unknown']),
                     'bystander_cpr' => $this->faker->randomElement(['Yes', 'No', 'Unknown']),
-                    'source_of_aed' => $this->faker->randomElement(['PAD', 'CFR', 'NAS', 'Fire', 'Garda', 'Other']),
+                    'source_of_aed' => $this->faker->randomElement(AedSource::toArray()),
                     'number_of_shocks_given' => $this->faker->randomNumber(1),
                     'rosc_achieved' => $this->faker->randomElement(['Yes', 'No', 'Unknown']),
                     'patient_transported' => $this->faker->randomElement(['Yes', 'No', 'Unknown']),
                     'responders_at_scene' => $this->faker->numberBetween(1, 4),
                     'ppe_kits_used' => $this->faker->numberBetween(1, 4),
-                    'waste_disposal' => $this->faker->randomElement(['NAS Crew', 'DFB Crew', 'NAS Station', 'Hospital', 'Responder', 'Other']),
+                    'waste_disposal' => $this->faker->randomElement(WasteDisposalMethods::toArray()),
                 ];
             }
 
