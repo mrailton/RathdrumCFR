@@ -10,8 +10,6 @@ use App\Http\Controllers\DefibInspectionController;
 use App\Http\Controllers\DefibNoteController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InviteUsersController;
-use App\Http\Controllers\MemberNotesController;
-use App\Http\Controllers\MembersController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\UserRequestedReportsController;
 use App\Http\Controllers\UsersController;
@@ -49,20 +47,6 @@ Route::middleware('auth')->group(function () {
         Route::prefix('/{defib}/notes')->name('notes.')->group(function () {
             Route::get('/new', [DefibNoteController::class, 'create'])->name('create')->can('defib.note');
             Route::post('/', [DefibNoteController::class, 'store'])->name('store')->can('defib.note');
-        });
-    });
-
-    Route::prefix('members')->name('members.')->group(function () {
-        Route::get('/', [MembersController::class, 'list'])->name('list')->can('member.list');
-        Route::post('/', [MembersController::class, 'store'])->name('store')->can('member.create');
-        Route::get('/new', [MembersController::class, 'create'])->name('create')->can('member.create');
-        Route::get('/{member}', [MembersController::class, 'show'])->name('view')->can('member.view');
-        Route::get('/{member}/update', [MembersController::class, 'edit'])->name('edit')->can('member.update');
-        Route::put('/{member}', [MembersController::class, 'update'])->name('update')->can('member.update');
-
-        Route::prefix('/{member}/notes')->name('notes.')->group(function () {
-            Route::get('/new', [MemberNotesController::class, 'create'])->name('create')->can('member.note');
-            Route::post('/', [MemberNotesController::class, 'store'])->name('store')->can('member.note');
         });
     });
 

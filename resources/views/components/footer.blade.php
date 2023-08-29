@@ -10,9 +10,7 @@
                 <p class="focus:outline-none">Website by
                     <a href="https://markrailton.com" target="_blank">Mark Railton</a>
                 </p>
-                @guest()
-                    <a href="{{ route('filament.admin.auth.login') }}">Login</a>
-                @endguest
+                    <a href="{{ route('filament.admin.pages.dashboard') }}">Admin</a>
             </div>
         </div>
     </div>
