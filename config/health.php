@@ -58,25 +58,12 @@ return [
         'throttle_notifications_key' => 'health:latestNotificationSentAt:',
 
         'mail' => [
-            'to' => 'your@example.com',
+            'to' => env('ADMIN_EMAIL'),
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
                 'name' => env('MAIL_FROM_NAME', 'Example'),
             ],
-        ],
-
-        'slack' => [
-            'webhook_url' => env('HEALTH_SLACK_WEBHOOK_URL', ''),
-
-            /*
-             * If this is set to null the default channel of the webhook will be used.
-             */
-            'channel' => null,
-
-            'username' => null,
-
-            'icon' => null,
         ],
     ],
 
