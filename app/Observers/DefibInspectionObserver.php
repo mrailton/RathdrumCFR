@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\DefibInspected;
 use App\Models\DefibInspection;
 
 class DefibInspectionObserver
@@ -14,5 +15,7 @@ class DefibInspectionObserver
             'last_inspected_at' => $inspection->inspected_at,
             'last_inspected_by' => $inspection->member->name,
         ]);
+
+        DefibInspected::dispatch($inspection->defib, $inspection);
     }
 }
