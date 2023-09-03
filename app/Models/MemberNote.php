@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Traits\HasUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,18 +14,10 @@ use function parent;
 class MemberNote extends Model
 {
     use HasFactory;
+    use HasUser;
     use SoftDeletes;
 
     protected $fillable = ['note'];
-
-    protected static function boot(): void
-    {
-        static::creating(function (MemberNote $note) {
-            $note->user_id = auth()->id();
-        });
-
-        parent::boot();
-    }
 
     public function author(): BelongsTo
     {

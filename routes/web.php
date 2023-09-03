@@ -5,9 +5,6 @@ declare(strict_types=1);
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalloutController;
 use App\Http\Controllers\ContactFormController;
-use App\Http\Controllers\DefibController;
-use App\Http\Controllers\DefibInspectionController;
-use App\Http\Controllers\DefibNoteController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InviteUsersController;
 use App\Http\Controllers\RegistrationController;
@@ -30,25 +27,6 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'destroy'])->name('auth.logout');
-
-    Route::prefix('defibs')->name('defibs.')->group(function () {
-        Route::get('/', [DefibController::class, 'list'])->name('list')->can('defib.list');
-        Route::post('/', [DefibController::class, 'store'])->name('store')->can('defib.create');
-        Route::get('/new', [DefibController::class, 'create'])->name('create')->can('defib.create');
-        Route::get('/{defib}', [DefibController::class, 'show'])->name('view')->can('defib.view');
-        Route::get('/{defib}/update', [DefibController::class, 'edit'])->name('edit')->can('defib.update');
-        Route::put('/{defib}', [DefibController::class, 'update'])->name('update')->can('defib.update');
-
-        Route::prefix('/{defib}/inspections')->name('inspections.')->group(function () {
-            Route::get('/new', [DefibInspectionController::class, 'create'])->name('create')->can('defib.inspect');
-            Route::post('/', [DefibInspectionController::class, 'store'])->name('store')->can('defib.inspect');
-        });
-
-        Route::prefix('/{defib}/notes')->name('notes.')->group(function () {
-            Route::get('/new', [DefibNoteController::class, 'create'])->name('create')->can('defib.note');
-            Route::post('/', [DefibNoteController::class, 'store'])->name('store')->can('defib.note');
-        });
-    });
 
     Route::prefix('callouts')->name('callouts.')->group(function () {
         Route::get('/', [CalloutController::class, 'list'])->name('list')->can('callout.list');

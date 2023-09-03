@@ -18,12 +18,6 @@
                     <a href="{{ route('contact.create') }}">Contact Us</a>
                 </li>
 
-                @can('defib.list')
-                    <li class="{{ (request()->is('defibs*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
-                        <a href="{{ route('defibs.list') }}">Defibs</a>
-                    </li>
-                @endcan
-
                 @can('callout.list')
                     <li class="{{ (request()->is('callouts*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
                         <a href="{{ route('callouts.list') }}">Callouts</a>
