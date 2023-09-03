@@ -30,7 +30,8 @@
         "spatie/laravel-permission": "^5.8",
         "spatie/security-advisories-health-check": "^1.1",
         "tapp/filament-authentication-log": "^3.0",
-        "torann/geoip": "^3.0"
+        "torann/geoip": "^3.0",
+        "usernotnull/tall-toasts": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
