@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\MemberResource\Pages;
 use App\Filament\Resources\MemberResource\RelationManagers;
 use App\Models\Member;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -69,7 +70,7 @@ class MemberResource extends Resource
                                 DatePicker::make('cfr_certificate_expiry')
                                     ->label('CFR Certificate Expiry'),
                                 DatePicker::make('volunteer_declaration')
-                                    ->label('Volunteer Declatation Signed'),
+                                    ->label('Volunteer Declaration Signed'),
                                 TextInput::make('garda_vetting_id')
                                     ->label('Garda Vetting ID')
                                     ->maxLength(255),
@@ -111,10 +112,12 @@ class MemberResource extends Resource
                     ->searchable()
                     ->formatStateUsing(fn(string $state): string => ucfirst($state)),
                 TextColumn::make('cfr_certificate_expiry')
+                    ->label('CFR Certificate Expiry')
                     ->date()
                     ->sortable(),
                 TextColumn::make('garda_vetting_date')
-                    ->date()
+                    ->label('Garda Vetting Expiry')
+                    ->formatStateUsing(fn (Carbon $state): string => $state->addYears(3)->format('M j, Y'))
                     ->sortable(),
             ])
             ->filters([
