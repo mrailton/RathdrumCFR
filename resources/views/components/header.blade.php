@@ -18,34 +18,11 @@
                     <a href="{{ route('contact.create') }}">Contact Us</a>
                 </li>
 
-                @can('defib.list')
-                    <li class="{{ (request()->is('defibs*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
-                        <a href="{{ route('defibs.list') }}">Defibs</a>
+                @auth()
+                    <li class="px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
+                        <a href="{{ route('filament.admin.pages.dashboard') }}">Admin</a>
                     </li>
-                @endcan
-
-                @can('member.list')
-                    <li class="{{ (request()->is('members*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
-                        <a href="{{ route('members.list') }}">Members</a>
-                    </li>
-                @endcan
-
-                @can('callout.list')
-                    <li class="{{ (request()->is('callouts*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
-                        <a href="{{ route('callouts.list') }}">Callouts</a>
-                    </li>
-                @endcan
-
-                @can('user.list')
-                    <li class="{{ (request()->is('users*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
-                        <a href="{{ route('users.list') }}">Users</a>
-                    </li>
-                @endcan
-                @can('horizon')
-                    <li class="{{ (request()->is('users*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
-                        <a href="{{ route('horizon.index') }}">Horizon</a>
-                    </li>
-                @endcan
+                @endauth
             </ul>
         </div>
     </nav>

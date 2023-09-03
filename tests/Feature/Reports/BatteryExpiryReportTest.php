@@ -8,6 +8,10 @@ use App\Models\Defib;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
+beforeEach(function () {
+    authenticatedUser();
+});
+
 test('sends the battery expiry report to users that want to receive it', function () {
     Mail::fake();
     User::factory()->create()->reports()->create(['defib_battery_expiry' => true]);

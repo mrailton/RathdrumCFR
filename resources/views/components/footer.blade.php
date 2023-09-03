@@ -10,17 +10,8 @@
                 <p class="focus:outline-none">Website by
                     <a href="https://markrailton.com" target="_blank">Mark Railton</a>
                 </p>
-                @guest()
-                    <a href="{{ route('login.create') }}">Login</a>
-                @endguest
-                @auth()
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-                @endauth
+                    <a href="{{ route('filament.admin.pages.dashboard') }}">Login</a>
             </div>
         </div>
     </div>
-
-    <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
 </footer>

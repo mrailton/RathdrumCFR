@@ -46,9 +46,6 @@ jobs:
         env:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
 
-      - name: Run Insights
-        run: php artisan insights
-
   deploy:
     runs-on: ubuntu-latest
     needs: test
