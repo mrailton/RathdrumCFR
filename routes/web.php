@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CalloutController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\InviteUsersController;
@@ -27,13 +26,6 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'destroy'])->name('auth.logout');
-
-    Route::prefix('callouts')->name('callouts.')->group(function () {
-        Route::get('/', [CalloutController::class, 'list'])->name('list')->can('callout.list');
-        Route::post('/', [CalloutController::class, 'store'])->name('store')->can('callout.create');
-        Route::get('/new', [CalloutController::class, 'create'])->name('create')->can('callout.create');
-        Route::get('/{callout}', [CalloutController::class, 'show'])->name('show')->can('callout.view');
-    });
 
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UsersController::class, 'list'])->name('list')->can('user.list');

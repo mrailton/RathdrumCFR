@@ -29,11 +29,6 @@
                         <a href="{{ route('users.list') }}">Users</a>
                     </li>
                 @endcan
-                @can('horizon')
-                    <li class="{{ (request()->is('users*')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
-                        <a href="{{ route('horizon.index') }}">Horizon</a>
-                    </li>
-                @endcan
             </ul>
         </div>
     </nav>

@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateDefib extends CreateRecord
 {
     protected static string $resource = DefibResource::class;
+    protected static bool $canCreateAnother = false;
 }

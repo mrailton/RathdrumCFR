@@ -8,6 +8,10 @@ use App\Models\Member;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
+beforeEach(function () {
+    authenticatedUser();
+});
+
 test('sends the cert expiry report to users that want to receive it', function () {
     Mail::fake();
     User::factory()->create()->reports()->create(['cfr_cert_expiry' => true]);
