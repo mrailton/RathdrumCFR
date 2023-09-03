@@ -30,7 +30,7 @@ class DefibResource extends Resource
 {
     protected static ?string $model = Defib::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bolt';
 
     public static function form(Form $form): Form
     {

@@ -27,7 +27,7 @@ class CalloutResource extends Resource
 {
     protected static ?string $model = Callout::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-phone-arrow-up-right';
 
     public static function form(Form $form): Form
     {
