@@ -39,6 +39,7 @@ class CalloutResource extends Resource
                 DateTimePicker::make('incident_date')
                     ->label('Incident Date')
                     ->seconds(false)
+                    ->default(now())
                     ->required(),
                 TextInput::make('ampds_code')
                     ->label('AMPDS Code')
