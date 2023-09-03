@@ -17,6 +17,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use STS\FilamentImpersonate\Impersonate;
 use Tapp\FilamentAuthenticationLog\RelationManagers\AuthenticationLogsRelationManager;
 
 class UserResource extends Resource
@@ -57,6 +58,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 ViewAction::make(),
+                Impersonate::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
