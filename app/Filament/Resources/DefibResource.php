@@ -79,16 +79,21 @@ class DefibResource extends Resource
                 TextColumn::make('name')
                     ->searchable(),
                 IconColumn::make('display_on_map')
+                    ->label('Display On Map')
                     ->boolean(),
                 TextColumn::make('last_inspected_by')
+                    ->label('Last Inspected By')
                     ->searchable(),
                 TextColumn::make('last_inspected_at')
+                    ->label('Last Inspcted On')
                     ->date()
                     ->sortable(),
                 TextColumn::make('pads_expire_at')
+                    ->label('Pads Expire On')
                     ->date()
                     ->sortable(),
                 TextColumn::make('battery_expires_at')
+                    ->label('Battery Expires On')
                     ->date()
                     ->sortable(),
             ])

@@ -18,6 +18,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use function ucfirst;
 
 class MemberResource extends Resource
 {
@@ -63,20 +64,33 @@ class MemberResource extends Resource
                         Tab::make('Certs')
                             ->schema([
                                 TextInput::make('cfr_certificate_number')
+                                    ->label('CFR Certificate Number')
                                     ->maxLength(255),
-                                DatePicker::make('cfr_certificate_expiry'),
-                                DatePicker::make('volunteer_declaration'),
+                                DatePicker::make('cfr_certificate_expiry')
+                                    ->label('CFR Certificate Expiry'),
+                                DatePicker::make('volunteer_declaration')
+                                    ->label('Volunteer Declatation Signed'),
                                 TextInput::make('garda_vetting_id')
+                                    ->label('Garda Vetting ID')
                                     ->maxLength(255),
-                                DatePicker::make('garda_vetting_date'),
-                                DatePicker::make('cism_completed'),
-                                DatePicker::make('child_first_completed'),
-                                DatePicker::make('ppe_community_completed'),
-                                DatePicker::make('ppe_acute_completed'),
-                                DatePicker::make('hand_hygiene_completed'),
-                                DatePicker::make('hiqa_completed'),
-                                DatePicker::make('covid_return_completed'),
-                                DatePicker::make('ppe_assessment_completed'),
+                                DatePicker::make('garda_vetting_date')
+                                    ->label('Garda Vetting Date'),
+                                DatePicker::make('cism_completed')
+                                    ->label('CISM Completed Date'),
+                                DatePicker::make('child_first_completed')
+                                    ->label('Children First Completed Date'),
+                                DatePicker::make('ppe_community_completed')
+                                    ->label('PPE Community Completed Date'),
+                                DatePicker::make('ppe_acute_completed')
+                                    ->label('PPE Acute Completed Date'),
+                                DatePicker::make('hand_hygiene_completed')
+                                    ->label('Hand Hygiene Completed Date'),
+                                DatePicker::make('hiqa_completed')
+                                    ->label('HIQA Completed Date'),
+                                DatePicker::make('covid_return_completed')
+                                    ->label('COVID Return Completed Date'),
+                                DatePicker::make('ppe_assessment_completed')
+                                    ->label('PPE Assessment Completed Date'),
                             ])
                     ])
             ])
@@ -94,7 +108,8 @@ class MemberResource extends Resource
                 TextColumn::make('email')
                     ->searchable(),
                 TextColumn::make('status')
-                    ->searchable(),
+                    ->searchable()
+                    ->formatStateUsing(fn(string $state): string => ucfirst($state)),
                 TextColumn::make('cfr_certificate_expiry')
                     ->date()
                     ->sortable(),
