@@ -13,7 +13,7 @@ class StatsOverview extends BaseWidget
 {
     protected function getStats(): array
     {
-        $cardiacArrestCodes = ['09E01', '30D01',];
+        $cardiacArrestCodes = ['09E01', '30D01', '09D01'];
 
         $callouts = Callout::query()->whereYear('incident_date', '=', now()->format('Y'));
         $arrests = Callout::query()->whereYear('incident_date', '=', now()->format('Y'))->whereIn('ampds_code', $cardiacArrestCodes);
