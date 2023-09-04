@@ -9,5 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateMember extends CreateRecord
 {
     protected static string $resource = MemberResource::class;
-    protected static bool $canCreateAnother = true;
+    protected static bool $canCreateAnother = false;
 }
