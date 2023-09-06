@@ -175,6 +175,20 @@ return [
                 'name' => env('MAIL_FROM_NAME', 'Example'),
             ],
         ],
+
+        'slack' => [
+            'webhook_url' => env('SLACK_WEBHOOK_URL'),
+
+            /*
+             * If this is set to null the default channel of the webhook will be used.
+             */
+            'channel' => '#server-alerts',
+
+            'username' => null,
+
+            'icon' => null,
+
+        ],
     ],
 
     /*
