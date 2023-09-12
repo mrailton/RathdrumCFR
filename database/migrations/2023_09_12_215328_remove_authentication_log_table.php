@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::table('authentication_log', function (Blueprint $table) {
-            $table->drop();
-        });
+        Schema::dropIfExists('authentication_log');
     }
 };
