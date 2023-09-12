@@ -18,7 +18,6 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use STS\FilamentImpersonate\Impersonate;
-use Tapp\FilamentAuthenticationLog\RelationManagers\AuthenticationLogsRelationManager;
 
 class UserResource extends Resource
 {
@@ -73,7 +72,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            AuthenticationLogsRelationManager::make(),
+            //
         ];
     }
 
