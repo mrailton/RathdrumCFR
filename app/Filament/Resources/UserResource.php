@@ -57,7 +57,10 @@ class UserResource extends Resource
             ])
             ->actions([
                 ViewAction::make(),
-                Impersonate::make(),
+                Impersonate::make()
+                    ->redirectTo(
+                        route('filament.admin.pages.dashboard')
+                    ),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
