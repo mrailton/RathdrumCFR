@@ -21,7 +21,6 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use RickDBCN\FilamentEmail\FilamentEmail;
 use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 use ShuvroRoy\FilamentSpatieLaravelHealth\FilamentSpatieLaravelHealthPlugin;
-use Tapp\FilamentAuthenticationLog\FilamentAuthenticationLogPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -50,7 +49,6 @@ class AdminPanelProvider extends PanelProvider
                 FilamentShieldPlugin::make(),
                 FilamentSpatieLaravelBackupPlugin::make(),
                 FilamentSpatieLaravelHealthPlugin::make(),
-                FilamentAuthenticationLogPlugin::make(),
                 new FilamentEmail(),
                 GravatarPlugin::make(),
             ])
