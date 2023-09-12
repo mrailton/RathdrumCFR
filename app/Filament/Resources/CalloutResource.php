@@ -138,10 +138,15 @@ class CalloutResource extends Resource
                 TextColumn::make('ampds_code')
                     ->label('AMPDS Code')
                     ->searchable(),
-                IconColumn::make('attended')
-                    ->boolean(fn(string $state) => $state === 'Yes'),
                 IconColumn::make('mobilised')
-                    ->boolean(fn(string $state) => $state === 'Yes'),
+                    ->boolean(fn(string $state) => $state === 'Yes')
+                    ->label('Mobilised?'),
+                IconColumn::make('attended')
+                    ->boolean(fn(string $state) => $state === 'Yes')
+                    ->label('Attended?'),
+                IconColumn::make('medical_facility')
+                    ->boolean(fn(string $state) => $state === 'Yes')
+                    ->label('Medical Facility?'),
             ])
             ->filters([
                 TernaryFilter::make('attended')
