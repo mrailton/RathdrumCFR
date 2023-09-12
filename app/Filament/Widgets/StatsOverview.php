@@ -47,6 +47,11 @@ class StatsOverview extends BaseWidget
                 ->whereIn('ampds_code', $cardiacArrestCodes)
                 ->where('attended', '=', 'Yes')
                 ->count()),
+            Stat::make('ROSCs Achieved This Year', $callouts
+                ->clone()
+                ->whereIn('ampds_code', $cardiacArrestCodes)
+                ->where('rosc_achieved', '=', 'Yes')
+                ->count()),
             Stat::make('Total Defibrillators', $defibs
                 ->count()),
             Stat::make('Public Access Defibrillators', $defibs
