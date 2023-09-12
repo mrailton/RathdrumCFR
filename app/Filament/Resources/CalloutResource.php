@@ -49,11 +49,27 @@ class CalloutResource extends Resource
                 Select::make('gender')
                     ->options(['Unknown' => 'Unknown', 'Male' => 'Male', 'Female' => 'Female'])
                     ->required(),
+                Select::make('mobilised')
+                    ->label('Mobilised?')
+                    ->options(['No' => 'No', 'Yes' => 'Yes'])
+                    ->live()
+                    ->required(),
+                Select::make('medical_facility')
+                    ->label('Medical Facility?')
+                    ->options(['No' => 'No', 'Yes' => 'Yes'])
+                    ->live()
+                    ->visible(fn(Get $get): bool => match ($get('mobilised')) {
+                        'No' => true,
+                        default => false,
+                    }),
                 Select::make('attended')
                     ->label('Attended?')
                     ->options(['No' => 'No', 'Yes' => 'Yes'])
                     ->live()
-                    ->required(),
+                    ->visible(fn(Get $get): bool => match ($get('mobilised')) {
+                        'Yes' => true,
+                        default => false,
+                    }),
                 Select::make('ohca_at_scene')
                     ->label('OHCA At Scene?')
                     ->options(['Yes' => 'Yes', 'No' => 'No'])
@@ -95,12 +111,10 @@ class CalloutResource extends Resource
                     ->label('Patient Transported?')
                     ->options(['Yes' => 'Yes', 'No' => 'No'])
                     ->visible(function (Get $get) {
-                        if ($get('ohca_at_scene') === 'No') {
-                            return true;
-                        }
-
-                        if ($get('rosc_achieved') === 'Yes') {
-                            return true;
+                        if ($get('attended') === 'Yes') {
+                            if ($get('ohca_at_scene') === 'No' || $get('rosc_achieved') === 'Yes') {
+                                return true;
+                            }
                         }
 
                         return false;
