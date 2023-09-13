@@ -66,10 +66,14 @@ class CalloutResource extends Resource
                     ->label('Attended?')
                     ->options(['No' => 'No', 'Yes' => 'Yes'])
                     ->live()
-                    ->visible(fn(Get $get): bool => match ($get('mobilised')) {
+                    ->visible(fn(Get $get): bool => match ($get('attended')) {
                         'Yes' => true,
                         default => false,
                     }),
+                Select::make('members')
+                    ->relationship('members', 'name')
+                    ->preload()
+                    ->multiple(),
                 Select::make('ohca_at_scene')
                     ->label('OHCA At Scene?')
                     ->options(['Yes' => 'Yes', 'No' => 'No'])
@@ -133,7 +137,7 @@ class CalloutResource extends Resource
                     ->searchable(),
                 TextColumn::make('incident_date')
                     ->label('Date/Time')
-                    ->date('d/m/Y H:i')
+                    ->date('M j, Y H:i')
                     ->searchable(),
                 TextColumn::make('ampds_code')
                     ->label('AMPDS Code')

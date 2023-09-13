@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MemberResource\Pages;
 use App\Filament\Resources\MemberResource\RelationManagers;
+use App\Filament\Resources\MemberResource\RelationManagers\CalloutsRelationManager;
+use App\Filament\Resources\MemberResource\RelationManagers\NotesRelationManager;
 use App\Models\Member;
 use Carbon\Carbon;
 use Filament\Forms;
@@ -136,7 +138,8 @@ class MemberResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\NotesRelationManager::make(),
+            CalloutsRelationManager::make(),
+            NotesRelationManager::make(),
         ];
     }
 

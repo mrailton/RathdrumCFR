@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Traits\HasUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -57,5 +58,10 @@ class Member extends Model
     public function notes(): HasMany
     {
         return $this->hasMany(MemberNote::class);
+    }
+
+    public function callouts(): BelongsToMany
+    {
+        return $this->belongsToMany(Callout::class);
     }
 }
