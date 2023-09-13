@@ -182,7 +182,8 @@ class CalloutResource extends Resource
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('incident_date');
     }
 
     public static function getPages(): array
