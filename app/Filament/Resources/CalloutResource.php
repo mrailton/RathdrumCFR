@@ -62,18 +62,22 @@ class CalloutResource extends Resource
                         'No' => true,
                         default => false,
                     }),
+                Select::make('members')
+                    ->relationship('members', 'name')
+                    ->preload()
+                    ->multiple()
+                    ->visible(fn(Get $get): bool => match ($get('mobilised')) {
+                        'Yes' => true,
+                        default => false,
+                    }),
                 Select::make('attended')
                     ->label('Attended?')
                     ->options(['No' => 'No', 'Yes' => 'Yes'])
                     ->live()
-                    ->visible(fn(Get $get): bool => match ($get('attended')) {
+                    ->visible(fn(Get $get): bool => match ($get('mobilised')) {
                         'Yes' => true,
                         default => false,
                     }),
-                Select::make('members')
-                    ->relationship('members', 'name')
-                    ->preload()
-                    ->multiple(),
                 Select::make('ohca_at_scene')
                     ->label('OHCA At Scene?')
                     ->options(['Yes' => 'Yes', 'No' => 'No'])
