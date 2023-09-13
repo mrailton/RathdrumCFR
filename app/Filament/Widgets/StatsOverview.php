@@ -42,6 +42,11 @@ class StatsOverview extends BaseWidget
                 ->clone()
                 ->whereIn('ampds_code', $cardiacArrestCodes)
                 ->count()),
+            Stat::make('Mobilised Cardiac Arrests This Year', $callouts
+                ->clone()
+                ->whereIn('ampds_code', $cardiacArrestCodes)
+                ->where('mobilised', '=', 'Yes')
+                ->count()),
             Stat::make('Attended Cardiac Arrests This Year', $callouts
                 ->clone()
                 ->whereIn('ampds_code', $cardiacArrestCodes)
