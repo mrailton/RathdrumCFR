@@ -35,6 +35,7 @@ class AMPDSCodeResource extends Resource
                 TextInput::make('code'),
                 TextInput::make('description'),
                 Toggle::make('arrest_code'),
+                Toggle::make('far_code'),
             ]);
     }
 
@@ -47,6 +48,8 @@ class AMPDSCodeResource extends Resource
                 TextColumn::make('description')
                     ->searchable(),
                 IconColumn::make('arrest_code')
+                    ->boolean(),
+                IconColumn::make('far_code')
                     ->boolean(),
             ])
             ->filters([

@@ -14,6 +14,7 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
         $cardiacArrestCodes = AMPDSCode::query()->where('arrest_code', '=', true)->pluck('code');
+        $farCodes = AMPDSCode::query()->where('far_code', '=', true)->pluck('code');
         $callouts = Callout::query()->whereYear('incident_date', '=', now()->format('Y'));
         $defibs = Defib::query();
 
@@ -42,6 +43,20 @@ class StatsOverview extends BaseWidget
             Stat::make('Calls To Medical Facilities This Year', $callouts
                 ->clone()
                 ->where('medical_facility', '=', true)
+                ->count()),
+            Stat::make('Received FAR Calls This Year', $callouts
+                ->clone()
+                ->whereIn('ampds_code', $farCodes)
+                ->count()),
+            Stat::make('Mobilised FAR Calls This Year', $callouts
+                ->clone()
+                ->whereIn('ampds_code', $farCodes)
+                ->where('mobilised', '=', true)
+                ->count()),
+            Stat::make('Attended FAR Calls This Year', $callouts
+                ->clone()
+                ->whereIn('ampds_code', $farCodes)
+                ->where('attended', '=', true)
                 ->count()),
             Stat::make('Cardiac Arrests This Year', $callouts
                 ->clone()
