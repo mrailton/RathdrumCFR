@@ -21,7 +21,6 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class CalloutResource extends Resource
 {
@@ -51,76 +50,52 @@ class CalloutResource extends Resource
                     ->required(),
                 Select::make('mobilised')
                     ->label('Mobilised?')
-                    ->options(['No' => 'No', 'Yes' => 'Yes'])
+                    ->options([false => 'No', true => 'Yes'])
                     ->live()
                     ->required(),
                 Select::make('medical_facility')
                     ->label('Medical Facility?')
-                    ->options(['No' => 'No', 'Yes' => 'Yes'])
+                    ->options([false => 'No', true => 'Yes'])
                     ->live()
-                    ->visible(fn(Get $get): bool => match ($get('mobilised')) {
-                        'No' => true,
-                        default => false,
-                    }),
+                    ->visible(fn(Get $get): bool => !is_null($get('mobilised')) && !$get('mobilised')),
                 Select::make('members')
                     ->relationship('members', 'name')
                     ->preload()
                     ->multiple()
-                    ->visible(fn(Get $get): bool => match ($get('mobilised')) {
-                        'Yes' => true,
-                        default => false,
-                    }),
+                    ->visible(fn(Get $get): bool => !is_null($get('mobilised')) && $get('mobilised')),
                 Select::make('attended')
                     ->label('Attended?')
-                    ->options(['No' => 'No', 'Yes' => 'Yes'])
+                    ->options([false => 'No', true => 'Yes'])
                     ->live()
-                    ->visible(fn(Get $get): bool => match ($get('mobilised')) {
-                        'Yes' => true,
-                        default => false,
-                    }),
+                    ->visible(fn(Get $get): bool => !is_null($get('mobilised')) && $get('mobilised')),
                 Select::make('ohca_at_scene')
                     ->label('OHCA At Scene?')
-                    ->options(['Yes' => 'Yes', 'No' => 'No'])
-                    ->visible(fn(Get $get): bool => match ($get('attended')) {
-                        'Yes' => true,
-                        default => false,
-                    })
-                    ->live(),
+                    ->options([false => 'No', true => 'Yes'])
+                    ->live()
+                    ->visible(fn(Get $get): bool => !is_null($get('attended')) && $get('attended')),
                 Select::make('bystander_cpr')
                     ->label('Bystander CPR?')
-                    ->options(['Yes' => 'Yes', 'No' => 'No'])
-                    ->visible(fn(Get $get): bool => match ($get('ohca_at_scene')) {
-                        'Yes' => true,
-                        default => false,
-                    }),
+                    ->options([false => 'No', true => 'Yes'])
+                    ->visible(fn(Get $get): bool => !is_null($get('ohca_at_scene')) && $get('ohca_at_scene')),
                 Select::make('source_of_aed')
                     ->label('Source Of AED')
                     ->options(['CFR', 'PAD', 'NAS', 'Fire', 'Garda', 'Other'])
-                    ->visible(fn(Get $get): bool => match ($get('ohca_at_scene')) {
-                        'Yes' => true,
-                        default => false,
-                    }),
+                    ->visible(fn(Get $get): bool => !is_null($get('ohca_at_scene')) && $get('ohca_at_scene')),
                 TextInput::make('number_of_shocks_given')
                     ->label('Number Of Shocks Given')
                     ->numeric()
-                    ->visible(fn(Get $get): bool => match ($get('ohca_at_scene')) {
-                        'Yes' => true,
-                        default => false,
-                    }),
+                    ->visible(fn(Get $get): bool => !is_null($get('ohca_at_scene')) && $get('ohca_at_scene')),
                 Select::make('rosc_achieved')
                     ->label('ROSC Achieved?')
-                    ->options(['Yes' => 'Yes', 'No' => 'No'])
-                    ->visible(fn(Get $get): bool => match ($get('ohca_at_scene')) {
-                        'Yes' => true,
-                        default => false,
-                    })
-                    ->live(),
+                    ->options([false => 'No', true => 'Yes'])
+                    ->live()
+                    ->visible(fn(Get $get): bool => !is_null($get('ohca_at_scene')) && $get('ohca_at_scene')),
                 Select::make('patient_transported')
                     ->label('Patient Transported?')
-                    ->options(['Yes' => 'Yes', 'No' => 'No'])
+                    ->options([false => 'No', true => 'Yes'])
                     ->visible(function (Get $get) {
-                        if ($get('attended') === 'Yes') {
-                            if ($get('ohca_at_scene') === 'No' || $get('rosc_achieved') === 'Yes') {
+                        if (!is_null($get('attended')) && $get('attended')) {
+                            if (!is_null($get('ohca_at_scene')) && !$get('ohca_at_scene') || !is_null($get('rosc_achieved')) && $get('rosc_achieved')) {
                                 return true;
                             }
                         }
@@ -147,33 +122,22 @@ class CalloutResource extends Resource
                     ->label('AMPDS Code')
                     ->searchable(),
                 IconColumn::make('mobilised')
-                    ->boolean(fn(string $state) => $state === 'Yes')
+                    ->boolean()
                     ->label('Mobilised?'),
                 IconColumn::make('attended')
-                    ->boolean(fn(string $state) => $state === 'Yes')
+                    ->boolean()
                     ->label('Attended?'),
                 IconColumn::make('medical_facility')
-                    ->boolean(fn(string $state) => $state === 'Yes')
+                    ->boolean()
                     ->label('Medical Facility?'),
             ])
             ->filters([
                 TernaryFilter::make('attended')
-                    ->placeholder('Attended and Not Attended')
-                    ->trueLabel('Attended')
-                    ->falseLabel('Not Attended')
-                    ->queries(
-                        true: fn(Builder $query) => $query->where('attended', '=', 'Yes'),
-                        false: fn(Builder $query) => $query->where('attended', '=', 'No'),
-                    ),
+                    ->label('Attended?')
+                    ->placeholder('All'),
                 TernaryFilter::make('ohca_at_scene')
                     ->label('OHCA At Scene?')
-                    ->placeholder('All')
-                    ->trueLabel('Yes')
-                    ->falseLabel('No')
-                    ->queries(
-                        true: fn(Builder $query) => $query->where('ohca_at_scene', '=', 'Yes'),
-                        false: fn(Builder $query) => $query->where('ohca_at_scene', '=', 'No'),
-                    )
+                    ->placeholder('All'),
             ])
             ->actions([
                 ViewAction::make(),
