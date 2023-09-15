@@ -6,6 +6,7 @@ use App\Filament\Resources\CalloutResource\Pages\CreateCallout;
 use App\Filament\Resources\CalloutResource\Pages\EditCallout;
 use App\Filament\Resources\CalloutResource\Pages\ListCallouts;
 use App\Filament\Resources\CalloutResource\Pages\ViewCallout;
+use App\Models\AMPDSCode;
 use App\Models\Callout;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
@@ -18,6 +19,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
@@ -30,6 +32,13 @@ class CalloutResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $ampds = [];
+
+        foreach (AMPDSCode::all() as $code) {
+            $ampds[$code->code] = "{$code->code} - {$code->description}";
+        }
+
+
         return $form
             ->schema([
                 TextInput::make('incident_number')
@@ -40,8 +49,11 @@ class CalloutResource extends Resource
                     ->seconds(false)
                     ->default(now())
                     ->required(),
-                TextInput::make('ampds_code')
+                Select::make('ampds_code')
                     ->label('AMPDS Code')
+                    ->options($ampds)
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 TextInput::make('age')
                     ->required(),

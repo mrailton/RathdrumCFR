@@ -2,19 +2,18 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\AMPDSCode;
 use App\Models\Callout;
 use App\Models\Defib;
 use App\Models\Member;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use function now;
 
 class StatsOverview extends BaseWidget
 {
     protected function getStats(): array
     {
-        $cardiacArrestCodes = ['09E01', '30D01', '09D01'];
-
+        $cardiacArrestCodes = AMPDSCode::query()->where('arrest_code', '=', true)->pluck('code');
         $callouts = Callout::query()->whereYear('incident_date', '=', now()->format('Y'));
         $defibs = Defib::query();
 
