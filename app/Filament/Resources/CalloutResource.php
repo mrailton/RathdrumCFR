@@ -21,7 +21,6 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class CalloutResource extends Resource
 {
@@ -147,33 +146,22 @@ class CalloutResource extends Resource
                     ->label('AMPDS Code')
                     ->searchable(),
                 IconColumn::make('mobilised')
-                    ->boolean(fn(string $state) => $state === 'Yes')
+                    ->boolean()
                     ->label('Mobilised?'),
                 IconColumn::make('attended')
-                    ->boolean(fn(string $state) => $state === 'Yes')
+                    ->boolean()
                     ->label('Attended?'),
                 IconColumn::make('medical_facility')
-                    ->boolean(fn(string $state) => $state === 'Yes')
+                    ->boolean()
                     ->label('Medical Facility?'),
             ])
             ->filters([
                 TernaryFilter::make('attended')
-                    ->placeholder('Attended and Not Attended')
-                    ->trueLabel('Attended')
-                    ->falseLabel('Not Attended')
-                    ->queries(
-                        true: fn(Builder $query) => $query->where('attended', '=', 'Yes'),
-                        false: fn(Builder $query) => $query->where('attended', '=', 'No'),
-                    ),
+                    ->label('Attended?')
+                    ->placeholder('All'),
                 TernaryFilter::make('ohca_at_scene')
                     ->label('OHCA At Scene?')
-                    ->placeholder('All')
-                    ->trueLabel('Yes')
-                    ->falseLabel('No')
-                    ->queries(
-                        true: fn(Builder $query) => $query->where('ohca_at_scene', '=', 'Yes'),
-                        false: fn(Builder $query) => $query->where('ohca_at_scene', '=', 'No'),
-                    )
+                    ->placeholder('All'),
             ])
             ->actions([
                 ViewAction::make(),
