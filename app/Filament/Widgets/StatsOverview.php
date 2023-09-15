@@ -22,21 +22,27 @@ class StatsOverview extends BaseWidget
             Stat::make('Total Members', Member::query()
                 ->count()),
             Stat::make('Active Members', Member::query()
-                ->where('status', '=', 'active')
+                ->where('status', '=', true)
+                ->count()),
+            Stat::make('Total Defibrillators', $defibs
+                ->count()),
+            Stat::make('Public Access Defibrillators', $defibs
+                ->clone()
+                ->where('display_on_map', '=', true)
                 ->count()),
             Stat::make('Callouts This Year', $callouts
                 ->count()),
             Stat::make('Mobilised Callouts This Year', $callouts
                 ->clone()
-                ->where('mobilised', '=', 'Yes')
+                ->where('mobilised', '=', true)
                 ->count()),
             Stat::make('Attended Callouts This Year', $callouts
                 ->clone()
-                ->where('attended', '=', 'Yes')
+                ->where('attended', '=', true)
                 ->count()),
             Stat::make('Calls To Medical Facilities This Year', $callouts
                 ->clone()
-                ->where('medical_facility', '=', 'Yes')
+                ->where('medical_facility', '=', true)
                 ->count()),
             Stat::make('Cardiac Arrests This Year', $callouts
                 ->clone()
@@ -45,23 +51,17 @@ class StatsOverview extends BaseWidget
             Stat::make('Mobilised Cardiac Arrests This Year', $callouts
                 ->clone()
                 ->whereIn('ampds_code', $cardiacArrestCodes)
-                ->where('mobilised', '=', 'Yes')
+                ->where('mobilised', '=', true)
                 ->count()),
             Stat::make('Attended Cardiac Arrests This Year', $callouts
                 ->clone()
                 ->whereIn('ampds_code', $cardiacArrestCodes)
-                ->where('attended', '=', 'Yes')
+                ->where('attended', '=', true)
                 ->count()),
             Stat::make('ROSCs Achieved This Year', $callouts
                 ->clone()
                 ->whereIn('ampds_code', $cardiacArrestCodes)
-                ->where('rosc_achieved', '=', 'Yes')
-                ->count()),
-            Stat::make('Total Defibrillators', $defibs
-                ->count()),
-            Stat::make('Public Access Defibrillators', $defibs
-                ->clone()
-                ->where('display_on_map', '=', 1)
+                ->where('rosc_achieved', '=', true)
                 ->count()),
         ];
     }
