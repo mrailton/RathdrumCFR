@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\DefibResource\Pages;
 
 use App\Filament\Resources\DefibResource;
+use App\Filament\Widgets\DefibStats;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -14,6 +15,13 @@ class ListDefibs extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            DefibStats::class,
         ];
     }
 }

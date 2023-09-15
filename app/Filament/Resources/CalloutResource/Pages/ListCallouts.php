@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\CalloutResource\Pages;
 
 use App\Filament\Resources\CalloutResource;
+use App\Filament\Widgets\CalloutStats;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -14,6 +15,13 @@ class ListCallouts extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            CalloutStats::class,
         ];
     }
 }
