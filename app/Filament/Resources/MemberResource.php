@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MemberResource\Pages;
@@ -17,6 +19,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+
 use function ucfirst;
 
 class MemberResource extends Resource
@@ -108,7 +111,7 @@ class MemberResource extends Resource
                     ->searchable(),
                 TextColumn::make('status')
                     ->searchable()
-                    ->formatStateUsing(fn(string $state): string => ucfirst($state)),
+                    ->formatStateUsing(fn (string $state): string => ucfirst($state)),
                 TextColumn::make('cfr_certificate_expiry')
                     ->label('CFR Certificate Expiry')
                     ->date()

@@ -6,7 +6,7 @@ use App\Mail\ContactFormMail;
 use Illuminate\Support\Facades\Mail;
 use Lunaweb\RecaptchaV3\Facades\RecaptchaV3;
 
-test('the contact us form renders', function () {
+test('the contact us form renders', function (): void {
     $this->get(route('contact.create'))
         ->assertSee('Rathdrum Community First Responders')
         ->assertSee('please fill in the form below and someone will get back to you as soon as possible.')
@@ -14,7 +14,7 @@ test('the contact us form renders', function () {
         ->assertSee('Contact Us');
 });
 
-test('the contact form can be submitted', function () {
+test('the contact form can be submitted', function (): void {
     Mail::fake();
     RecaptchaV3::shouldReceive('verify')
         ->once()

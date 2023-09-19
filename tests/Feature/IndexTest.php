@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-test('index page loads', function () {
+test('index page loads', function (): void {
     $this->get(route('index'))
         ->assertStatus(200)
         ->assertSee('Rathdrum Community First Responders')

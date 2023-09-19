@@ -8,11 +8,11 @@ use App\Models\Defib;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
-beforeEach(function () {
+beforeEach(function (): void {
     authenticatedUser();
 });
 
-test('sends the defibs expiry report to users that want to receive it', function () {
+test('sends the defibs expiry report to users that want to receive it', function (): void {
     Mail::fake();
     User::factory()->create()->reports()->create(['defib_pad_expiry' => true]);
     Defib::factory()->count(10)->create();
@@ -22,7 +22,7 @@ test('sends the defibs expiry report to users that want to receive it', function
     Mail::assertQueued(DefibPadExpiryMail::class);
 });
 
-test('does not send the defib expiry report to users that do not want to receive it', function () {
+test('does not send the defib expiry report to users that do not want to receive it', function (): void {
     Mail::fake();
     User::factory()->create()->reports()->create(['defib_pad_expiry' => false]);
     Defib::factory()->count(10)->create();
@@ -32,7 +32,7 @@ test('does not send the defib expiry report to users that do not want to receive
     Mail::assertNotQueued(DefibPadExpiryMail::class);
 });
 
-test('email content renders properly if there are defibs that have pads expiring in hte next month', function () {
+test('email content renders properly if there are defibs that have pads expiring in hte next month', function (): void {
     Defib::factory()->create(['pads_expire_at' => now()->addDays(3)]);
     $defibs = (new GenerateDefibPadExpiryReport())->getDefibs();
 
@@ -41,7 +41,7 @@ test('email content renders properly if there are defibs that have pads expiring
     $mailable->assertSeeInHtml($defibs[0]->name);
 });
 
-test('email content renders properly if there are no defibs that have pads expiring in the next month', function () {
+test('email content renders properly if there are no defibs that have pads expiring in the next month', function (): void {
     Defib::factory()->create(['pads_expire_at' => now()->addMonths(3)]);
     $defibs = (new GenerateDefibPadExpiryReport())->getDefibs();
 

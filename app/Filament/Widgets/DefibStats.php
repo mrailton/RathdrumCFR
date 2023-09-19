@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Widgets;
 
 use App\Models\Defib;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+
 use function now;
 
 class DefibStats extends BaseWidget
@@ -24,7 +27,7 @@ class DefibStats extends BaseWidget
                 ->where('display_on_map', '=', true)
                 ->count()),
             Stat::make('Defibs With Expiring Pads', $defibs
-            ->clone()
+                ->clone()
                 ->where('pads_expire_at', '<', now()->addMonths(3))
                 ->orWhereNull('pads_expire_at')
                 ->count()),

@@ -8,11 +8,11 @@ use App\Models\Member;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
-beforeEach(function () {
+beforeEach(function (): void {
     authenticatedUser();
 });
 
-test('it sends the garda vetting expiry report to users that want to receive it', function () {
+test('it sends the garda vetting expiry report to users that want to receive it', function (): void {
     Mail::fake();
     User::factory()->create()->reports()->create(['garda_vetting_expiry' => true]);
     Member::factory()->count(10)->create();
@@ -22,7 +22,7 @@ test('it sends the garda vetting expiry report to users that want to receive it'
     Mail::assertQueued(GardaVettingExpiryMail::class);
 });
 
-test('it does not send the garda vetting expiry report to users that do not want to receive it', function () {
+test('it does not send the garda vetting expiry report to users that do not want to receive it', function (): void {
     Mail::fake();
     User::factory()->create()->reports()->create(['garda_vetting_expiry' => false]);
     Member::factory()->count(10)->create();
@@ -32,7 +32,7 @@ test('it does not send the garda vetting expiry report to users that do not want
     Mail::assertNotQueued(GardaVettingExpiryMail::class);
 });
 
-test('email content renders properly if there are members with garda vetting expiring in the next 2 months', function () {
+test('email content renders properly if there are members with garda vetting expiring in the next 2 months', function (): void {
     Member::factory()->create(['garda_vetting_date' => now()->subYears(3)]);
     $members = (new GenerateGardaVettingExpiryReport())->getMembers();
 
@@ -40,7 +40,7 @@ test('email content renders properly if there are members with garda vetting exp
         ->assertSeeInHtml($members[0]->name);
 });
 
-test('email content renders properly if there are no members with garda vetting expiring in the next 2 months', function () {
+test('email content renders properly if there are no members with garda vetting expiring in the next 2 months', function (): void {
     Member::factory()->create(['garda_vetting_date' => now()]);
     $members = (new GenerateGardaVettingExpiryReport())->getMembers();
 

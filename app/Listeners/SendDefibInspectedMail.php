@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Mail;
 
 class SendDefibInspectedMail implements ShouldQueue
 {
-    use InteractsWithQueue;
     use GetsReportRecipients;
+    use InteractsWithQueue;
 
     public string $key = 'defib_inspected';
 

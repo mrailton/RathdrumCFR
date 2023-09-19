@@ -8,11 +8,11 @@ use App\Models\Member;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
-beforeEach(function () {
+beforeEach(function (): void {
     authenticatedUser();
 });
 
-test('sends the cert expiry report to users that want to receive it', function () {
+test('sends the cert expiry report to users that want to receive it', function (): void {
     Mail::fake();
     User::factory()->create()->reports()->create(['cfr_cert_expiry' => true]);
     Member::factory()->count(10)->create();
@@ -22,7 +22,7 @@ test('sends the cert expiry report to users that want to receive it', function (
     Mail::assertQueued(CertExpiryMail::class);
 });
 
-test('does not send the cert expiry report to users that do not want to receive it', function () {
+test('does not send the cert expiry report to users that do not want to receive it', function (): void {
     Mail::fake();
     User::factory()->create()->reports()->create(['cfr_cert_expiry' => false]);
     Member::factory()->count(10)->create();
@@ -32,7 +32,7 @@ test('does not send the cert expiry report to users that do not want to receive 
     Mail::assertNotQueued(CertExpiryMail::class);
 });
 
-test('email content renders properly if there are members with a cert expiring in the next 2 months', function () {
+test('email content renders properly if there are members with a cert expiring in the next 2 months', function (): void {
     Member::factory()->create(['cfr_certificate_expiry' => now()]);
     $members = (new GenerateCertExpiryReport())->getMembers();
 
@@ -40,7 +40,7 @@ test('email content renders properly if there are members with a cert expiring i
         ->assertSeeInHtml($members[0]->name);
 });
 
-test('email content renders properly if there are no members with a cert expiring in the next 2 months', function () {
+test('email content renders properly if there are no members with a cert expiring in the next 2 months', function (): void {
     Member::factory()->create(['cfr_certificate_expiry' => now()->addMonths(6)]);
     $members = (new GenerateCertExpiryReport())->getMembers();
 

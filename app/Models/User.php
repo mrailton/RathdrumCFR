@@ -15,8 +15,8 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasRoles;
     use HasFactory;
+    use HasRoles;
     use Notifiable;
     use SoftDeletes;
 

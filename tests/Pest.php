@@ -10,9 +10,7 @@ uses(Tests\TestCase::class)->in('Feature');
 uses(LazilyRefreshDatabase::class)->in('Feature');
 uses()->beforeEach(fn () => $this->seed(PermissionsSeeder::class))->in('Feature');
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
-});
+expect()->extend('toBeOne', fn () => $this->toBe(1));
 
 function authenticatedUser(?array $permissions = null): Tests\TestCase
 {

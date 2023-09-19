@@ -8,11 +8,11 @@ use App\Models\Defib;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
-beforeEach(function () {
+beforeEach(function (): void {
     authenticatedUser();
 });
 
-test('sends the battery expiry report to users that want to receive it', function () {
+test('sends the battery expiry report to users that want to receive it', function (): void {
     Mail::fake();
     User::factory()->create()->reports()->create(['defib_battery_expiry' => true]);
     Defib::factory()->count(10)->create();
@@ -22,7 +22,7 @@ test('sends the battery expiry report to users that want to receive it', functio
     Mail::assertQueued(BatteryExpiryMail::class);
 });
 
-test('does not send the battery expiry report to users that do not want to receive it', function () {
+test('does not send the battery expiry report to users that do not want to receive it', function (): void {
     Mail::fake();
     User::factory()->create()->reports()->create(['defib_battery_expiry' => false]);
     Defib::factory()->count(10)->create();
@@ -32,7 +32,7 @@ test('does not send the battery expiry report to users that do not want to recei
     Mail::assertNotQueued(BatteryExpiryMail::class);
 });
 
-test('email content renders properly if there are defibs with expiring batteries', function () {
+test('email content renders properly if there are defibs with expiring batteries', function (): void {
     Defib::factory()->create(['battery_expires_at' => now()->subMonths(3)]);
     $defibs = (new GenerateBatteryExpiryReport())->getDefibs();
 
@@ -41,7 +41,7 @@ test('email content renders properly if there are defibs with expiring batteries
     $mailable->assertSeeInHtml($defibs[0]->name);
 });
 
-test('email content renders properly if there are no defibs with expiring batteries', function () {
+test('email content renders properly if there are no defibs with expiring batteries', function (): void {
     Defib::factory()->create(['battery_expires_at' => now()->addYears(3)]);
     $defibs = (new GenerateBatteryExpiryReport())->getDefibs();
 

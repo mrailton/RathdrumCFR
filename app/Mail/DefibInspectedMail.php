@@ -13,7 +13,8 @@ use Illuminate\Queue\SerializesModels;
 
 class DefibInspectedMail extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public function __construct(protected Defib $defib, protected DefibInspection $inspection)
     {

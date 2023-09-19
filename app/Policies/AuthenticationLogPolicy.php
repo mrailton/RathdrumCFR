@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
 use App\Models\User;
-use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Rappasoft\LaravelAuthenticationLog\Models\AuthenticationLog;
 
 class AuthenticationLogPolicy
 {

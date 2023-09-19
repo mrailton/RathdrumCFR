@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Mail;
 class GenerateBatteryExpiryReport implements ShouldQueue
 {
     use Dispatchable;
+    use GetsReportRecipients;
     use InteractsWithQueue;
     use Queueable;
-    use GetsReportRecipients;
     use SerializesModels;
 
     public string $key = 'defib_battery_expiry';

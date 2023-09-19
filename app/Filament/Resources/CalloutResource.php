@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CalloutResource\Pages\CreateCallout;
@@ -19,7 +21,6 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
@@ -69,45 +70,45 @@ class CalloutResource extends Resource
                     ->label('Medical Facility?')
                     ->options([false => 'No', true => 'Yes'])
                     ->live()
-                    ->visible(fn(Get $get): bool => !is_null($get('mobilised')) && !$get('mobilised')),
+                    ->visible(fn (Get $get): bool => null !== $get('mobilised') && ! $get('mobilised')),
                 Select::make('members')
                     ->relationship('members', 'name')
                     ->preload()
                     ->multiple()
-                    ->visible(fn(Get $get): bool => !is_null($get('mobilised')) && $get('mobilised')),
+                    ->visible(fn (Get $get): bool => null !== $get('mobilised') && $get('mobilised')),
                 Select::make('attended')
                     ->label('Attended?')
                     ->options([false => 'No', true => 'Yes'])
                     ->live()
-                    ->visible(fn(Get $get): bool => !is_null($get('mobilised')) && $get('mobilised')),
+                    ->visible(fn (Get $get): bool => null !== $get('mobilised') && $get('mobilised')),
                 Select::make('ohca_at_scene')
                     ->label('OHCA At Scene?')
                     ->options([false => 'No', true => 'Yes'])
                     ->live()
-                    ->visible(fn(Get $get): bool => !is_null($get('attended')) && $get('attended')),
+                    ->visible(fn (Get $get): bool => null !== $get('attended') && $get('attended')),
                 Select::make('bystander_cpr')
                     ->label('Bystander CPR?')
                     ->options([false => 'No', true => 'Yes'])
-                    ->visible(fn(Get $get): bool => !is_null($get('ohca_at_scene')) && $get('ohca_at_scene')),
+                    ->visible(fn (Get $get): bool => null !== $get('ohca_at_scene') && $get('ohca_at_scene')),
                 Select::make('source_of_aed')
                     ->label('Source Of AED')
                     ->options(['CFR', 'PAD', 'NAS', 'Fire', 'Garda', 'Other'])
-                    ->visible(fn(Get $get): bool => !is_null($get('ohca_at_scene')) && $get('ohca_at_scene')),
+                    ->visible(fn (Get $get): bool => null !== $get('ohca_at_scene') && $get('ohca_at_scene')),
                 TextInput::make('number_of_shocks_given')
                     ->label('Number Of Shocks Given')
                     ->numeric()
-                    ->visible(fn(Get $get): bool => !is_null($get('ohca_at_scene')) && $get('ohca_at_scene')),
+                    ->visible(fn (Get $get): bool => null !== $get('ohca_at_scene') && $get('ohca_at_scene')),
                 Select::make('rosc_achieved')
                     ->label('ROSC Achieved?')
                     ->options([false => 'No', true => 'Yes'])
                     ->live()
-                    ->visible(fn(Get $get): bool => !is_null($get('ohca_at_scene')) && $get('ohca_at_scene')),
+                    ->visible(fn (Get $get): bool => null !== $get('ohca_at_scene') && $get('ohca_at_scene')),
                 Select::make('patient_transported')
                     ->label('Patient Transported?')
                     ->options([false => 'No', true => 'Yes'])
                     ->visible(function (Get $get) {
-                        if (!is_null($get('attended')) && $get('attended')) {
-                            if (!is_null($get('ohca_at_scene')) && !$get('ohca_at_scene') || !is_null($get('rosc_achieved')) && $get('rosc_achieved')) {
+                        if (null !== $get('attended') && $get('attended')) {
+                            if (null !== $get('ohca_at_scene') && ! $get('ohca_at_scene') || null !== $get('rosc_achieved') && $get('rosc_achieved')) {
                                 return true;
                             }
                         }
