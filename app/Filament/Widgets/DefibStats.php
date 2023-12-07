@@ -7,7 +7,6 @@ namespace App\Filament\Widgets;
 use App\Models\Defib;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-
 use function now;
 
 class DefibStats extends BaseWidget

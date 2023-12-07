@@ -4,14 +4,21 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages;
 
+use App\Filament\Widgets\CalloutStats;
+use App\Filament\Widgets\DefibStats;
+use App\Filament\Widgets\Filters;
+use App\Filament\Widgets\MemberStats;
 use Filament\Pages\Dashboard as DashboardAlias;
 
 class Dashboard extends DashboardAlias
 {
-    public function getTitle(): string
+    public function getWidgets(): array
     {
-        $year = now()->format('Y');
-
-        return "Rathdrum CFR Stats ({$year})";
+        return [
+            Filters::make(),
+            CalloutStats::make(),
+            MemberStats::make(),
+            DefibStats::make(),
+        ];
     }
 }

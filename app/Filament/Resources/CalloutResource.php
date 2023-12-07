@@ -10,7 +10,9 @@ use App\Filament\Resources\CalloutResource\Pages\ListCallouts;
 use App\Filament\Resources\CalloutResource\Pages\ViewCallout;
 use App\Models\AMPDSCode;
 use App\Models\Callout;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -22,8 +24,10 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class CalloutResource extends Resource
 {
@@ -151,6 +155,26 @@ class CalloutResource extends Resource
                 TernaryFilter::make('ohca_at_scene')
                     ->label('OHCA At Scene?')
                     ->placeholder('All'),
+                Filter::make('incident_date')
+                    ->form([
+                        Fieldset::make('Callout Date')
+                            ->schema([
+                                DatePicker::make('from')->default(now()->startOfYear()),
+                                DatePicker::make('to')->default(now()->endOfYear()),
+                            ])
+                            ->columns(1)
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when(
+                                $data['from'] ?? null,
+                                fn(Builder $query) => $query->whereDate('incident_date', '>=', $data['from'])
+                            )
+                            ->when(
+                                $data['to'] ?? null,
+                                fn(Builder $query) => $query->whereDate('incident_date', '<=', $data['to'])
+                            );
+                    })
             ])
             ->actions([
                 ViewAction::make(),
