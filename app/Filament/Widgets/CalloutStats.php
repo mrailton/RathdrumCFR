@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace App\Filament\Widgets;
 
 use App\Helpers\WidgetHelper;
-use App\Models\AMPDSCode;
 use App\Models\Callout;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 use Livewire\Attributes\On;
-use function now;
 
 class CalloutStats extends BaseWidget
 {
@@ -22,8 +19,8 @@ class CalloutStats extends BaseWidget
 
     public function mount(): void
     {
-        $this->fromDate = Filters::$public['from'];
-        $this->toDate = Filters::$public['to'];
+        $this->fromDate = Filters::$public['from'] ?? now()->startOfYear();
+        $this->toDate = Filters::$public['to'] ?? now()->startOfYear();
     }
 
     #[On('updateFromDate')]
