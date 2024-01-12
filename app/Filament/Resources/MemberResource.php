@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MemberResource\Pages;
+use App\Filament\Resources\MemberResource\Pages\CreateMember;
+use App\Filament\Resources\MemberResource\Pages\EditMember;
+use App\Filament\Resources\MemberResource\Pages\ListMembers;
+use App\Filament\Resources\MemberResource\Pages\ViewMember;
 use App\Filament\Resources\MemberResource\RelationManagers\CalloutsRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\NotesRelationManager;
 use App\Models\Member;
@@ -17,9 +21,15 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use function ucfirst;
 
 class MemberResource extends Resource
@@ -111,25 +121,25 @@ class MemberResource extends Resource
                     ->searchable(),
                 TextColumn::make('status')
                     ->searchable()
-                    ->formatStateUsing(fn (string $state): string => ucfirst($state)),
+                    ->formatStateUsing(fn(string $state): string => ucfirst($state)),
                 TextColumn::make('cfr_certificate_expiry')
                     ->label('CFR Certificate Expiry')
                     ->date()
                     ->sortable(),
                 TextColumn::make('garda_vetting_date')
                     ->label('Garda Vetting Expiry')
-                    ->formatStateUsing(fn (Carbon $state): string => $state->addYears(3)->format('M j, Y'))
+                    ->formatStateUsing(fn(Carbon $state): string => $state->addYears(3)->format('M j, Y'))
                     ->sortable(),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -145,10 +155,10 @@ class MemberResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListMembers::route('/'),
-            'create' => Pages\CreateMember::route('/create'),
-            'view' => Pages\ViewMember::route('/{record}'),
-            'edit' => Pages\EditMember::route('/{record}/edit'),
+            'index' => ListMembers::route('/'),
+            'create' => CreateMember::route('/create'),
+            'view' => ViewMember::route('/{record}'),
+            'edit' => EditMember::route('/{record}/edit'),
         ];
     }
 }
