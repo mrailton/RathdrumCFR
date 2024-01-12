@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\MemberResource\Pages;
 use App\Filament\Resources\MemberResource\Pages\CreateMember;
 use App\Filament\Resources\MemberResource\Pages\EditMember;
 use App\Filament\Resources\MemberResource\Pages\ListMembers;
@@ -20,17 +19,14 @@ use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use function ucfirst;
 
 class MemberResource extends Resource
 {
@@ -160,5 +156,13 @@ class MemberResource extends Resource
             'view' => ViewMember::route('/{record}'),
             'edit' => EditMember::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }
