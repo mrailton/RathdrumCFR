@@ -28,6 +28,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
+    protected static ?string $navigationGroup = 'User Management';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -41,8 +43,8 @@ class UserResource extends Resource
                     ->maxLength(255),
                 TextInput::make('password')
                     ->password()
-                    ->required(fn (Page $livewire) => $livewire instanceof CreateUser)
-                    ->disabled(fn (Page $livewire) => $livewire instanceof EditUser)
+                    ->required(fn(Page $livewire) => $livewire instanceof CreateUser)
+                    ->disabled(fn(Page $livewire) => $livewire instanceof EditUser)
                     ->maxLength(255),
                 Select::make('roles')
                     ->relationship('roles', 'name')

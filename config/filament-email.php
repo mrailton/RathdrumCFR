@@ -6,7 +6,7 @@ declare(strict_types=1);
 return [
 
     'resource' => [
-        'group' => null,
+        'group' => 'System',
         'sort' => null,
         'default_sort_column' => 'created_at',
         'default_sort_direction' => 'desc',
