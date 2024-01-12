@@ -6,12 +6,15 @@ namespace App\Filament\Widgets;
 
 use App\Helpers\WidgetHelper;
 use App\Models\Callout;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Livewire\Attributes\On;
 
 class CalloutStats extends BaseWidget
 {
+    use HasWidgetShield;
+
     protected static ?int $sort = 2;
 
     public Carbon $fromDate;

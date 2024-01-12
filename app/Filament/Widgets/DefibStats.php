@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Filament\Widgets;
 
 use App\Models\Defib;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use function now;
 
 class DefibStats extends BaseWidget
 {
+    use HasWidgetShield;
+
     protected static ?int $sort = 2;
 
     protected function getStats(): array

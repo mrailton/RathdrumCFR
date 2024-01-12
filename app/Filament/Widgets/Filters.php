@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Widgets;
 
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -13,6 +14,7 @@ use Filament\Widgets\Widget;
 
 class Filters extends Widget implements HasForms
 {
+    use HasWidgetShield;
     use InteractsWithForms;
 
     protected static string $view = 'filament.widgets.filters';

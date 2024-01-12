@@ -12,6 +12,7 @@ use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\CreateAction;
@@ -37,6 +38,11 @@ class UserResource extends Resource
                 TextInput::make('email')
                     ->email()
                     ->required()
+                    ->maxLength(255),
+                TextInput::make('password')
+                    ->password()
+                    ->required(fn (Page $livewire) => $livewire instanceof CreateUser)
+                    ->disabled(fn (Page $livewire) => $livewire instanceof EditUser)
                     ->maxLength(255),
                 Select::make('roles')
                     ->relationship('roles', 'name')

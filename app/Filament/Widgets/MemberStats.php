@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace App\Filament\Widgets;
 
 use App\Models\Member;
+use BezhanSalleh\FilamentShield\Traits\HasWidgetShield;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use function now;
 
 class MemberStats extends BaseWidget
 {
+    use HasWidgetShield;
+
     protected static ?int $sort = 1;
 
     protected function getStats(): array
