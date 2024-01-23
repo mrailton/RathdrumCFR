@@ -32,6 +32,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.13",
+        "deployer/deployer": "^7.3",
         "fakerphp/faker": "^1.21",
         "laravel/pint": "^1.13",
         "mockery/mockery": "^1.4.4",
