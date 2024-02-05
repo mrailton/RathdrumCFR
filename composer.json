@@ -9,6 +9,7 @@
         "ext-pdo": "*",
         "awcodes/filament-gravatar": "^2.0",
         "bezhansalleh/filament-shield": "^3.1",
+        "croustibat/filament-jobs-monitor": "^2.1",
         "doctrine/dbal": "^3.5",
         "filament/filament": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
