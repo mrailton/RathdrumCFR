@@ -17,7 +17,6 @@
         "josiasmontag/laravel-recaptchav3": "dev-master",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
-        "laravel/slack-notification-channel": "^3.1",
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.0",
         "rickdbcn/filament-email": "^1.0",
