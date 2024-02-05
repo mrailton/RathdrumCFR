@@ -42,9 +42,4 @@ return [
     'slack' => [
         'webhook_url' => env('SLACK_WEBHOOK_URL'),
     ],
-
-    'horizon' => [
-        'token' => env('HORIZON_TOKEN'),
-    ],
-
 ];
