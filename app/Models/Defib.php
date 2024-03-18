@@ -30,6 +30,12 @@ class Defib extends Model
         'last_serviced_at',
         'pads_expire_at',
         'battery_expires_at',
+        'defib_lot_number',
+        'defib_manufacture_date',
+        'battery_lot_number',
+        'battery_manufacture_date',
+        'pads_lot_number',
+        'pads_manufacture_date',
     ];
 
     protected $casts = [
@@ -39,6 +45,9 @@ class Defib extends Model
         'display_on_map' => 'boolean',
         'serial' => 'string',
         'battery_expires_at' => 'datetime:Y-m-d',
+        'defib_manufacture_date' => 'datetime:Y-m-d',
+        'battery_manufacture_date' => 'datetime:Y-m-d',
+        'pads_manufacture_date' => 'datetime:Y-m-d',
     ];
 
     public function inspections(): HasMany

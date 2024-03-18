@@ -12,6 +12,8 @@ use App\Filament\Resources\DefibResource\RelationManagers\InspectionsRelationMan
 use App\Filament\Resources\DefibResource\RelationManagers\NotesRelationManager;
 use App\Models\Defib;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -38,40 +40,64 @@ class DefibResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('location')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('coordinates')
-                    ->maxLength(255),
-                Toggle::make('display_on_map')
-                    ->required(),
-                TextInput::make('model')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('serial')
-                    ->maxLength(255),
-                TextInput::make('owner')
-                    ->required()
-                    ->maxLength(255)
-                    ->default('RathdrumCFR'),
-                DatePicker::make('last_serviced_at')
-                    ->label('Last Serviced'),
-                DatePicker::make('last_inspected_at')
-                    ->label('Last Inspected On')
-                    ->readOnly(),
-                TextInput::make('last_inspected_by')
-                    ->label('Last Inspected By')
-                    ->readOnly(),
-                DatePicker::make('pads_expire_at')
-                    ->label('Pads Expiry')
-                    ->readOnly(),
-                DatePicker::make('battery_expires_at')
-                    ->label('Battery Expiry')
-                    ->readOnly(),
-            ]);
+                Tabs::make('Label')
+                    ->tabs([
+                        Tab::make('Defib')
+                            ->schema([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('location')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('coordinates')
+                                    ->maxLength(255),
+                                Toggle::make('display_on_map')
+                                    ->required(),
+                                TextInput::make('model')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('serial')
+                                    ->maxLength(255),
+                                TextInput::make('defib_lot_number')
+                                    ->maxLength(255)
+                                    ->label('Lot Number'),
+                                DatePicker::make('defib_manufacture_date')
+                                    ->label('Manufacture Date'),
+                                TextInput::make('owner')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->default('RathdrumCFR'),
+                                DatePicker::make('last_serviced_at')
+                                    ->label('Last Serviced'),
+                                DatePicker::make('last_inspected_at')
+                                    ->label('Last Inspected On'),
+                                TextInput::make('last_inspected_by')
+                                    ->label('Last Inspected By'),
+                            ]),
+                        Tab::make('Battery')
+                            ->schema([
+                                TextInput::make('battery_lot_number')
+                                    ->maxLength(255)
+                                    ->label('Battery Lot Number'),
+                                DatePicker::make('battery_manufacture_date')
+                                    ->label('Battery Manufacture Date'),
+                                DatePicker::make('battery_expires_at')
+                                    ->label('Battery Expiry'),
+                            ]),
+                        Tab::make('Pads')
+                            ->schema([
+                                TextInput::make('pads_lot_number')
+                                    ->maxLength(255)
+                                    ->label('Pads Lot Number'),
+                                DatePicker::make('pads_manufacture_date')
+                                    ->label('Pads Manufacture Date'),
+                                DatePicker::make('pads_expire_at')
+                                    ->label('Pads Expiry'),
+                            ]),
+                    ]),
+            ])
+            ->columns(1);
     }
 
     public static function table(Table $table): Table
