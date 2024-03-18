@@ -38,13 +38,4 @@ return [
             'api_key' => env('GOOGLE_MAPS_API_KEY'),
         ],
     ],
-
-    'slack' => [
-        'webhook_url' => env('SLACK_WEBHOOK_URL'),
-    ],
-
-    'horizon' => [
-        'token' => env('HORIZON_TOKEN'),
-    ],
-
 ];
