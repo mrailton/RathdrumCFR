@@ -18,7 +18,7 @@ class Filters extends Widget implements HasForms
     use InteractsWithForms;
 
     protected static string $view = 'filament.widgets.filters';
-
+    protected static bool $isLazy = false;
     protected string|int|array $columnSpan = 'full';
 
     protected static ?int $sort = 1;

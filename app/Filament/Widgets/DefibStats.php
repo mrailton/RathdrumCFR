@@ -15,6 +15,7 @@ class DefibStats extends BaseWidget
     use HasWidgetShield;
 
     protected static ?int $sort = 2;
+    protected static bool $isLazy = false;
 
     protected function getStats(): array
     {

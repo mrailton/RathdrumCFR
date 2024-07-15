@@ -16,6 +16,7 @@ class CalloutTableStats extends BaseWidget
     use HasWidgetShield;
 
     protected static ?int $sort = 1;
+    protected static bool $isLazy = false;
 
     protected function getTablePage(): string
     {

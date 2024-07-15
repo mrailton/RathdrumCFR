@@ -16,7 +16,7 @@ class CalloutStats extends BaseWidget
     use HasWidgetShield;
 
     protected static ?int $sort = 2;
-
+    protected static bool $isLazy = false;
     public Carbon $fromDate;
     public Carbon $toDate;
 
