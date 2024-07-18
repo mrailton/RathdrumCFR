@@ -95,10 +95,6 @@ class MemberResource extends Resource
                                     ->label('Hand Hygiene Completed Date'),
                                 DatePicker::make('hiqa_completed')
                                     ->label('HIQA Completed Date'),
-                                DatePicker::make('covid_return_completed')
-                                    ->label('COVID Return Completed Date'),
-                                DatePicker::make('ppe_assessment_completed')
-                                    ->label('PPE Assessment Completed Date'),
                             ])
                     ])
             ])
