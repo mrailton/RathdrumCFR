@@ -30,12 +30,15 @@ class User extends Authenticatable implements FilamentUser
         'password',
     ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'last_login_at' => 'datetime',
-    ];
-
     protected $rememberTokenName = '';
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'last_login_at' => 'datetime',
+        ];
+    }
 
     public function reports(): HasOne
     {

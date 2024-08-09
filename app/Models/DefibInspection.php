@@ -18,11 +18,14 @@ class DefibInspection extends Model
 
     protected $fillable = ['member_id', 'inspected_at', 'pads_expire_at', 'battery_expires_at', 'battery_condition', 'notes'];
 
-    protected $casts = [
-        'inspected_at' => 'date:Y-m-d',
-        'pads_expire_at' => 'date:Y-m-d',
-        'battery_expires_at' => 'date:Y-m-d',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'inspected_at' => 'date:Y-m-d',
+            'pads_expire_at' => 'date:Y-m-d',
+            'battery_expires_at' => 'date:Y-m-d',
+        ];
+    }
 
     public function member(): BelongsTo
     {

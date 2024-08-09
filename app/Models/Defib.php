@@ -38,17 +38,20 @@ class Defib extends Model
         'pads_manufacture_date',
     ];
 
-    protected $casts = [
-        'last_inspected_at' => 'datetime:Y-m-d',
-        'pads_expire_at' => 'datetime:Y-m-d',
-        'last_serviced_at' => 'datetime:Y-m-d',
-        'display_on_map' => 'boolean',
-        'serial' => 'string',
-        'battery_expires_at' => 'datetime:Y-m-d',
-        'defib_manufacture_date' => 'datetime:Y-m-d',
-        'battery_manufacture_date' => 'datetime:Y-m-d',
-        'pads_manufacture_date' => 'datetime:Y-m-d',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'last_inspected_at' => 'datetime:Y-m-d',
+            'pads_expire_at' => 'datetime:Y-m-d',
+            'last_serviced_at' => 'datetime:Y-m-d',
+            'display_on_map' => 'boolean',
+            'serial' => 'string',
+            'battery_expires_at' => 'datetime:Y-m-d',
+            'defib_manufacture_date' => 'datetime:Y-m-d',
+            'battery_manufacture_date' => 'datetime:Y-m-d',
+            'pads_manufacture_date' => 'datetime:Y-m-d',
+        ];
+    }
 
     public function inspections(): HasMany
     {
