@@ -151,25 +151,6 @@ CREATE TABLE `failed_jobs` (
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `filament_email_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `filament_email_log` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `from` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `to` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bcc` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `text_body` longtext COLLATE utf8mb4_unicode_ci,
-  `html_body` longtext COLLATE utf8mb4_unicode_ci,
-  `raw_body` longtext COLLATE utf8mb4_unicode_ci,
-  `sent_debug_info` longtext COLLATE utf8mb4_unicode_ci,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `health_check_result_history_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -443,3 +424,4 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (30,'2023_09_15_202
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (31,'2024_02_05_105533_create_filament-jobs-monitor_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (32,'2024_03_18_123259_add_lot_numbers_to_defibs',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (33,'2024_08_09_000000_rename_password_resets_table',2);
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (34,'2024_08_09_104402_remove_filament_email_table',3);
