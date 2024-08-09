@@ -41,19 +41,22 @@ class Member extends Model
         'ppe_assessment_completed',
     ];
 
-    protected $casts = [
-        'cfr_certificate_expiry' => 'date:Y-m-d',
-        'volunteer_declaration' => 'date:Y-m-d',
-        'garda_vetting_date' => 'date:Y-m-d',
-        'cism_completed' => 'date:Y-m-d',
-        'child_first_completed' => 'date:Y-m-d',
-        'ppe_community_completed' => 'date:Y-m-d',
-        'ppe_acute_completed' => 'date:Y-m-d',
-        'hand_hygiene_completed' => 'date:Y-m-d',
-        'hiqa_completed' => 'date:Y-m-d',
-        'covid_return_completed' => 'date:Y-m-d',
-        'ppe_assessment_completed' => 'date:Y-m-d',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'cfr_certificate_expiry' => 'date:Y-m-d',
+            'volunteer_declaration' => 'date:Y-m-d',
+            'garda_vetting_date' => 'date:Y-m-d',
+            'cism_completed' => 'date:Y-m-d',
+            'child_first_completed' => 'date:Y-m-d',
+            'ppe_community_completed' => 'date:Y-m-d',
+            'ppe_acute_completed' => 'date:Y-m-d',
+            'hand_hygiene_completed' => 'date:Y-m-d',
+            'hiqa_completed' => 'date:Y-m-d',
+            'covid_return_completed' => 'date:Y-m-d',
+            'ppe_assessment_completed' => 'date:Y-m-d',
+        ];
+    }
 
     public function notes(): HasMany
     {

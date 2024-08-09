@@ -20,6 +20,8 @@ use Spatie\SecurityAdvisoriesHealthCheck\SecurityAdvisoriesCheck;
 
 class AppServiceProvider extends ServiceProvider
 {
+    public const HOME = '/';
+
     public function register(): void
     {
     }
