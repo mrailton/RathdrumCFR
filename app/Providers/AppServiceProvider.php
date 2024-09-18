@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
             RedisCheck::new(),
             ScheduleCheck::new()
                 ->useCacheStore('healthcheck')
-                ->heartbeatMaxAgeInMinutes(2),
+                ->heartbeatMaxAgeInMinutes(5),
             SecurityAdvisoriesCheck::new(),
             UsedDiskSpaceCheck::new(),
         ]);
