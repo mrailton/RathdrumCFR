@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\MemberResource\RelationManagers;
 
-use Filament\Forms;
+use Filament\Actions\StaticAction;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\HtmlString;
 
 class NotesRelationManager extends RelationManager
 {
@@ -18,9 +26,9 @@ class NotesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('note')
-                    ->required()
-                    ->maxLength(255),
+                Textarea::make('note')
+                    ->rows(5)
+                    ->required(),
             ])
             ->columns(1);
     }
@@ -30,21 +38,33 @@ class NotesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('note')
             ->columns([
-                Tables\Columns\TextColumn::make('note'),
-            ])
-            ->filters([
-                //
+                TextColumn::make('note')->limit(50),
+                TextColumn::make('created_at')->date('d/m/Y H:i:s')->sortable(),
+                TextColumn::make('updated_at')->date('d/m/Y H:i:s')->sortable(),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Action::make('view')
+                    ->label('View')
+                    ->icon('heroicon-o-eye')
+                    ->modalHeading('View Note')
+                    ->modalContent(function ($record) {
+                        return view('filament.modals.member-notes.view', ['note' => new HtmlString(sprintf('<pre style="font-family: inherit">%s</pre>', $record->note))]);
+                    })
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(function (StaticAction $action) {
+                        $action->button()->label('Close')->shouldClose();
+                    })
+                    ->closeModalByClickingAway()
+                    ->closeModalByEscaping(),
+                EditAction::make()->modalHeading('Edit Note'),
+                DeleteAction::make()->modalHeading('Are you sure?'),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
