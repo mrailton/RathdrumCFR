@@ -51,7 +51,7 @@ class NotesRelationManager extends RelationManager
                     ->icon('heroicon-o-eye')
                     ->modalHeading('View Note')
                     ->modalContent(function ($record) {
-                        return view('filament.modals.member-notes.view', ['note' => new HtmlString(sprintf('<pre style="font-family: inherit">%s</pre>', $record->note))]);
+                        return view('filament.modals.view-note', ['note' => new HtmlString(sprintf('<pre style="font-family: inherit">%s</pre>', $record->note))]);
                     })
                     ->modalSubmitAction(false)
                     ->modalCancelAction(function (StaticAction $action) {
