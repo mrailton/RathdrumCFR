@@ -10,6 +10,7 @@ use App\Filament\Resources\MemberResource\Pages\ListMembers;
 use App\Filament\Resources\MemberResource\Pages\ViewMember;
 use App\Filament\Resources\MemberResource\RelationManagers\CalloutsRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\NotesRelationManager;
+use App\Filament\Resources\MemberResource\RelationManagers\TrainingSessionsRelationManager;
 use App\Models\Member;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
@@ -141,6 +142,7 @@ class MemberResource extends Resource
         return [
             CalloutsRelationManager::make(),
             NotesRelationManager::make(),
+            TrainingSessionsRelationManager::make(),
         ];
     }
 

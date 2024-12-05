@@ -67,4 +67,9 @@ class Member extends Model
     {
         return $this->belongsToMany(Callout::class);
     }
+
+    public function trainingSessions(): BelongsToMany
+    {
+        return $this->belongsToMany(TrainingSession::class);
+    }
 }
