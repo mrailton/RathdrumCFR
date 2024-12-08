@@ -10,23 +10,7 @@ return [
      * can use multiple stores at the same time.
      */
     'result_stores' => [
-        Spatie\Health\ResultStores\EloquentHealthResultStore::class => [
-            'model' => Spatie\Health\Models\HealthCheckResultHistoryItem::class,
-            'keep_history_for_days' => 5,
-        ],
-
-        /*
-        Spatie\Health\ResultStores\CacheHealthResultStore::class => [
-            'store' => 'file',
-        ],
-
-        Spatie\Health\ResultStores\JsonFileHealthResultStore::class => [
-            'disk' => 's3',
-            'path' => 'health.json',
-        ],
-
         Spatie\Health\ResultStores\InMemoryHealthResultStore::class,
-        */
     ],
 
     /*
