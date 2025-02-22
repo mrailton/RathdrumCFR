@@ -20,6 +20,7 @@ class Defib extends Model
     protected $fillable = [
         'name',
         'location',
+        'eircode',
         'coordinates',
         'display_on_map',
         'model',

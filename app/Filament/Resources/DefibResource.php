@@ -50,6 +50,8 @@ class DefibResource extends Resource
                                 TextInput::make('location')
                                     ->required()
                                     ->maxLength(255),
+                                TextInput::make('eircode')
+                                    ->nullable(),
                                 TextInput::make('coordinates')
                                     ->maxLength(255),
                                 Toggle::make('display_on_map')
