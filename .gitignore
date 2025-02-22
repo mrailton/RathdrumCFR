@@ -8,6 +8,7 @@
 /storage/*.key
 /storage/key
 /storage/key.pub
+/storage/pail
 /vendor
 .env
 .env.backup
