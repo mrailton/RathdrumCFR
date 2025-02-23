@@ -18,6 +18,10 @@
                     <a href="{{ route('contact.create') }}">Contact Us</a>
                 </li>
 
+                <li class="{{ (request()->is('donate')) ? 'bg-white text-red-600' : '' }} px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
+                    <a href="{{ route('donate') }}">Donate Now</a>
+                </li>
+
                 @auth()
                     <li class="px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
                         <a href="{{ route('filament.admin.pages.dashboard') }}">Admin</a>
