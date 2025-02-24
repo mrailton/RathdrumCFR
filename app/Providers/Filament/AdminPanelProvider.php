@@ -45,7 +45,6 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 FilamentShieldPlugin::make(),
                 FilamentSpatieLaravelBackupPlugin::make()->usingPage(Backups::class),
-                FilamentSpatieLaravelHealthPlugin::make()->usingPage(HealthCheckResults::class),
                 GravatarPlugin::make(),
                 FilamentJobsMonitorPlugin::make(),
             ])
