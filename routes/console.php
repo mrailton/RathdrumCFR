@@ -5,10 +5,6 @@ declare(strict_types=1);
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
-use Spatie\Health\Commands\RunHealthChecksCommand;
-use Spatie\Health\Commands\ScheduleCheckHeartbeatCommand;
-use Spatie\Health\Models\HealthCheckResultHistoryItem;
-
 /*
 |--------------------------------------------------------------------------
 | Console Routes
@@ -32,6 +28,3 @@ Schedule::command('reports:battery-expiry')->monthlyOn(1, '09:00');
 Schedule::command('reports:defib-inspection')->monthlyOn(1, '09:00');
 Schedule::command('reports:defib-pad-expiry')->monthlyOn(1, '09:00');
 Schedule::command('reports:garda-vetting-expiry')->monthlyOn(1, '09:00');
-Schedule::command(RunHealthChecksCommand::class)->everyMinute();
-Schedule::command(ScheduleCheckHeartbeatCommand::class)->everyMinute();
-Schedule::command('model:prune', ['--model' => [HealthCheckResultHistoryItem::class]])->dailyAt('02:00');

@@ -21,7 +21,6 @@
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.0",
         "shuvroroy/filament-spatie-laravel-backup": "^2.0",
-        "shuvroroy/filament-spatie-laravel-health": "^2.0",
         "spatie/cpu-load-health-check": "^1.0",
         "spatie/laravel-backup": "^8.6",
         "spatie/laravel-permission": "^6.2",
