@@ -48,7 +48,7 @@ class MemberResource extends Resource
                                     ->maxLength(255),
                                 Select::make('status')
                                     ->required()
-                                    ->options(['inactive' => 'Inactive', 'active' => 'Active'])
+                                    ->options(['inactive' => 'Inactive', 'active' => 'Active', 'new recruit' => 'New Recruit', 'buddying' => 'Buddying'])
                                     ->default('Inactive'),
                                 TextInput::make('title')
                                     ->required()
@@ -114,7 +114,7 @@ class MemberResource extends Resource
                     ->searchable(),
                 TextColumn::make('status')
                     ->searchable()
-                    ->formatStateUsing(fn(string $state): string => ucfirst($state)),
+                    ->formatStateUsing(fn(string $state): string => ucwords($state)),
                 TextColumn::make('cfr_certificate_expiry')
                     ->label('CFR Certificate Expiry')
                     ->date()
