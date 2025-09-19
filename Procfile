@@ -1,3 +1,3 @@
 web: unitd --no-daemon
 scheduler: php /var/www/html/artisan schedule:work
-release: php /var/www/html/artisan migrate --force
+release: php /var/www/html/artisan config:cache && php /var/www/html/artisan migrate --force
