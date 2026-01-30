@@ -1,6 +1,13 @@
 # Stage 1: Build assets
 FROM node:20-alpine AS assets-builder
 WORKDIR /app
+
+# Install PHP and Composer to get vendor assets needed for the build
+RUN apk add --no-cache php83 php83-common php83-iconv php83-json php83-gd php83-curl php83-xml php83-mysqli php83-imap php83-cgi php83-pdo php83-pdo_mysql php83-soap php83-posix php83-gettext php83-ldap php83-ctype php83-dom php83-simplexml php83-tokenizer php83-xmlwriter php83-zip php83-mbstring php83-bcmath php83-phar php83-openssl curl composer
+
+COPY composer.* ./
+RUN composer install --no-interaction --no-dev --no-scripts --no-autoloader
+
 COPY package*.json ./
 RUN npm install
 COPY . .
