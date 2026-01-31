@@ -3,10 +3,10 @@ FROM node:20-alpine AS assets-builder
 WORKDIR /app
 
 # Install PHP and Composer to get vendor assets needed for the build
-RUN apk add --no-cache php83 php83-common php83-iconv php83-json php83-gd php83-curl php83-xml php83-mysqli php83-imap php83-cgi php83-pdo php83-pdo_mysql php83-soap php83-posix php83-gettext php83-ldap php83-ctype php83-dom php83-simplexml php83-tokenizer php83-xmlwriter php83-zip php83-mbstring php83-bcmath php83-phar php83-openssl curl composer
+RUN apk add --no-cache php84 php84-common php84-iconv php84-gd php84-curl php84-xml php84-mysqli php84-imap php84-cgi php84-pdo php84-pdo_mysql php84-soap php84-posix php84-gettext php84-ldap php84-ctype php84-dom php84-simplexml php84-tokenizer php84-xmlwriter php84-zip php84-mbstring php84-bcmath php84-phar php84-openssl php84-session php84-fileinfo php84-intl php84-pdo_sqlite curl composer
 
 COPY composer.* ./
-RUN composer install --no-interaction --no-dev --no-scripts --no-autoloader
+RUN composer install --no-interaction --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
 
 COPY package*.json ./
 RUN npm install
@@ -49,7 +49,7 @@ COPY . .
 COPY --from=assets-builder /app/public/build ./public/build
 
 # Install dependencies
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
 # Setup configurations
 COPY docker/nginx.conf /etc/nginx/nginx.conf
