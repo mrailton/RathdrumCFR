@@ -9,10 +9,12 @@ fi
 
 # Cache configuration and routes
 echo "Caching configuration..."
+php artisan optimize:clear
 php artisan config:cache
 php artisan route:cache
-php artisan view:cache
 php artisan event:cache
+php artisan filament:assets
+php aritsan filament:cache
 
 # Start Supervisor
 echo "Starting Supervisor..."
