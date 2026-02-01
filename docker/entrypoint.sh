@@ -14,7 +14,7 @@ php artisan config:cache
 php artisan route:cache
 php artisan event:cache
 php artisan filament:assets
-php aritsan filament:cache
+php artisan filament:cache
 
 # Start Supervisor
 echo "Starting Supervisor..."
