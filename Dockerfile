@@ -3,7 +3,7 @@ FROM node:20-alpine AS assets-builder
 WORKDIR /app
 
 # Install PHP and Composer to get vendor assets needed for the build
-RUN apk add --no-cache php84 php84-common php84-iconv php84-gd php84-curl php84-xml php84-mysqli php84-imap php84-cgi php84-pdo php84-pdo_mysql php84-soap php84-posix php84-gettext php84-ldap php84-ctype php84-dom php84-simplexml php84-tokenizer php84-xmlwriter php84-zip php84-mbstring php84-bcmath php84-phar php84-openssl php84-session php84-fileinfo php84-intl php84-pdo_sqlite curl composer
+RUN apk add --no-cache php84 php84-common php84-iconv php84-gd php84-curl php84-xml php84-mysqli php84-imap php84-cgi php84-pdo php84-pdo_mysql php84-soap php84-posix php84-gettext php84-ldap php84-ctype php84-dom php84-simplexml php84-tokenizer php84-xmlwriter php84-zip php84-mbstring php84-bcmath php84-phar php84-openssl php84-session php84-fileinfo php84-intl php84-pdo_sqlite php8.4-redis curl composer
 
 COPY composer.* ./
 RUN composer install --no-interaction --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
