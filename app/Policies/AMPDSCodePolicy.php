@@ -1,108 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\AMPDSCode;
-use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
 
 class AMPDSCodePolicy
 {
-    use HandlesAuthorization;
-
-    /**
-     * Determine whether the user can view any models.
-     */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_a::m::p::d::s::code');
+        return $user->can('view_any_ampds_code');
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
     public function view(User $user, AMPDSCode $aMPDSCode): bool
     {
-        return $user->can('view_a::m::p::d::s::code');
+        return $user->can('view_ampds_code');
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
     public function create(User $user): bool
     {
-        return $user->can('create_a::m::p::d::s::code');
+        return $user->can('create_ampds_code');
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
     public function update(User $user, AMPDSCode $aMPDSCode): bool
     {
-        return $user->can('update_a::m::p::d::s::code');
+        return $user->can('update_ampds_code');
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
     public function delete(User $user, AMPDSCode $aMPDSCode): bool
     {
-        return $user->can('delete_a::m::p::d::s::code');
-    }
-
-    /**
-     * Determine whether the user can bulk delete.
-     */
-    public function deleteAny(User $user): bool
-    {
-        return $user->can('delete_any_a::m::p::d::s::code');
-    }
-
-    /**
-     * Determine whether the user can permanently delete.
-     */
-    public function forceDelete(User $user, AMPDSCode $aMPDSCode): bool
-    {
-        return $user->can('force_delete_a::m::p::d::s::code');
-    }
-
-    /**
-     * Determine whether the user can permanently bulk delete.
-     */
-    public function forceDeleteAny(User $user): bool
-    {
-        return $user->can('force_delete_any_a::m::p::d::s::code');
-    }
-
-    /**
-     * Determine whether the user can restore.
-     */
-    public function restore(User $user, AMPDSCode $aMPDSCode): bool
-    {
-        return $user->can('restore_a::m::p::d::s::code');
-    }
-
-    /**
-     * Determine whether the user can bulk restore.
-     */
-    public function restoreAny(User $user): bool
-    {
-        return $user->can('restore_any_a::m::p::d::s::code');
-    }
-
-    /**
-     * Determine whether the user can replicate.
-     */
-    public function replicate(User $user, AMPDSCode $aMPDSCode): bool
-    {
-        return $user->can('replicate_a::m::p::d::s::code');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     */
-    public function reorder(User $user): bool
-    {
-        return $user->can('reorder_a::m::p::d::s::code');
+        return $user->can('delete_ampds_code');
     }
 }

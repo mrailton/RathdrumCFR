@@ -10,10 +10,14 @@ trait HasUser
 {
     protected static function boot(): void
     {
-        static::creating(function (self $record): void {
-            $record->user_id = auth()->id();
-        });
-
         parent::boot();
+
+        static::creating(function (self $record): void {
+            if (empty($record->user_id) && auth()->check()) {
+                /** @var int<0, max> $userId */
+                $userId = auth()->id();
+                $record->user_id = $userId;
+            }
+        });
     }
 }

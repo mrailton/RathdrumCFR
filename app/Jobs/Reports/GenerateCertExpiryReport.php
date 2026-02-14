@@ -35,6 +35,9 @@ class GenerateCertExpiryReport implements ShouldQueue
         }
     }
 
+    /**
+     * @return Collection<int, Member>
+     */
     public function getMembers(): Collection
     {
         return Member::query()

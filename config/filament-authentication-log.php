@@ -5,11 +5,11 @@ declare(strict_types=1);
 return [
 
     'resources' => [
-        'AutenticationLogResource' => \Tapp\FilamentAuthenticationLog\Resources\AuthenticationLogResource::class,
+        'AutenticationLogResource' => Tapp\FilamentAuthenticationLog\Resources\AuthenticationLogResource::class,
     ],
 
     'authenticable-resources' => [
-        \App\Models\User::class,
+        App\Models\User::class,
     ],
 
     'navigation' => [

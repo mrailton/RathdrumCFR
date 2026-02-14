@@ -13,6 +13,7 @@ class DefibMap extends Component
 {
     public string $googleMapsAPIKey;
 
+    /** @var Collection<int, mixed> */
     public Collection $locations;
 
     public function __construct()
@@ -30,8 +31,10 @@ class DefibMap extends Component
                         'location' => $defib->location,
                     ];
                 }
+
+                return null;
             }
-        );
+        )->filter()->values();
     }
 
     public function render(): View

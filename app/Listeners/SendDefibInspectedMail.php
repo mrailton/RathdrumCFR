@@ -23,7 +23,11 @@ class SendDefibInspectedMail implements ShouldQueue
         $recipients = $this->getRecipients();
 
         foreach ($recipients as $recipient) {
-            Mail::to($recipient->user->email)->queue(new DefibInspectedMail($event->defib, $event->inspection));
+            /** @var \App\Models\UserReport $recipient */
+            $user = $recipient->user;
+            if (null !== $user) {
+                Mail::to($user->email)->queue(new DefibInspectedMail($event->defib, $event->inspection));
+            }
         }
     }
 }

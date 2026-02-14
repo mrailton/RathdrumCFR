@@ -1,0 +1,12 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app/
+
+    # Level 7 of 9
+    level: 7
+
+    excludePaths:
+        - app/Mail/UserInvitationMail.php

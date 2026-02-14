@@ -1,0 +1,187 @@
+@extends('admin.layouts.app')
+
+@section('content')
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="sm:flex sm:items-center sm:justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Edit Defibrillator</h1>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Update defibrillator information</p>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <form method="POST" action="{{ route('admin.defibs.update', $defib) }}" class="space-y-6" x-data="{ currentTab: 'defib' }">
+        @csrf
+        @method('PUT')
+
+        <!-- Tabs -->
+        <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div class="border-b border-gray-200 dark:border-gray-700">
+                <nav class="-mb-px flex space-x-8 px-6" aria-label="Tabs">
+                    <button type="button" @click="currentTab = 'defib'" :class="currentTab === 'defib' ? 'border-red-500 text-red-600 dark:text-red-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'" class="whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                        Defib
+                    </button>
+                    <button type="button" @click="currentTab = 'battery'" :class="currentTab === 'battery' ? 'border-red-500 text-red-600 dark:text-red-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'" class="whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                        Battery
+                    </button>
+                    <button type="button" @click="currentTab = 'pads'" :class="currentTab === 'pads' ? 'border-red-500 text-red-600 dark:text-red-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 hover:text-gray-700 dark:hover:text-gray-300'" class="whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium">
+                        Pads
+                    </button>
+                </nav>
+            </div>
+
+            <div class="px-6 py-6 sm:p-8">
+                <!-- Defib Tab -->
+                <div x-show="currentTab === 'defib'" class="space-y-6">
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <x-admin.input 
+                            label="Name" 
+                            name="name" 
+                            :value="$defib->name"
+                            :required="true"
+                            class="sm:col-span-2"
+                        />
+
+                        <x-admin.input 
+                            label="Location" 
+                            name="location" 
+                            :value="$defib->location"
+                            :required="true"
+                            class="sm:col-span-2"
+                        />
+
+                        <x-admin.input 
+                            label="Coordinates" 
+                            name="coordinates"
+                            :value="$defib->coordinates"
+                            placeholder="Latitude, Longitude"
+                        />
+
+                        <div class="flex items-end pb-2">
+                            <x-admin.checkbox 
+                                label="Display on Map" 
+                                name="display_on_map"
+                                :checked="$defib->display_on_map"
+                            />
+                        </div>
+
+                        <x-admin.input 
+                            label="Model" 
+                            name="model" 
+                            :value="$defib->model"
+                            :required="true"
+                        />
+
+                        <x-admin.input 
+                            label="Serial Number" 
+                            name="serial"
+                            :value="$defib->serial"
+                        />
+
+                        <x-admin.input 
+                            label="Lot Number" 
+                            name="defib_lot_number"
+                            :value="$defib->defib_lot_number"
+                        />
+
+                        <x-admin.input 
+                            label="Manufacture Date" 
+                            name="defib_manufacture_date"
+                            type="date"
+                            :value="$defib->defib_manufacture_date?->format('Y-m-d')"
+                        />
+
+                        <x-admin.input 
+                            label="Owner" 
+                            name="owner" 
+                            :value="$defib->owner"
+                            :required="true"
+                        />
+
+                        <x-admin.input 
+                            label="Last Serviced" 
+                            name="last_serviced_at"
+                            type="date"
+                            :value="$defib->last_serviced_at?->format('Y-m-d')"
+                        />
+
+                        <x-admin.input 
+                            label="Last Inspected On" 
+                            name="last_inspected_at"
+                            type="date"
+                            :value="$defib->last_inspected_at?->format('Y-m-d')"
+                        />
+
+                        <x-admin.input 
+                            label="Last Inspected By" 
+                            name="last_inspected_by"
+                            :value="$defib->last_inspected_by"
+                        />
+                    </div>
+                </div>
+
+                <!-- Battery Tab -->
+                <div x-show="currentTab === 'battery'" class="space-y-6" x-cloak>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <x-admin.input 
+                            label="Battery Lot Number" 
+                            name="battery_lot_number"
+                            :value="$defib->battery_lot_number"
+                        />
+
+                        <x-admin.input 
+                            label="Battery Manufacture Date" 
+                            name="battery_manufacture_date"
+                            type="date"
+                            :value="$defib->battery_manufacture_date?->format('Y-m-d')"
+                        />
+
+                        <x-admin.input 
+                            label="Battery Expiry" 
+                            name="battery_expires_at"
+                            type="date"
+                            :value="$defib->battery_expires_at?->format('Y-m-d')"
+                        />
+                    </div>
+                </div>
+
+                <!-- Pads Tab -->
+                <div x-show="currentTab === 'pads'" class="space-y-6" x-cloak>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                        <x-admin.input 
+                            label="Pads Lot Number" 
+                            name="pads_lot_number"
+                            :value="$defib->pads_lot_number"
+                        />
+
+                        <x-admin.input 
+                            label="Pads Manufacture Date" 
+                            name="pads_manufacture_date"
+                            type="date"
+                            :value="$defib->pads_manufacture_date?->format('Y-m-d')"
+                        />
+
+                        <x-admin.input 
+                            label="Pads Expiry" 
+                            name="pads_expire_at"
+                            type="date"
+                            :value="$defib->pads_expire_at?->format('Y-m-d')"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-end gap-3">
+            <x-admin.button variant="secondary" href="{{ route('admin.defibs.show', $defib) }}">
+                Cancel
+            </x-admin.button>
+            <x-admin.button type="submit">
+                Update Defib
+            </x-admin.button>
+        </div>
+    </form>
+</div>
+@endsection

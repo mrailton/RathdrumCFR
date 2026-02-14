@@ -20,7 +20,7 @@
 
                 @auth()
                     <li class="px-3 cursor-pointer hover:bg-white flex items-center hover:text-red-600" :class="showMenu && 'py-1'">
-                        <a href="{{ route('filament.admin.pages.dashboard') }}">Admin</a>
+                        <a href="{{ route('admin.dashboard') }}">Admin</a>
                     </li>
                 @endauth
             </ul>

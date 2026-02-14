@@ -10,13 +10,34 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @use HasFactory<\Database\Factories\DefibInspectionFactory>
+ * @use SoftDeletes<DefibInspection>
+ */
 class DefibInspection extends Model
 {
+    /** @use HasFactory<\Database\Factories\DefibInspectionFactory> */
     use HasFactory;
     use HasUser;
     use SoftDeletes;
 
     protected $fillable = ['member_id', 'inspected_at', 'pads_expire_at', 'battery_expires_at', 'battery_condition', 'notes'];
+
+    /**
+     * @return BelongsTo<Member, $this>
+     */
+    public function member(): BelongsTo
+    {
+        return $this->belongsTo(Member::class);
+    }
+
+    /**
+     * @return BelongsTo<Defib, $this>
+     */
+    public function defib(): BelongsTo
+    {
+        return $this->belongsTo(Defib::class);
+    }
 
     protected function casts(): array
     {
@@ -25,15 +46,5 @@ class DefibInspection extends Model
             'pads_expire_at' => 'date:Y-m-d',
             'battery_expires_at' => 'date:Y-m-d',
         ];
-    }
-
-    public function member(): BelongsTo
-    {
-        return $this->belongsTo(Member::class);
-    }
-
-    public function defib(): BelongsTo
-    {
-        return $this->belongsTo(Defib::class);
     }
 }

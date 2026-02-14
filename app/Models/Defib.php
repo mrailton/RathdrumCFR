@@ -11,8 +11,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @use HasFactory<\Database\Factories\DefibFactory>
+ * @use SoftDeletes<Defib>
+ */
 class Defib extends Model
 {
+    /** @use HasFactory<\Database\Factories\DefibFactory> */
     use HasFactory;
     use HasUser;
     use SoftDeletes;
@@ -38,6 +43,31 @@ class Defib extends Model
         'pads_manufacture_date',
     ];
 
+    /**
+     * @return HasMany<DefibInspection, $this>
+     */
+    public function inspections(): HasMany
+    {
+        return $this->hasMany(DefibInspection::class);
+    }
+
+    /**
+     * @return HasMany<DefibNote, $this>
+     */
+    public function notes(): HasMany
+    {
+        return $this->hasMany(DefibNote::class);
+    }
+
+    /**
+     * @param Builder<Defib> $query
+     * @return Builder<Defib>
+     */
+    public function scopePublic(Builder $query): Builder
+    {
+        return $query->where('display_on_map', true);
+    }
+
     protected function casts(): array
     {
         return [
@@ -51,20 +81,5 @@ class Defib extends Model
             'battery_manufacture_date' => 'datetime:Y-m-d',
             'pads_manufacture_date' => 'datetime:Y-m-d',
         ];
-    }
-
-    public function inspections(): HasMany
-    {
-        return $this->hasMany(DefibInspection::class);
-    }
-
-    public function notes(): HasMany
-    {
-        return $this->hasMany(DefibNote::class);
-    }
-
-    public function scopePublic(Builder $query): Builder
-    {
-        return $query->where('display_on_map', true);
     }
 }

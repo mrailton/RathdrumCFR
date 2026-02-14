@@ -6,35 +6,28 @@
     "require": {
         "php": "^8.5.0",
         "ext-pdo": "*",
-        "awcodes/filament-gravatar": "^2.0",
         "aws/aws-sdk-php": "^3.336.9",
-        "bezhansalleh/filament-shield": "^3.1",
-        "croustibat/filament-jobs-monitor": "^2.3",
-        "filament/filament": "^3.2",
         "josiasmontag/laravel-recaptchav3": "dev-master",
         "laravel/framework": "^12.18",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "league/flysystem-aws-s3-v3": "^3.0",
-        "shuvroroy/filament-spatie-laravel-backup": "^2.0",
         "spatie/cpu-load-health-check": "^1.0",
         "spatie/laravel-backup": "^9.3.3",
         "spatie/laravel-permission": "^6.2",
-        "spatie/security-advisories-health-check": "^1.1",
-        "stechstudio/filament-impersonate": "^3.5",
-        "usernotnull/tall-toasts": "^2.1"
+        "spatie/security-advisories-health-check": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.0",
         "laravel/pail": "^1.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "pestphp/pest": "^v3.8.2",
-        "pestphp/pest-plugin-laravel": "^v3.2.0",
-        "pestphp/pest-plugin-livewire": "^v3.0.0"
+        "pestphp/pest-plugin-laravel": "^v3.2.0"
     },
     "autoload": {
         "psr-4": {
@@ -51,8 +44,7 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi",
-            "@php artisan filament:upgrade"
+            "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

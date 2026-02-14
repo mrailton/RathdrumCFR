@@ -26,8 +26,6 @@ class ContactFormController extends Controller
             message: $request->validated('message')
         ));
 
-        toast()->success('Contact form successfully submitted')->pushOnNextPage();
-
-        return redirect()->route('index');
+        return redirect()->route('index')->with('success', 'Contact form successfully submitted');
     }
 }

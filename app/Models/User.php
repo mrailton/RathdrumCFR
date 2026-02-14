@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,8 +11,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser
+/**
+ * @use HasFactory<\Database\Factories\UserFactory>
+ * @use SoftDeletes<User>
+ */
+class User extends Authenticatable
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use HasRoles;
     use Notifiable;
@@ -32,21 +35,19 @@ class User extends Authenticatable implements FilamentUser
 
     protected $rememberTokenName = '';
 
+    /**
+     * @return HasOne<UserReport, $this>
+     */
+    public function reports(): HasOne
+    {
+        return $this->hasOne(UserReport::class);
+    }
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'last_login_at' => 'datetime',
         ];
-    }
-
-    public function reports(): HasOne
-    {
-        return $this->hasOne(UserReport::class);
-    }
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return true;
     }
 }

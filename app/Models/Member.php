@@ -11,8 +11,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @use HasFactory<\Database\Factories\MemberFactory>
+ * @use SoftDeletes<Member>
+ */
 class Member extends Model
 {
+    /** @use HasFactory<\Database\Factories\MemberFactory> */
     use HasFactory;
     use HasUser;
     use SoftDeletes;
@@ -41,6 +46,30 @@ class Member extends Model
         'ppe_assessment_completed',
     ];
 
+    /**
+     * @return HasMany<MemberNote, $this>
+     */
+    public function notes(): HasMany
+    {
+        return $this->hasMany(MemberNote::class);
+    }
+
+    /**
+     * @return BelongsToMany<Callout, $this>
+     */
+    public function callouts(): BelongsToMany
+    {
+        return $this->belongsToMany(Callout::class);
+    }
+
+    /**
+     * @return BelongsToMany<TrainingSession, $this>
+     */
+    public function trainingSessions(): BelongsToMany
+    {
+        return $this->belongsToMany(TrainingSession::class);
+    }
+
     protected function casts(): array
     {
         return [
@@ -56,20 +85,5 @@ class Member extends Model
             'covid_return_completed' => 'date:Y-m-d',
             'ppe_assessment_completed' => 'date:Y-m-d',
         ];
-    }
-
-    public function notes(): HasMany
-    {
-        return $this->hasMany(MemberNote::class);
-    }
-
-    public function callouts(): BelongsToMany
-    {
-        return $this->belongsToMany(Callout::class);
-    }
-
-    public function trainingSessions(): BelongsToMany
-    {
-        return $this->belongsToMany(TrainingSession::class);
     }
 }

@@ -12,7 +12,7 @@ class MemberFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::count() > 0 ? User::get()->random() : User::factory()->create(),
+            'user_id' => User::factory(),
             'name' => $this->faker->name(),
             'phone' => $this->faker->phoneNumber(),
             'email' => $this->faker->email(),

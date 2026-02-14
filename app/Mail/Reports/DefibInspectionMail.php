@@ -15,6 +15,9 @@ class DefibInspectionMail extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
+    /**
+     * @param Collection<int, \App\Models\Defib> $defibs
+     */
     public function __construct(protected Collection $defibs)
     {
     }

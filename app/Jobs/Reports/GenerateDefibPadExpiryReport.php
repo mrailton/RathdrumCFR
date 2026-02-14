@@ -35,6 +35,9 @@ class GenerateDefibPadExpiryReport implements ShouldQueue
         }
     }
 
+    /**
+     * @return Collection<int, Defib>
+     */
     public function getDefibs(): Collection
     {
         return Defib::query()

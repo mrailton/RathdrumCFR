@@ -9,8 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @use HasFactory<\Database\Factories\CalloutFactory>
+ */
 class Callout extends Model
 {
+    /** @use HasFactory<\Database\Factories\CalloutFactory> */
     use HasFactory;
     use HasUser;
 
@@ -18,8 +22,25 @@ class Callout extends Model
         'incident_number', 'incident_date', 'ampds_code', 'ohca_at_scene', 'bystander_cpr', 'source_of_aed', 'number_of_shocks_given', 'rosc_achieved', 'patient_transported', 'responders_at_scene', 'ppe_kits_used', 'waste_disposal', 'notes', 'attended', 'age', 'gender', 'mobilised', 'medical_facility',
     ];
 
+    /**
+     * @return BelongsToMany<Member, $this>
+     */
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(Member::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'incident_date' => 'datetime',
+            'mobilised' => 'boolean',
+            'medical_facility' => 'boolean',
+            'attended' => 'boolean',
+            'ohca_at_scene' => 'boolean',
+            'bystander_cpr' => 'boolean',
+            'rosc_achieved' => 'boolean',
+            'patient_transported' => 'boolean',
+        ];
     }
 }

@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Collection;
 
 trait GetsReportRecipients
 {
+    /**
+     * @return Collection<int, UserReport>
+     */
     public function getRecipients(): Collection
     {
         return UserReport::query()->where($this->key, '=', true)->get();

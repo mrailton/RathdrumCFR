@@ -15,6 +15,9 @@ class CertExpiryMail extends Mailable implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
+    /**
+     * @param Collection<int, \App\Models\Member> $members
+     */
     public function __construct(private readonly Collection $members)
     {
     }
