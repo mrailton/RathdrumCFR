@@ -41,6 +41,9 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+      - name: Copy environment file
+        run: cp .env.example .env
+
       - name: Get Composer cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
@@ -60,9 +63,6 @@ jobs:
 
       - name: Build assets
         run: npm run build
-
-      - name: Copy environment file
-        run: cp .env.example .env
 
       - name: Generate application key
         run: php artisan key:generate
