@@ -1,17 +1,13 @@
 {
-    "name": "laravel/laravel",
+    "name": "mrailton/rathdrum-cfr",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
+    "description": "Website for Rathdrum Community First Responders",
     "license": "MIT",
     "require": {
-        "php": "^8.4.0",
+        "php": "^8.5.0",
         "ext-pdo": "*",
         "awcodes/filament-gravatar": "^2.0",
-        "aws/aws-sdk-php": "3.336.9",
+        "aws/aws-sdk-php": "^3.336.9",
         "bezhansalleh/filament-shield": "^3.1",
         "croustibat/filament-jobs-monitor": "^2.3",
         "filament/filament": "^3.2",

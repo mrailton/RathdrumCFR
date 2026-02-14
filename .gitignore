@@ -21,3 +21,4 @@ _ide_helper.php
 .php-cs-fixer.cache
 .phpunit.cache
 .idea
+.claude
