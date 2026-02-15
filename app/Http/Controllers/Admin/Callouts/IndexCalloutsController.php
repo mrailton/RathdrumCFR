@@ -25,12 +25,12 @@ final class IndexCalloutsController extends Controller
         }
 
         // Attended filter
-        if ($request->has('attended') && '' !== $request->get('attended')) {
+        if ($request->has('attended') && $request->get('attended') !== 'all') {
             $query->where('attended', (bool) $request->get('attended'));
         }
 
         // OHCA at scene filter
-        if ($request->has('ohca_at_scene') && '' !== $request->get('ohca_at_scene')) {
+        if ($request->has('ohca_at_scene') && $request->get('ohca_at_scene') !== 'all') {
             $query->where('ohca_at_scene', (bool) $request->get('ohca_at_scene'));
         }
 

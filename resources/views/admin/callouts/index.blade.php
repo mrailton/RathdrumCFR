@@ -22,9 +22,9 @@
                 <!-- Search -->
                 <div class="sm:col-span-2">
                     <label for="search" class="block text-sm font-medium leading-6 text-gray-900 dark:text-white">Search</label>
-                    <input 
-                        type="text" 
-                        name="search" 
+                    <input
+                        type="text"
+                        name="search"
                         id="search"
                         value="{{ request('search') }}"
                         placeholder="CAD number or AMPDS code..."
@@ -35,12 +35,12 @@
                 <!-- Attended -->
                 <div>
                     <label for="attended" class="block text-sm font-medium leading-6 text-gray-900 dark:text-white">Attended</label>
-                    <select 
-                        name="attended" 
+                    <select
+                        name="attended"
                         id="attended"
                         class="mt-1 block w-full rounded-lg border-0 px-4 py-2.5 text-gray-900 dark:text-white dark:bg-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                     >
-                        <option value="">All</option>
+                        <option value="all">All</option>
                         <option value="1" {{ request('attended') === '1' ? 'selected' : '' }}>Yes</option>
                         <option value="0" {{ request('attended') === '0' ? 'selected' : '' }}>No</option>
                     </select>
@@ -49,12 +49,12 @@
                 <!-- OHCA at Scene -->
                 <div>
                     <label for="ohca_at_scene" class="block text-sm font-medium leading-6 text-gray-900 dark:text-white">OHCA at Scene</label>
-                    <select 
-                        name="ohca_at_scene" 
+                    <select
+                        name="ohca_at_scene"
                         id="ohca_at_scene"
                         class="mt-1 block w-full rounded-lg border-0 px-4 py-2.5 text-gray-900 dark:text-white dark:bg-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                     >
-                        <option value="">All</option>
+                        <option value="all">All</option>
                         <option value="1" {{ request('ohca_at_scene') === '1' ? 'selected' : '' }}>Yes</option>
                         <option value="0" {{ request('ohca_at_scene') === '0' ? 'selected' : '' }}>No</option>
                     </select>
@@ -63,9 +63,9 @@
                 <!-- Date From -->
                 <div>
                     <label for="from" class="block text-sm font-medium leading-6 text-gray-900 dark:text-white">From Date</label>
-                    <input 
-                        type="date" 
-                        name="from" 
+                    <input
+                        type="date"
+                        name="from"
                         id="from"
                         value="{{ request('from', now()->startOfYear()->format('Y-m-d')) }}"
                         class="mt-1 block w-full rounded-lg border-0 px-4 py-2.5 text-gray-900 dark:text-white dark:bg-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
@@ -75,9 +75,9 @@
                 <!-- Date To -->
                 <div>
                     <label for="to" class="block text-sm font-medium leading-6 text-gray-900 dark:text-white">To Date</label>
-                    <input 
-                        type="date" 
-                        name="to" 
+                    <input
+                        type="date"
+                        name="to"
                         id="to"
                         value="{{ request('to', now()->endOfYear()->format('Y-m-d')) }}"
                         class="mt-1 block w-full rounded-lg border-0 px-4 py-2.5 text-gray-900 dark:text-white dark:bg-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
