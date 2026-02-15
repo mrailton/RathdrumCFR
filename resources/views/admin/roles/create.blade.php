@@ -36,7 +36,7 @@
                                 <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                                     @foreach($groupPermissions as $permission)
                                     <label class="flex items-center gap-2 text-sm">
-                                        <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" {{ in_array($permission->id, old('permissions', [])) ? 'checked' : '' }} class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500">
+                                        <input type="checkbox" name="permissions[]" value="{{ $permission->name }}" {{ in_array($permission->name, old('permissions', [])) ? 'checked' : '' }} class="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500">
                                         <span class="text-gray-700">{{ str_replace('_' . $group, '', str_replace('_', ' ', $permission->name)) }}</span>
                                     </label>
                                     @endforeach

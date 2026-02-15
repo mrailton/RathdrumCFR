@@ -65,7 +65,7 @@ it('can create a new role', function (): void {
 
     $response = $this->actingAs($user)->post(route('admin.roles.store'), [
         'name' => 'New Test Role',
-        'permissions' => [$permission->id],
+        'permissions' => [$permission->name],
     ]);
 
     $role = Role::where('name', 'New Test Role')->first();
@@ -120,7 +120,7 @@ it('can update a role', function (): void {
 
     $response = $this->actingAs($user)->put(route('admin.roles.update', $role), [
         'name' => 'Updated Role Name',
-        'permissions' => [$permission->id],
+        'permissions' => [$permission->name],
     ]);
 
     $response->assertRedirect(route('admin.roles.show', $role));

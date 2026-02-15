@@ -19,7 +19,7 @@ final class UpdateRoleController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', Rule::unique('roles', 'name')->ignore($role->id)],
             'permissions' => ['nullable', 'array'],
-            'permissions.*' => ['exists:permissions,id'],
+            'permissions.*' => ['exists:permissions,name'],
         ]);
 
         $role->update([

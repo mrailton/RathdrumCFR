@@ -21,7 +21,7 @@ final class EditRoleController extends Controller
             return $parts[2] ?? $parts[1] ?? $permission->name;
         });
 
-        $rolePermissions = $role->permissions->pluck('id')->toArray();
+        $rolePermissions = $role->permissions->pluck('name')->toArray();
 
         return view('admin.roles.edit', compact('role', 'permissions', 'rolePermissions'));
     }
