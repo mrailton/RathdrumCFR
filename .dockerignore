@@ -7,4 +7,9 @@ node_modules
 .phpunit.result.cache
 .vscode
 .idea
+.git
+tests
+phpunit.xml
+README.md
+docker-compose.yml
 docker-compose.override.yml
