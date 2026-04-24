@@ -27,7 +27,7 @@ RUN apt-get update \
         unzip \
         nginx \
         supervisor \
-        default-mysql-client \
+        mariadb-client \
         libpng-dev \
         libonig-dev \
         libxml2-dev \
