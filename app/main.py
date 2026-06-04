@@ -16,7 +16,7 @@ settings = get_settings()
 init_db(settings)
 
 APP_DIR = Path(__file__).resolve().parent
-STATIC_DIR = APP_DIR / "static"
+STATIC_DIR = APP_DIR / "resources" / "static"
 BUILT_ASSETS_DIR = STATIC_DIR / "dist" / "assets"
 
 

@@ -8,10 +8,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   plugins: [tailwindcss()],
   build: {
-    outDir: "app/static/dist",
+    outDir: "app/resources/static/dist",
     emptyOutDir: true,
     rollupOptions: {
-      input: path.resolve(__dirname, "app/static/js/app.js"),
+      input: path.resolve(__dirname, "app/resources/static/js/app.js"),
       output: {
         entryFileNames: "assets/[name].js",
         assetFileNames: "assets/[name][extname]",

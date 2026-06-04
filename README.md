@@ -76,9 +76,10 @@ app/
   schemas/       Pydantic form models
   services/      Business logic
   routers/       HTTP routes (public + admin)
-  templates/     Jinja2 (mobile-first admin drawer)
-  static/        Raw static files (CSS/JS sources, images, etc.)
-  static/dist/   Built assets (Vite; served at /static/assets/)
+  resources/
+    templates/   Jinja2 (mobile-first admin drawer)
+    static/      Raw static files (CSS/JS sources, images, etc.)
+    static/dist/ Built assets (Vite; served at /static/assets/)
 migrations/      Database migrations (Alembic)
 scripts/         import_from_laravel.py
 ```

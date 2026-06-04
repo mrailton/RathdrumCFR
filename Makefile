@@ -107,5 +107,5 @@ typecheck: ## Run mypy on app/
 	uv run mypy app/
 
 clean: ## Remove build artifacts and caches
-	rm -rf app/static/dist .pytest_cache .coverage htmlcov
+	rm -rf app/resources/static/dist .pytest_cache .coverage htmlcov
 	find . -type d -name __pycache__ -not -path './.venv/*' -prune -exec rm -rf {} +

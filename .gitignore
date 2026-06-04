@@ -6,6 +6,6 @@ __pycache__/
 htmlcov/
 .env
 *.db
-app/static/dist/
+app/resources/static/dist/
 node_modules/
 .DS_Store
