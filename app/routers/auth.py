@@ -1,10 +1,9 @@
-from datetime import datetime
-
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import RedirectResponse
 
 from app import policies
 from app.core.database import mark_for_commit
+from app.core.time import utc_now
 from app.dependencies import CurrentUser, DbSession, require_guest, verify_csrf
 from app.schemas.forms import LoginForm, login_form
 from app.services.users import authenticate
@@ -35,7 +34,7 @@ def login_store(request: Request, db: DbSession, form: LoginForm = Depends(login
     request.session["user_id"] = user.id
     if form.remember_me:
         request.session["remember_me"] = True
-    user.last_login_at = datetime.utcnow()
+    user.last_login_at = utc_now()
     mark_for_commit(db)
     return RedirectResponse(url="/admin", status_code=303)
 

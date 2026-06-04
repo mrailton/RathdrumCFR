@@ -5,7 +5,7 @@ from fastapi.responses import RedirectResponse
 
 from app.core.database import mark_for_commit
 from app.dependencies import CurrentUser, DbSession, verify_csrf
-from app.routers.admin._helpers import parse_bool, require_admin, require_operator
+from app.routers.admin._helpers import form_str, parse_bool, require_admin, require_operator
 from app.services import defibs as defib_service
 from app.services import members as member_service
 from app.services import reports as report_service
@@ -86,7 +86,7 @@ async def add_inspection(defib_id: int, request: Request, db: DbSession, user: C
         db,
         defib,
         {
-            "member_id": int(form.get("member_id")),
+            "member_id": int(form_str(form.get("member_id"))),
             "inspected_at": _dt(form.get("inspected_at")),
             "pads_expire_at": _dt(form.get("pads_expire_at")),
             "battery_expires_at": _dt(form.get("battery_expires_at")),

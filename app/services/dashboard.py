@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from app.core.time import utc_now
 from app.models.ampds_code import AMPDSCode
 from app.models.callout import Callout
 from app.models.defib import Defib
@@ -10,7 +11,7 @@ from app.models.member import Member
 
 
 def member_stats(db: Session) -> dict[str, int]:
-    now = datetime.utcnow()
+    now = utc_now()
     total = db.scalar(select(func.count()).select_from(Member).where(Member.deleted_at.is_(None))) or 0
     active = (
         db.scalar(
@@ -41,7 +42,7 @@ def member_stats(db: Session) -> dict[str, int]:
 
 
 def defib_stats(db: Session) -> dict[str, int]:
-    now = datetime.utcnow()
+    now = utc_now()
     total = db.scalar(select(func.count()).select_from(Defib).where(Defib.deleted_at.is_(None))) or 0
     public = (
         db.scalar(

@@ -1,8 +1,7 @@
-from datetime import datetime
-
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
+from app.core.time import utc_now
 from app.models.defib import Defib
 from app.models.defib_inspection import DefibInspection
 from app.models.defib_note import DefibNote
@@ -46,7 +45,7 @@ def update_defib(db: Session, defib: Defib, data: dict) -> Defib:
 
 
 def soft_delete_defib(db: Session, defib: Defib) -> None:
-    defib.deleted_at = datetime.utcnow()
+    defib.deleted_at = utc_now()
 
 
 def restore_defib(db: Session, defib: Defib) -> None:

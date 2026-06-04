@@ -1,8 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session, joinedload
 
+from app.core.time import utc_now
 from app.models.defib import Defib
 from app.models.member import Member
 from app.models.user_report import UserReport
@@ -17,14 +18,14 @@ def report_recipients(db: Session, flag: str) -> list[str]:
 
 
 def run_cert_expiry_report(db: Session) -> None:
-    cutoff = datetime.utcnow() + timedelta(days=60)
+    cutoff = utc_now() + timedelta(days=60)
     members = list(db.scalars(select(Member).where(Member.cfr_certificate_expiry < cutoff.date())).all())
     for email in report_recipients(db, "cfr_cert_expiry"):
         mail_service.send_report_email(email, "CFR Certificate Expiry Report", members)
 
 
 def run_battery_expiry_report(db: Session) -> None:
-    cutoff = datetime.utcnow() + timedelta(days=30)
+    cutoff = utc_now() + timedelta(days=30)
     defibs = list(
         db.scalars(
             select(Defib).where(or_(Defib.battery_expires_at < cutoff, Defib.battery_expires_at.is_(None)))
@@ -35,14 +36,14 @@ def run_battery_expiry_report(db: Session) -> None:
 
 
 def run_defib_pad_expiry_report(db: Session) -> None:
-    cutoff = datetime.utcnow() + timedelta(days=30)
+    cutoff = utc_now() + timedelta(days=30)
     defibs = list(db.scalars(select(Defib).where(Defib.pads_expire_at < cutoff)).all())
     for email in report_recipients(db, "defib_pad_expiry"):
         mail_service.send_report_email(email, "Defibrillator Pad Expiry Report", defibs)
 
 
 def run_defib_inspection_report(db: Session) -> None:
-    cutoff = datetime.utcnow() - timedelta(days=30)
+    cutoff = utc_now() - timedelta(days=30)
     defibs = list(
         db.scalars(select(Defib).where(or_(Defib.last_inspected_at < cutoff, Defib.last_inspected_at.is_(None)))).all()
     )
@@ -51,7 +52,7 @@ def run_defib_inspection_report(db: Session) -> None:
 
 
 def run_garda_vetting_report(db: Session) -> None:
-    cutoff = datetime.utcnow() - timedelta(days=3 * 365 - 60)
+    cutoff = utc_now() - timedelta(days=3 * 365 - 60)
     members = list(db.scalars(select(Member).where(Member.garda_vetting_date < cutoff.date())).all())
     for email in report_recipients(db, "garda_vetting_expiry"):
         mail_service.send_report_email(email, "Garda Vetting Expiry Report", members)

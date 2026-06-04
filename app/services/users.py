@@ -1,13 +1,10 @@
-from sqlalchemy import MetaData, Table, select
-from sqlalchemy.engine import Engine
+from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
 from app.core.security import hash_password, verify_password
 from app.models.user import User
 from app.models.user_report import UserReport
 from app.policies import ROLE_ADMIN, ROLE_USER, normalize_role
-
-LARAVEL_USER_MODEL_TYPE = "App\\Models\\User"
 
 
 def get_user_by_id(db: Session, user_id: int) -> User | None:
@@ -82,32 +79,3 @@ def update_user_report_flags(db: Session, user: User, flags: dict[str, bool]) ->
         if hasattr(report, key):
             setattr(report, key, value)
     return report
-
-
-def apply_laravel_roles_from_source(source: Engine, db: Session) -> int:
-    """Map legacy Spatie roles onto users.role (not imported as tables)."""
-    inspector = __import__("sqlalchemy").inspect(source)
-    if "model_has_roles" not in inspector.get_table_names() or "roles" not in inspector.get_table_names():
-        return 0
-
-    src_meta = MetaData()
-    roles_table = Table("roles", src_meta, autoload_with=source)
-    mhr_table = Table("model_has_roles", src_meta, autoload_with=source)
-
-    rows = (
-        source.connect()
-        .execute(
-            select(mhr_table.c.model_id, roles_table.c.name)
-            .select_from(mhr_table.join(roles_table, roles_table.c.id == mhr_table.c.role_id))
-            .where(mhr_table.c.model_type == LARAVEL_USER_MODEL_TYPE)
-        )
-        .all()
-    )
-
-    updated = 0
-    for user_id, role_name in rows:
-        user = db.get(User, user_id)
-        if user:
-            user.role = normalize_role(role_name)
-            updated += 1
-    return updated

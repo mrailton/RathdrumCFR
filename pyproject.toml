@@ -38,6 +38,10 @@ package = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+filterwarnings = ["error"]
+markers = [
+    "real_password_hash: use real bcrypt (slow); default tests use a fast stub",
+]
 
 [tool.mypy]
 python_version = "3.14"

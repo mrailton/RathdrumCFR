@@ -48,7 +48,7 @@ uv run python scripts/import_from_laravel.py --list
 uv run python scripts/import_from_laravel.py --tables users,members,defibs,callouts
 ```
 
-Importing `users` maps legacy Spatie role assignments onto `users.role`. Permission and role pivot tables are not created in the new schema.
+Imported users get the default `user` role; assign `admin` or `user` under **Admin → Users**. Permission and role pivot tables are not in the new schema.
 
 ## Makefile
 

@@ -35,9 +35,9 @@ def update_member(db: Session, member: Member, data: dict) -> Member:
 
 
 def soft_delete_member(db: Session, member: Member) -> None:
-    from datetime import datetime
+    from app.core.time import utc_now
 
-    member.deleted_at = datetime.utcnow()
+    member.deleted_at = utc_now()
 
 
 def add_member_note(db: Session, member_id: int, note: str, user_id: int) -> MemberNote:

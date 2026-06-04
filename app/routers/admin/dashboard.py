@@ -2,6 +2,7 @@ from datetime import datetime
 
 from fastapi import APIRouter, Request
 
+from app.core.time import utc_now
 from app.dependencies import CurrentUser, DbSession
 from app.routers.admin._helpers import require_operator
 from app.services import dashboard as dashboard_service
@@ -15,8 +16,8 @@ def dashboard(request: Request, db: DbSession, user: CurrentUser):
     require_operator(db, user)
     date_from = request.query_params.get("from")
     date_to = request.query_params.get("to")
-    df = datetime.fromisoformat(date_from) if date_from else datetime(datetime.utcnow().year, 1, 1)
-    dt = datetime.fromisoformat(date_to) if date_to else datetime.utcnow()
+    df = datetime.fromisoformat(date_from) if date_from else datetime(utc_now().year, 1, 1)
+    dt = datetime.fromisoformat(date_to) if date_to else utc_now()
     from app import policies
 
     ctx: dict = {

@@ -37,7 +37,10 @@ def route_is(request: Request, pattern: str) -> bool:
     if pattern == "admin.dashboard":
         return path == "/admin"
     if pattern.endswith(".*"):
-        prefix = "/admin/" + pattern[:-2].replace(".", "/")
+        base = pattern[:-2]
+        if base.startswith("admin."):
+            base = base[len("admin.") :]
+        prefix = "/admin/" + base.replace(".", "/")
         return path.startswith(prefix)
     return name == pattern or name.startswith(pattern.replace(".*", ""))
 

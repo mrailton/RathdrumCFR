@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 
 from app.core.database import mark_for_commit
 from app.dependencies import CurrentUser, DbSession, verify_csrf
-from app.routers.admin._helpers import parse_bool, require_admin
+from app.routers.admin._helpers import form_str, form_str_optional, parse_bool, require_admin
 from app.services import ampds as ampds_service
 from app.templating import render
 
@@ -24,10 +24,10 @@ async def store(request: Request, db: DbSession, user: CurrentUser, csrf_token: 
     ampds_service.save_ampds_code(
         db,
         {
-            "code": str(form.get("code", "")),
-            "description": str(form.get("description", "")),
-            "arrest_code": parse_bool(form.get("arrest_code")),
-            "far_code": parse_bool(form.get("far_code")),
+            "code": form_str(form.get("code")),
+            "description": form_str(form.get("description")),
+            "arrest_code": parse_bool(form_str_optional(form.get("arrest_code"))),
+            "far_code": parse_bool(form_str_optional(form.get("far_code"))),
         },
     )
     mark_for_commit(db)

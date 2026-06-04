@@ -3,9 +3,7 @@
 Import selected tables from the legacy Laravel MySQL database.
 
 Preserves primary keys (upsert). Only imports tables that exist in the FastAPI schema.
-
-When importing users, Spatie role assignments are read from the legacy DB and written
-to users.role (roles / model_has_roles are not created in the new schema).
+Assign user roles manually in Admin → Users after importing users.
 
 Usage:
   uv run python scripts/import_from_laravel.py --list
@@ -18,7 +16,6 @@ from __future__ import annotations
 import argparse
 import os
 import sys
-from datetime import datetime
 from typing import Any
 
 from sqlalchemy import MetaData, Table, create_engine, inspect
@@ -29,7 +26,7 @@ from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
 from app.core.database import get_session_factory, init_db
-from app.services import users as user_service
+from app.core.time import utc_now
 
 # FK-safe order
 TABLE_ORDER = [
@@ -142,7 +139,7 @@ def run_import(tables: list[str]) -> None:
 
     target_meta = Base.metadata
     totals: dict[str, int] = {}
-    started = datetime.utcnow()
+    started = utc_now()
 
     try:
         for table_name in tables:
@@ -153,13 +150,8 @@ def run_import(tables: list[str]) -> None:
             else:
                 print(f"  {table_name}: (no rows or not in source)")
 
-            if table_name == "users":
-                role_count = user_service.apply_laravel_roles_from_source(source_engine, target_session)
-                if role_count:
-                    print(f"  users.role: {role_count} mapped from legacy Spatie roles")
-
         target_session.commit()
-        elapsed = (datetime.utcnow() - started).total_seconds()
+        elapsed = (utc_now() - started).total_seconds()
         print(f"Import complete in {elapsed:.1f}s — {sum(totals.values())} rows across {len(totals)} tables.")
     except Exception:
         target_session.rollback()
@@ -184,7 +176,7 @@ def main() -> None:
         for name in TABLE_ORDER:
             print(f"  {name}")
         print("\nSkipped Laravel-only tables:", ", ".join(sorted(SKIP_TABLES)))
-        print("\nNote: importing users maps legacy roles/model_has_roles onto users.role.")
+        print("\nNote: assign roles under Admin → Users after importing users.")
         return
 
     env_tables = os.environ.get("IMPORT_TABLES", "").strip()
