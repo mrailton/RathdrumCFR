@@ -54,6 +54,7 @@ dev = [
     "pytest-cov>=7.1.0",
     "ruff>=0.15.14",
     "mypy>=1.19.1",
+    "httpx2>=2.3.0",
 ]
 
 [tool.ruff]

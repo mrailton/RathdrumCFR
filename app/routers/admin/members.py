@@ -71,7 +71,9 @@ async def update(member_id: int, request: Request, db: DbSession, user: CurrentU
 
 
 @router.post("/{member_id}/notes", name="admin.members.notes.store")
-async def add_note(member_id: int, request: Request, db: DbSession, user: CurrentUser, csrf_token: str = Form(""), note: str = Form("")):
+async def add_note(
+    member_id: int, request: Request, db: DbSession, user: CurrentUser, csrf_token: str = Form(""), note: str = Form("")
+):
     require_admin(db, user)
     verify_csrf(request, csrf_token)
     member_service.add_member_note(db, member_id, note, user.id)

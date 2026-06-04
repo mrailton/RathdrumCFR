@@ -2,14 +2,13 @@ from datetime import datetime
 
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import RedirectResponse
-from sqlalchemy.orm import Session
 
+from app import policies
 from app.core.database import mark_for_commit
 from app.dependencies import CurrentUser, DbSession, require_guest, verify_csrf
 from app.schemas.forms import LoginForm, login_form
-from app import policies
 from app.services.users import authenticate
-from app.templating import flash, render
+from app.templating import render
 
 router = APIRouter(tags=["auth"])
 

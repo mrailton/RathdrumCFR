@@ -15,7 +15,7 @@ cp .env.example .env
 uv sync
 npm install
 npm run build
-uv run alembic upgrade head
+make setup
 make server
 ```
 
@@ -27,7 +27,7 @@ Create an initial user (after import, or for a fresh install):
 uv run rathdrumcfr user-create "Admin" admin@example.com 'your-password' --role admin
 ```
 
-**Roles:** `user` (callouts + defibs, no delete) and `admin` (everything). Laravel `super_admin` is treated as admin. Assign roles under **Admin → Users**.
+**Roles:** `user` (callouts + defibs, no delete) and `admin` (everything). Assign roles under **Admin → Users**.
 
 **Database:** Production must use MySQL (`DATABASE_URL=mysql+pymysql://...`). SQLite is only suitable for automated tests.
 
@@ -38,7 +38,7 @@ uv run rathdrumcfr user-create "Admin" admin@example.com 'your-password' --role 
 Point `LARAVEL_DATABASE_URL` at the legacy database and `DATABASE_URL` at the new database, then migrate:
 
 ```bash
-uv run alembic upgrade head
+make db-upgrade
 ```
 
 Import **only the tables you need** (preserves IDs, safe to re-run):
@@ -50,16 +50,22 @@ uv run python scripts/import_from_laravel.py --tables users,members,defibs,callo
 
 Importing `users` maps legacy Spatie role assignments onto `users.role`. Permission and role pivot tables are not created in the new schema.
 
-## Scripts
+## Makefile
+
+Run `make help` for the full list. Common commands:
 
 | Command | Description |
 |---------|-------------|
-| `make server` | Dev server (uvicorn reload) |
-| `make assets` | Build CSS/JS |
-| `make migrate` | Alembic upgrade |
-| `make import` | Laravel → FastAPI data import |
-| `make test` | Pytest |
-| `uv run rathdrumcfr reports-cert-expiry` | Scheduled report (see CLI) |
+| `make setup` | Install deps, build assets, migrate DB |
+| `make dev` | Dev server + asset watch |
+| `make db-upgrade` | Apply database migrations |
+| `make db-revision MSG="..."` | Autogenerate a new migration |
+| `make import TABLES=users,members` | Laravel data import |
+| `make user-create USER_PASSWORD=...` | Create an admin/user |
+| `make test` / `make test-cov` | Tests / coverage |
+| `make lint` / `make lint-fix` | Check / fix lint |
+
+Scheduled reports: `uv run rathdrumcfr reports-cert-expiry` (and other `reports-*` commands).
 
 ## Project layout
 
@@ -71,11 +77,12 @@ app/
   services/      Business logic
   routers/       HTTP routes (public + admin)
   templates/     Jinja2 (mobile-first admin drawer)
-  static/dist/   Built assets (Vite)
-alembic/         Database migrations
+  static/        Raw static files (CSS/JS sources, images, etc.)
+  static/dist/   Built assets (Vite; served at /static/assets/)
+migrations/      Database migrations (Alembic)
 scripts/         import_from_laravel.py
 ```
 
 ## Roles
 
-Two roles only: **user** (callouts + defibs, no delete) and **admin** (full access). Laravel `super_admin` counts as admin. Assign roles under **Admin → Users**.
+Two roles only: **user** (callouts + defibs, no delete) and **admin** (full access). Assign roles under **Admin → Users**.

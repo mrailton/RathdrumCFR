@@ -18,16 +18,16 @@ def list_defibs(db: Session, *, include_trashed: bool = False) -> list[Defib]:
 def list_public_defibs(db: Session) -> list[Defib]:
     return list(
         db.scalars(
-            select(Defib).where(Defib.display_on_map.is_(True), Defib.deleted_at.is_(None), Defib.coordinates.isnot(None))
+            select(Defib).where(
+                Defib.display_on_map.is_(True), Defib.deleted_at.is_(None), Defib.coordinates.isnot(None)
+            )
         ).all()
     )
 
 
 def get_defib(db: Session, defib_id: int) -> Defib | None:
     return db.scalars(
-        select(Defib)
-        .where(Defib.id == defib_id)
-        .options(selectinload(Defib.inspections), selectinload(Defib.notes))
+        select(Defib).where(Defib.id == defib_id).options(selectinload(Defib.inspections), selectinload(Defib.notes))
     ).first()
 
 

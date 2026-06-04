@@ -15,6 +15,10 @@ from app.templating import register_route_names, setup_template_globals
 settings = get_settings()
 init_db(settings)
 
+APP_DIR = Path(__file__).resolve().parent
+STATIC_DIR = APP_DIR / "static"
+BUILT_ASSETS_DIR = STATIC_DIR / "dist" / "assets"
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -36,9 +40,11 @@ app.add_middleware(
     https_only=settings.session_secure_cookie,
 )
 
-static_dir = Path(__file__).resolve().parent / "static" / "dist"
-if static_dir.exists():
-    app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+# Built bundle first (more specific path), then raw files (images, etc.)
+if BUILT_ASSETS_DIR.is_dir():
+    app.mount("/static/assets", StaticFiles(directory=str(BUILT_ASSETS_DIR)), name="static-built")
+if STATIC_DIR.is_dir():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 setup_template_globals()
 app.include_router(api_router)

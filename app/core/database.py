@@ -5,7 +5,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.core.config import Settings, get_settings
-from app.models.base import Base
 
 _engine = None
 _SessionLocal: sessionmaker[Session] | None = None
@@ -42,7 +41,7 @@ def get_session_factory() -> sessionmaker[Session]:
     return _SessionLocal
 
 
-def get_db() -> Generator[Session, None, None]:
+def get_db() -> Generator[Session]:
     session = get_session_factory()()
     commit = False
     try:

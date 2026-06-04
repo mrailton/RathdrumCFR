@@ -10,7 +10,9 @@ from app.services import mail as mail_service
 
 
 def report_recipients(db: Session, flag: str) -> list[str]:
-    rows = db.scalars(select(UserReport).options(joinedload(UserReport.user)).where(getattr(UserReport, flag).is_(True))).all()
+    rows = db.scalars(
+        select(UserReport).options(joinedload(UserReport.user)).where(getattr(UserReport, flag).is_(True))
+    ).all()
     return [r.user.email for r in rows if r.user and r.user.email]
 
 
@@ -41,7 +43,9 @@ def run_defib_pad_expiry_report(db: Session) -> None:
 
 def run_defib_inspection_report(db: Session) -> None:
     cutoff = datetime.utcnow() - timedelta(days=30)
-    defibs = list(db.scalars(select(Defib).where(or_(Defib.last_inspected_at < cutoff, Defib.last_inspected_at.is_(None)))).all())
+    defibs = list(
+        db.scalars(select(Defib).where(or_(Defib.last_inspected_at < cutoff, Defib.last_inspected_at.is_(None)))).all()
+    )
     for email in report_recipients(db, "defib_inspection"):
         mail_service.send_report_email(email, "Defibrillator Inspection Report", defibs)
 

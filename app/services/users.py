@@ -94,11 +94,15 @@ def apply_laravel_roles_from_source(source: Engine, db: Session) -> int:
     roles_table = Table("roles", src_meta, autoload_with=source)
     mhr_table = Table("model_has_roles", src_meta, autoload_with=source)
 
-    rows = source.connect().execute(
-        select(mhr_table.c.model_id, roles_table.c.name)
-        .select_from(mhr_table.join(roles_table, roles_table.c.id == mhr_table.c.role_id))
-        .where(mhr_table.c.model_type == LARAVEL_USER_MODEL_TYPE)
-    ).all()
+    rows = (
+        source.connect()
+        .execute(
+            select(mhr_table.c.model_id, roles_table.c.name)
+            .select_from(mhr_table.join(roles_table, roles_table.c.id == mhr_table.c.role_id))
+            .where(mhr_table.c.model_type == LARAVEL_USER_MODEL_TYPE)
+        )
+        .all()
+    )
 
     updated = 0
     for user_id, role_name in rows:

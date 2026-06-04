@@ -25,6 +25,4 @@ class TrainingSession(Base, PrimaryKeyMixin, TimestampMixin, SoftDeleteMixin):
     topic: Mapped[str] = mapped_column(String(255))
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
 
-    members: Mapped[list[Member]] = relationship(
-        secondary=member_training_session, back_populates="training_sessions"
-    )
+    members: Mapped[list[Member]] = relationship(secondary=member_training_session, back_populates="training_sessions")

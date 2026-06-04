@@ -11,7 +11,7 @@ export default defineConfig({
     outDir: "app/static/dist",
     emptyOutDir: true,
     rollupOptions: {
-      input: path.resolve(__dirname, "frontend/js/app.js"),
+      input: path.resolve(__dirname, "app/static/js/app.js"),
       output: {
         entryFileNames: "assets/[name].js",
         assetFileNames: "assets/[name][extname]",

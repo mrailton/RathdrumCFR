@@ -8,8 +8,8 @@ from app.dependencies import CurrentUser, DbSession, verify_csrf
 from app.routers.admin._helpers import parse_bool, require_admin, require_operator
 from app.services import ampds as ampds_service
 from app.services import callouts as callout_service
-from app.services import members as member_service
 from app.services import dashboard as dashboard_service
+from app.services import members as member_service
 from app.templating import flash, render
 
 router = APIRouter(prefix="/callouts", tags=["admin.callouts"])

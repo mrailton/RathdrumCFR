@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """One-off generator for bulk app modules. Run: python3.14 scripts/_generate_app.py"""
+
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -19,7 +20,7 @@ w(
 
 w(
     "app/services/users.py",
-    '''from sqlalchemy import select
+    """from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.security import hash_password, verify_password
@@ -59,12 +60,12 @@ def update_user(db: Session, user: User, data: dict) -> User:
         elif hasattr(user, key) and key != "password":
             setattr(user, key, value)
     return user
-''',
+""",
 )
 
 w(
     "app/services/members.py",
-    '''from datetime import date
+    """from datetime import date
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
@@ -113,12 +114,12 @@ def add_member_note(db: Session, member_id: int, note: str, user_id: int) -> Mem
     db.add(row)
     db.flush()
     return row
-''',
+""",
 )
 
 w(
     "app/services/defibs.py",
-    '''from datetime import datetime
+    """from datetime import datetime
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
@@ -190,12 +191,12 @@ def create_inspection(db: Session, defib: Defib, data: dict, creator_id: int) ->
     defib.last_inspected_at = inspection.inspected_at
     defib.last_inspected_by = member.name if member else None
     return inspection
-''',
+""",
 )
 
 w(
     "app/services/callouts.py",
-    '''from sqlalchemy import select
+    """from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
 from app.models.callout import Callout
@@ -236,12 +237,12 @@ def update_callout(db: Session, callout: Callout, data: dict, member_ids: list[i
 
 def delete_callout(db: Session, callout: Callout) -> None:
     db.delete(callout)
-''',
+""",
 )
 
 w(
     "app/services/training.py",
-    '''from sqlalchemy import select
+    """from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
 from app.models.member import Member
@@ -273,12 +274,12 @@ def save_training_session(db: Session, data: dict, member_ids: list[int], sessio
     db.add(row)
     db.flush()
     return row
-''',
+""",
 )
 
 w(
     "app/services/ampds.py",
-    '''from sqlalchemy import select
+    """from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.ampds_code import AMPDSCode
@@ -304,12 +305,12 @@ def save_ampds_code(db: Session, data: dict, code_id: int | None = None) -> AMPD
 
 def delete_ampds_code(db: Session, code: AMPDSCode) -> None:
     db.delete(code)
-''',
+""",
 )
 
 w(
     "app/services/dashboard.py",
-    '''from datetime import datetime, timedelta
+    """from datetime import datetime, timedelta
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -376,12 +377,12 @@ def callout_stats(db: Session, date_from: datetime | None = None, date_to: datet
         "cardiac_attended": count(cardiac, lambda c: c.attended),
         "rosc": count(cardiac, lambda c: c.rosc_achieved),
     }
-''',
+""",
 )
 
 w(
     "app/services/reports.py",
-    '''from datetime import datetime, timedelta
+    """from datetime import datetime, timedelta
 
 from sqlalchemy import or_, select
 from sqlalchemy.orm import Session, joinedload
@@ -439,12 +440,12 @@ def run_garda_vetting_report(db: Session) -> None:
 def notify_defib_inspected(db: Session, defib: Defib) -> None:
     for email in report_recipients(db, "defib_inspected"):
         mail_service.send_defib_inspected_email(email, defib)
-''',
+""",
 )
 
 w(
     "app/services/mail.py",
-    '''import smtplib
+    """import smtplib
 from email.message import EmailMessage
 
 from app.core.config import get_settings
@@ -478,12 +479,12 @@ def send_report_email(to: str, subject: str, items: list) -> None:
 
 def send_defib_inspected_email(to: str, defib) -> None:
     _send(to, f"Defibrillator inspected: {defib.name or defib.location}", f"Location: {defib.location}")
-''',
+""",
 )
 
 w(
     "app/services/recaptcha.py",
-    '''import httpx
+    """import httpx
 
 from app.core.config import get_settings
 
@@ -500,7 +501,7 @@ async def verify_recaptcha(token: str, action: str = "contact") -> bool:
         )
         data = resp.json()
     return bool(data.get("success")) and float(data.get("score", 0)) >= settings.recaptcha_min_score
-''',
+""",
 )
 
 print("Generated services")

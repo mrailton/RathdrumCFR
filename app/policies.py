@@ -8,8 +8,6 @@ from app.models.user import User
 
 ROLE_ADMIN = "admin"
 ROLE_USER = "user"
-# Normalized from Laravel Filament Shield on import
-LEGACY_ADMIN_ROLES = frozenset({ROLE_ADMIN, "super_admin"})
 
 
 class AuthorizationError(Exception):
@@ -17,7 +15,7 @@ class AuthorizationError(Exception):
 
 
 def normalize_role(role_name: str | None) -> str:
-    if role_name in LEGACY_ADMIN_ROLES:
+    if role_name == ROLE_ADMIN:
         return ROLE_ADMIN
     return ROLE_USER
 
@@ -31,7 +29,7 @@ def get_role_names(_db: Session, user: User) -> list[str]:
 def is_admin(_db: Session, user: User | None) -> bool:
     if user is None or not user.role:
         return False
-    return user.role in LEGACY_ADMIN_ROLES
+    return user.role == ROLE_ADMIN
 
 
 def is_operator(_db: Session, user: User | None) -> bool:

@@ -102,7 +102,9 @@ async def add_inspection(defib_id: int, request: Request, db: DbSession, user: C
 
 
 @router.post("/{defib_id}/notes", name="admin.defibs.notes.store")
-async def add_note(defib_id: int, request: Request, db: DbSession, user: CurrentUser, csrf_token: str = Form(""), note: str = Form("")):
+async def add_note(
+    defib_id: int, request: Request, db: DbSession, user: CurrentUser, csrf_token: str = Form(""), note: str = Form("")
+):
     require_operator(db, user)
     verify_csrf(request, csrf_token)
     defib_service.add_defib_note(db, defib_id, note, user.id)

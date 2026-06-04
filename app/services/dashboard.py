@@ -12,32 +12,62 @@ from app.models.member import Member
 def member_stats(db: Session) -> dict[str, int]:
     now = datetime.utcnow()
     total = db.scalar(select(func.count()).select_from(Member).where(Member.deleted_at.is_(None))) or 0
-    active = db.scalar(select(func.count()).select_from(Member).where(Member.deleted_at.is_(None), Member.status == "active")) or 0
-    cert = db.scalar(
-        select(func.count()).select_from(Member).where(Member.deleted_at.is_(None), Member.cfr_certificate_expiry < now.date() - timedelta(days=90))
-    ) or 0
-    vetting = db.scalar(
-        select(func.count()).select_from(Member).where(
-            Member.deleted_at.is_(None),
-            Member.garda_vetting_date < (now - timedelta(days=3 * 365 - 90)).date(),
+    active = (
+        db.scalar(
+            select(func.count()).select_from(Member).where(Member.deleted_at.is_(None), Member.status == "active")
         )
-    ) or 0
+        or 0
+    )
+    cert = (
+        db.scalar(
+            select(func.count())
+            .select_from(Member)
+            .where(Member.deleted_at.is_(None), Member.cfr_certificate_expiry < now.date() - timedelta(days=90))
+        )
+        or 0
+    )
+    vetting = (
+        db.scalar(
+            select(func.count())
+            .select_from(Member)
+            .where(
+                Member.deleted_at.is_(None),
+                Member.garda_vetting_date < (now - timedelta(days=3 * 365 - 90)).date(),
+            )
+        )
+        or 0
+    )
     return {"total": total, "active": active, "cert_expiring": cert, "vetting_expiring": vetting}
 
 
 def defib_stats(db: Session) -> dict[str, int]:
     now = datetime.utcnow()
     total = db.scalar(select(func.count()).select_from(Defib).where(Defib.deleted_at.is_(None))) or 0
-    public = db.scalar(select(func.count()).select_from(Defib).where(Defib.deleted_at.is_(None), Defib.display_on_map.is_(True))) or 0
-    pads = db.scalar(
-        select(func.count()).select_from(Defib).where(Defib.deleted_at.is_(None), Defib.pads_expire_at < now + timedelta(days=30))
-    ) or 0
-    battery = db.scalar(
-        select(func.count()).select_from(Defib).where(
-            Defib.deleted_at.is_(None),
-            (Defib.battery_expires_at < now + timedelta(days=30)) | (Defib.battery_expires_at.is_(None)),
+    public = (
+        db.scalar(
+            select(func.count()).select_from(Defib).where(Defib.deleted_at.is_(None), Defib.display_on_map.is_(True))
         )
-    ) or 0
+        or 0
+    )
+    pads = (
+        db.scalar(
+            select(func.count())
+            .select_from(Defib)
+            .where(Defib.deleted_at.is_(None), Defib.pads_expire_at < now + timedelta(days=30))
+        )
+        or 0
+    )
+    battery = (
+        db.scalar(
+            select(func.count())
+            .select_from(Defib)
+            .where(
+                Defib.deleted_at.is_(None),
+                (Defib.battery_expires_at < now + timedelta(days=30)) | (Defib.battery_expires_at.is_(None)),
+            )
+        )
+        or 0
+    )
     return {"total": total, "public": public, "pads_expiring": pads, "battery_expiring": battery}
 
 

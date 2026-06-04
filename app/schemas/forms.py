@@ -1,6 +1,7 @@
 from typing import Annotated
-from pydantic import BaseModel, EmailStr, Field
+
 from fastapi import Form
+from pydantic import BaseModel, EmailStr, Field
 
 
 class CsrfForm(BaseModel):

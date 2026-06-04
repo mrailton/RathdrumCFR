@@ -34,7 +34,6 @@ class Settings(BaseSettings):
     recaptcha_secret_key: str = ""
     recaptcha_min_score: float = 0.5
 
-    super_admin_role: str = "super_admin"
     scheduler_enabled: bool = True
 
     def model_post_init(self, __context: object) -> None:
