@@ -1,0 +1,21 @@
+{% extends "layouts/admin.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+<form class="flex flex-wrap gap-2 mb-4" method="get">
+  <input type="date" name="from" value="{{ date_from }}" class="input input-bordered input-sm">
+  <input type="date" name="to" value="{{ date_to }}" class="input input-bordered input-sm">
+  <button class="btn btn-sm btn-primary">Filter callouts</button>
+</form>
+{% if is_admin %}
+<h2 class="font-semibold mb-2">Members</h2>
+{% set stats = {"Total": member_stats.total, "Active": member_stats.active, "Cert expiring": member_stats.cert_expiring, "Vetting expiring": member_stats.vetting_expiring} %}
+{% include "components/stats_grid.html" %}
+<h2 class="font-semibold mt-6 mb-2">Defibrillators</h2>
+{% set stats = {"Total": defib_stats.total, "On map": defib_stats.public, "Pads expiring": defib_stats.pads_expiring, "Battery expiring": defib_stats.battery_expiring} %}
+{% include "components/stats_grid.html" %}
+{% endif %}
+<h2 class="font-semibold mt-6 mb-2">Callouts</h2>
+{% set stats = {"Received": callout_stats.total, "Mobilised": callout_stats.mobilised, "Attended": callout_stats.attended, "Missed": callout_stats.missed, "Cardiac": callout_stats.cardiac, "ROSC": callout_stats.rosc} %}
+{% include "components/stats_grid.html" %}
+{% endblock %}

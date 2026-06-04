@@ -1,0 +1,19 @@
+{% extends "layouts/admin.html" %}
+{% block title %}Callouts{% endblock %}
+{% block content %}
+<div class="flex justify-between mb-4">
+  <h1 class="text-xl font-bold">Callouts</h1>
+  <a href="{{ url_for('admin.callouts.create') }}" class="btn btn-primary btn-sm">New</a>
+</div>
+{% set stats = {"Total": stats.total, "Mobilised": stats.mobilised, "Attended": stats.attended} %}
+{% include "components/stats_grid.html" %}
+<div class="overflow-x-auto bg-base-100 rounded-box shadow mt-4">
+  <table class="table table-sm">
+    <tbody>
+      {% for c in callouts %}
+      <tr><td>{{ c.incident_number }}</td><td>{{ c.incident_date }}</td><td><a href="{{ url_for('admin.callouts.show', callout_id=c.id) }}">View</a></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

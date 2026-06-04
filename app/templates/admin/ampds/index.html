@@ -1,0 +1,29 @@
+{% extends "layouts/admin.html" %}
+{% block title %}AMPDS{% endblock %}
+{% block content %}
+<h1 class="text-xl font-bold mb-4">AMPDS codes</h1>
+<form method="post" class="card bg-base-100 p-4 mb-4 grid gap-2 max-w-xl">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <input name="code" class="input input-bordered" placeholder="Code" required>
+  <input name="description" class="input input-bordered" placeholder="Description" required>
+  <label class="label gap-2 justify-start"><input type="checkbox" name="arrest_code" class="checkbox"> Arrest code</label>
+  <label class="label gap-2 justify-start"><input type="checkbox" name="far_code" class="checkbox"> FAR code</label>
+  <button class="btn btn-primary btn-sm w-fit">Add code</button>
+</form>
+<div class="overflow-x-auto bg-base-100 rounded-box shadow">
+  <table class="table table-sm">
+    {% for c in codes %}
+    <tr>
+      <td>{{ c.code }}</td>
+      <td>{{ c.description }}</td>
+      <td>
+        <form method="post" action="{{ url_for('admin.ampds.delete', code_id=c.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button class="btn btn-xs btn-error">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

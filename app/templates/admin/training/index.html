@@ -1,0 +1,16 @@
+{% extends "layouts/admin.html" %}
+{% block title %}Training{% endblock %}
+{% block content %}
+<div class="flex justify-between mb-4">
+  <h1 class="text-xl font-bold">Training sessions</h1>
+  <a href="{{ url_for('admin.training.create') }}" class="btn btn-primary btn-sm">New</a>
+</div>
+<ul class="space-y-2">
+  {% for s in sessions %}
+  <li class="bg-base-100 p-3 rounded flex justify-between items-center">
+    <span>{{ s.date }} — {{ s.topic }}</span>
+    <a href="{{ url_for('admin.training.edit', session_id=s.id) }}" class="link">Edit</a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

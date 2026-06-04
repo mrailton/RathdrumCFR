@@ -1,0 +1,13 @@
+{% extends "layouts/admin.html" %}
+{% block content %}
+<form method="post" action="{% if defib %}{{ url_for('admin.defibs.update', defib_id=defib.id) }}{% else %}{{ url_for('admin.defibs.store') }}{% endif %}" class="card bg-base-100 p-4 space-y-3 max-w-2xl">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <input name="name" class="input input-bordered w-full" placeholder="Name" value="{{ defib.name if defib else '' }}">
+  <input name="location" class="input input-bordered w-full" placeholder="Location" value="{{ defib.location if defib else '' }}" required>
+  <input name="coordinates" class="input input-bordered w-full" placeholder="lat,lng" value="{{ defib.coordinates if defib else '' }}">
+  <label class="label cursor-pointer justify-start gap-2"><input type="checkbox" name="display_on_map" class="checkbox" {% if defib and defib.display_on_map %}checked{% endif %}><span>Display on map</span></label>
+  <input name="model" class="input input-bordered w-full" value="{{ defib.model if defib else '' }}" required>
+  <input name="owner" class="input input-bordered w-full" value="{{ defib.owner if defib else 'RathdrumCFR' }}">
+  <button class="btn btn-primary w-full">Save</button>
+</form>
+{% endblock %}

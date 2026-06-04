@@ -1,0 +1,24 @@
+{% extends "layouts/admin.html" %}
+{% block title %}{{ defib.name or defib.location }}{% endblock %}
+{% block content %}
+<h1 class="text-xl font-bold">{{ defib.name or defib.location }}</h1>
+<p>{{ defib.location }}{% if defib.coordinates %} · {{ defib.coordinates }}{% endif %}</p>
+<a href="{{ url_for('admin.defibs.edit', defib_id=defib.id) }}" class="btn btn-sm mt-2">Edit</a>
+{% if can_delete_defibs %}
+<form method="post" action="{{ url_for('admin.defibs.delete', defib_id=defib.id) }}" class="mt-4 inline" onsubmit="return confirm('Delete this defibrillator?')">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <button class="btn btn-error btn-sm">Delete</button>
+</form>
+{% endif %}
+<h2 class="font-semibold mt-4">Add inspection</h2>
+<form method="post" action="{{ url_for('admin.defibs.inspections.store', defib_id=defib.id) }}" class="card bg-base-100 p-4 space-y-2 mt-2 max-w-xl">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <select name="member_id" class="select select-bordered w-full" required>
+    {% for m in members %}<option value="{{ m.id }}">{{ m.name }}</option>{% endfor %}
+  </select>
+  <input type="datetime-local" name="inspected_at" class="input input-bordered w-full" required>
+  <input type="datetime-local" name="pads_expire_at" class="input input-bordered w-full" required>
+  <input type="datetime-local" name="battery_expires_at" class="input input-bordered w-full" required>
+  <button class="btn btn-primary btn-sm">Record inspection</button>
+</form>
+{% endblock %}

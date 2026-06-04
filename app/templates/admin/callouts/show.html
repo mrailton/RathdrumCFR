@@ -1,0 +1,14 @@
+{% extends "layouts/admin.html" %}
+{% block title %}{{ callout.incident_number }}{% endblock %}
+{% block content %}
+<h1 class="text-xl font-bold">{{ callout.incident_number }}</h1>
+<p>{{ callout.incident_date }} · AMPDS {{ callout.ampds_code }}</p>
+<p>Mobilised: {{ callout.mobilised }} · Attended: {{ callout.attended }}</p>
+<a href="{{ url_for('admin.callouts.edit', callout_id=callout.id) }}" class="btn btn-sm">Edit</a>
+{% if can_delete_callouts %}
+<form method="post" action="{{ url_for('admin.callouts.delete', callout_id=callout.id) }}" class="mt-4" onsubmit="return confirm('Delete this callout?')">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <button class="btn btn-error btn-sm">Delete</button>
+</form>
+{% endif %}
+{% endblock %}

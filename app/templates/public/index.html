@@ -1,0 +1,25 @@
+{% extends "layouts/public.html" %}
+{% block content %}
+<section class="text-center mb-8">
+  <h1 class="text-2xl font-semibold">Community defibrillator map</h1>
+  <p class="mt-2 opacity-80">Public AED locations in the Rathdrum area.</p>
+</section>
+<div id="map" class="w-full h-80 md:h-96 rounded-box bg-base-100 shadow"></div>
+{% if maps_key %}
+<script src="https://maps.googleapis.com/maps/api/js?key={{ maps_key }}" async defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const markers = {{ defibs | tojson }};
+  if (!window.google || !markers.length) return;
+  const map = new google.maps.Map(document.getElementById('map'), { center: { lat: 52.92, lng: -6.23 }, zoom: 12 });
+  markers.forEach(d => new google.maps.Marker({
+    position: { lat: parseFloat(d.lat), lng: parseFloat(d.lng) },
+    map,
+    title: d.name,
+  }));
+});
+</script>
+{% else %}
+<p class="text-center opacity-70 mt-4">Map requires Google Maps API key.</p>
+{% endif %}
+{% endblock %}

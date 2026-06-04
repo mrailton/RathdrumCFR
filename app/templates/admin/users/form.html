@@ -1,0 +1,42 @@
+{% extends "layouts/admin.html" %}
+{% block title %}{% if edit_user %}Edit{% else %}New{% endif %} User{% endblock %}
+{% block content %}
+<form method="post" action="{% if edit_user %}{{ url_for('admin.users.update', user_id=edit_user.id) }}{% else %}{{ url_for('admin.users.store') }}{% endif %}" class="space-y-4 max-w-2xl">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+  <div class="card bg-base-100 p-4 shadow space-y-3">
+    <h2 class="font-semibold">Account</h2>
+    <input name="name" class="input input-bordered w-full" placeholder="Name" required
+      value="{{ edit_user.name if edit_user else '' }}">
+    <input name="email" type="email" class="input input-bordered w-full" placeholder="Email" required
+      value="{{ edit_user.email if edit_user else '' }}">
+    <input name="password" type="password" class="input input-bordered w-full"
+      placeholder="{% if edit_user %}New password (leave blank to keep){% else %}Password{% endif %}"
+      {% if not edit_user %}required{% endif %}>
+  </div>
+
+  <div class="card bg-base-100 p-4 shadow">
+    <h2 class="font-semibold mb-3">Role</h2>
+    <select name="role" class="select select-bordered w-full">
+      <option value="user" {% if current_role == 'user' %}selected{% endif %}>User — callouts & defibs (no delete)</option>
+      <option value="admin" {% if current_role == 'admin' %}selected{% endif %}>Admin — full access</option>
+    </select>
+    <p class="text-sm opacity-70 mt-2">Imported <code>super_admin</code> from Laravel is treated as admin.</p>
+  </div>
+
+  <div class="card bg-base-100 p-4 shadow">
+    <h2 class="font-semibold mb-3">Email report subscriptions</h2>
+    <div class="space-y-2">
+      {% for key, label in report_flag_options %}
+      <label class="label cursor-pointer justify-start gap-2 py-1 min-h-0">
+        <input type="checkbox" name="{{ key }}" class="checkbox checkbox-sm"
+          {% if report_flags.get(key) %}checked{% endif %}>
+        <span class="label-text text-sm">{{ label }}</span>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+
+  <button class="btn btn-primary w-full">{% if edit_user %}Update user{% else %}Create user{% endif %}</button>
+</form>
+{% endblock %}

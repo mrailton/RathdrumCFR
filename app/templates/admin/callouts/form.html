@@ -1,0 +1,161 @@
+{% extends "layouts/admin.html" %}
+{% block title %}{% if callout %}Edit{% else %}New{% endif %} Callout{% endblock %}
+{% block content %}
+<form
+  method="post"
+  action="{% if callout %}{{ url_for('admin.callouts.update', callout_id=callout.id) }}{% else %}{{ url_for('admin.callouts.store') }}{% endif %}"
+  class="card bg-base-100 p-4 space-y-4 max-w-2xl"
+  x-data="calloutForm({
+    mobilised: '{{ '1' if callout and callout.mobilised else '0' }}',
+    medical_facility: '{{ '1' if callout and callout.medical_facility else '0' }}',
+    attended: '{{ '1' if callout and callout.attended else '0' }}',
+    ohca_at_scene: '{{ '1' if callout and callout.ohca_at_scene else '0' }}',
+    bystander_cpr: '{{ '1' if callout and callout.bystander_cpr else '0' }}',
+    rosc_achieved: '{{ '1' if callout and callout.rosc_achieved else '0' }}',
+    patient_transported: '{{ '1' if callout and callout.patient_transported else '0' }}',
+    source_of_aed: '{{ callout.source_of_aed if callout and callout.source_of_aed else '' }}',
+    number_of_shocks_given: '{{ callout.number_of_shocks_given if callout else 0 }}',
+  })"
+>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+  <label class="form-control w-full">
+    <span class="label-text font-medium">CAD number</span>
+    <input name="incident_number" class="input input-bordered w-full" required
+      value="{{ callout.incident_number if callout else '' }}">
+  </label>
+
+  <label class="form-control w-full">
+    <span class="label-text font-medium">Incident date</span>
+    <input name="incident_date" type="datetime-local" class="input input-bordered w-full" required
+      value="{{ callout.incident_date.strftime('%Y-%m-%dT%H:%M') if callout else '' }}">
+  </label>
+
+  <label class="form-control w-full">
+    <span class="label-text font-medium">AMPDS code</span>
+    <select name="ampds_code" class="select select-bordered w-full" required>
+      {% for c in ampds_codes %}
+      <option value="{{ c.code }}" {% if callout and callout.ampds_code == c.code %}selected{% endif %}>
+        {{ c.code }} — {{ c.description }}
+      </option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label class="form-control w-full">
+    <span class="label-text font-medium">Age</span>
+    <input name="age" class="input input-bordered w-full" required
+      value="{{ callout.age if callout else '' }}">
+  </label>
+
+  <label class="form-control w-full">
+    <span class="label-text font-medium">Gender</span>
+    <select name="gender" class="select select-bordered w-full" required>
+      {% for g in ['Unknown', 'Male', 'Female'] %}
+      <option {% if callout and callout.gender == g %}selected{% elif not callout and g == 'Unknown' %}selected{% endif %}>{{ g }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label class="form-control w-full">
+    <span class="label-text font-medium">Mobilised?</span>
+    <select name="mobilised" class="select select-bordered w-full" required x-model="mobilised">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+  </label>
+
+  <div x-show="showMedicalFacility()" x-cloak class="space-y-4">
+    <label class="form-control w-full">
+      <span class="label-text font-medium">Medical facility?</span>
+      <select name="medical_facility" class="select select-bordered w-full" x-model="medical_facility">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </label>
+  </div>
+
+  <div x-show="showMobilisedFields()" x-cloak class="space-y-4">
+    <label class="form-control w-full">
+      <span class="label-text font-medium">Responders</span>
+      <select name="member_ids" class="select select-bordered w-full" multiple size="6">
+        {% for m in members %}
+        <option value="{{ m.id }}" {% if callout and m in callout.members %}selected{% endif %}>{{ m.name }}</option>
+        {% endfor %}
+      </select>
+      <span class="label-text-alt opacity-70">Hold Ctrl/Cmd to select multiple on desktop; tap to toggle on mobile.</span>
+    </label>
+
+    <label class="form-control w-full">
+      <span class="label-text font-medium">Attended?</span>
+      <select name="attended" class="select select-bordered w-full" x-model="attended">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </label>
+  </div>
+
+  <div x-show="showOhcaFields()" x-cloak class="space-y-4">
+    <label class="form-control w-full">
+      <span class="label-text font-medium">OHCA at scene?</span>
+      <select name="ohca_at_scene" class="select select-bordered w-full" x-model="ohca_at_scene">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </label>
+  </div>
+
+  <div x-show="showCardiacDetail()" x-cloak class="space-y-4 border-l-4 border-primary/30 pl-3">
+    <label class="form-control w-full">
+      <span class="label-text font-medium">Bystander CPR?</span>
+      <select name="bystander_cpr" class="select select-bordered w-full" x-model="bystander_cpr">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </label>
+
+    <label class="form-control w-full">
+      <span class="label-text font-medium">Source of AED</span>
+      <select name="source_of_aed" class="select select-bordered w-full" x-model="source_of_aed">
+        <option value="">—</option>
+        {% for s in ['CFR', 'PAD', 'NAS', 'Fire', 'Garda', 'Other'] %}
+        <option value="{{ s }}">{{ s }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label class="form-control w-full">
+      <span class="label-text font-medium">Number of shocks given</span>
+      <input name="number_of_shocks_given" type="number" min="0" class="input input-bordered w-full"
+        x-model="number_of_shocks_given">
+    </label>
+
+    <label class="form-control w-full">
+      <span class="label-text font-medium">ROSC achieved?</span>
+      <select name="rosc_achieved" class="select select-bordered w-full" x-model="rosc_achieved">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </label>
+  </div>
+
+  <div x-show="showPatientTransported()" x-cloak>
+    <label class="form-control w-full">
+      <span class="label-text font-medium">Patient transported?</span>
+      <select name="patient_transported" class="select select-bordered w-full" x-model="patient_transported">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+    </label>
+  </div>
+
+  <label class="form-control w-full">
+    <span class="label-text font-medium">Notes</span>
+    <textarea name="notes" class="textarea textarea-bordered w-full" rows="3">{{ callout.notes if callout and callout.notes else '' }}</textarea>
+  </label>
+
+  <button class="btn btn-primary w-full" type="submit">Save callout</button>
+</form>
+
+<style>[x-cloak] { display: none !important; }</style>
+{% endblock %}

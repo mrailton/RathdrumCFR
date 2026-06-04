@@ -1,0 +1,1 @@
+"""Rathdrum CFR FastAPI application."""

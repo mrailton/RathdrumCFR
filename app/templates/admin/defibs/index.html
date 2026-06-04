@@ -1,0 +1,21 @@
+{% extends "layouts/admin.html" %}
+{% block title %}Defibrillators{% endblock %}
+{% block content %}
+<div class="flex justify-between mb-4">
+  <h1 class="text-xl font-bold">Defibrillators</h1>
+  <a href="{{ url_for('admin.defibs.create') }}" class="btn btn-primary btn-sm">New</a>
+</div>
+<div class="overflow-x-auto bg-base-100 rounded-box shadow">
+  <table class="table table-sm">
+    <tbody>
+      {% for d in defibs %}
+      <tr>
+        <td>{{ d.name or d.location }}</td>
+        <td>{% if d.display_on_map %}Map{% endif %}</td>
+        <td><a href="{{ url_for('admin.defibs.show', defib_id=d.id) }}">View</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

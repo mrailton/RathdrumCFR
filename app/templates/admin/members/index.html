@@ -1,0 +1,18 @@
+{% extends "layouts/admin.html" %}
+{% block title %}Members{% endblock %}
+{% block content %}
+<div class="flex justify-between items-center mb-4">
+  <h1 class="text-xl font-bold">Members</h1>
+  <a href="{{ url_for('admin.members.create') }}" class="btn btn-primary btn-sm">New</a>
+</div>
+<div class="overflow-x-auto bg-base-100 rounded-box shadow">
+  <table class="table table-sm">
+    <thead><tr><th>Name</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for m in members %}
+      <tr><td>{{ m.name }}</td><td>{{ m.status }}</td><td><a class="link" href="{{ url_for('admin.members.show', member_id=m.id) }}">View</a></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

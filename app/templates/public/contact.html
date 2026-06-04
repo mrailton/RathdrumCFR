@@ -1,0 +1,18 @@
+{% extends "layouts/public.html" %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<div class="card bg-base-100 shadow max-w-lg mx-auto">
+  <div class="card-body">
+    <h2 class="card-title">Contact us</h2>
+    <form method="post" action="{{ url_for('public.contact.store') }}" class="space-y-3">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label class="form-control w-full"><span class="label-text">Name</span><input name="name" class="input input-bordered w-full" required></label>
+      <label class="form-control w-full"><span class="label-text">Email</span><input name="email" type="email" class="input input-bordered w-full" required></label>
+      <label class="form-control w-full"><span class="label-text">Phone</span><input name="phone" class="input input-bordered w-full" required></label>
+      <label class="form-control w-full"><span class="label-text">Message</span><textarea name="message" class="textarea textarea-bordered w-full" rows="4" required></textarea></label>
+      <input type="hidden" name="g-recaptcha-response" id="recaptcha">
+      <button class="btn btn-primary w-full" type="submit">Send</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

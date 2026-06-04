@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="corporate">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Rathdrum CFR{% endblock %}</title>
+  <link rel="stylesheet" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600">
+  <link rel="stylesheet" href="/static/assets/app.css">
+  <script type="module" src="/static/assets/app.js"></script>
+</head>
+<body class="min-h-screen bg-base-200">
+  <div class="navbar bg-primary text-primary-content shadow-lg">
+    <div class="flex-1"><a href="/" class="btn btn-ghost text-lg">Rathdrum CFR</a></div>
+    <div class="flex-none gap-2">
+      <a href="/contact" class="btn btn-ghost btn-sm">Contact</a>
+      <a href="/admin/login" class="btn btn-ghost btn-sm">Login</a>
+    </div>
+  </div>
+  <main class="container mx-auto p-4 max-w-5xl">
+    {% if success %}<div class="alert alert-success mb-4"><span>{{ success }}</span></div>{% endif %}
+    {% if error %}<div class="alert alert-error mb-4"><span>{{ error }}</span></div>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
