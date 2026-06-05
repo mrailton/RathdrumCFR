@@ -1,16 +1,35 @@
 {% extends "layouts/admin.html" %}
 {% block title %}Training{% endblock %}
 {% block content %}
-<div class="flex justify-between mb-4">
-  <h1 class="text-xl font-bold">Training sessions</h1>
-  <a href="{{ url_for('admin.training.create') }}" class="btn btn-primary btn-sm">New</a>
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold">Training</h1>
+    <p class="text-sm text-base-content/70 mt-1">Session dates, topics, and attendees.</p>
+  </div>
+  <a href="{{ url_for('admin.training.create') }}" class="btn btn-primary btn-sm">New session</a>
 </div>
-<ul class="space-y-2">
-  {% for s in sessions %}
-  <li class="bg-base-100 p-3 rounded flex justify-between items-center">
-    <span>{{ s.date }} — {{ s.topic }}</span>
-    <a href="{{ url_for('admin.training.edit', session_id=s.id) }}" class="link">Edit</a>
-  </li>
-  {% endfor %}
-</ul>
+<div class="overflow-x-auto rounded-box border border-base-300 bg-base-100 shadow-sm">
+  <table class="table">
+    <thead>
+      <tr class="bg-base-200/80">
+        <th>Date</th>
+        <th>Topic</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in sessions %}
+      <tr class="hover">
+        <td>{{ s.date }}</td>
+        <td class="font-medium">{{ s.topic }}</td>
+        <td class="text-right">
+          <a href="{{ url_for('admin.training.edit', session_id=s.id) }}" class="btn btn-ghost btn-xs">Edit</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3" class="text-center text-base-content/60 py-8">No training sessions yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

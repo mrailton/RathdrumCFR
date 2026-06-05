@@ -1,41 +1,51 @@
 {% extends "layouts/admin.html" %}
+{% from "components/macros.html" import input_field, select_field, checkbox_field %}
 {% block title %}{% if edit_user %}Edit{% else %}New{% endif %} User{% endblock %}
 {% block content %}
-<form method="post" action="{% if edit_user %}{{ url_for('admin.users.update', user_id=edit_user.id) }}{% else %}{{ url_for('admin.users.store') }}{% endif %}" class="space-y-4 max-w-2xl">
+<div class="mb-6">
+  <h1 class="text-2xl font-bold">{% if edit_user %}Edit user{% else %}New user{% endif %}</h1>
+  <p class="text-sm text-base-content/70 mt-1"><a href="{{ url_for('admin.users.index') }}" class="link link-primary">← Back to users</a></p>
+</div>
+
+<form method="post" action="{% if edit_user %}{{ url_for('admin.users.update', user_id=edit_user.id) }}{% else %}{{ url_for('admin.users.store') }}{% endif %}" class="space-y-6 max-w-2xl">
   <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
-  <div class="card bg-base-100 p-4 shadow space-y-3">
-    <h2 class="font-semibold">Account</h2>
-    <input name="name" class="input input-bordered w-full" placeholder="Name" required
-      value="{{ edit_user.name if edit_user else '' }}">
-    <input name="email" type="email" class="input input-bordered w-full" placeholder="Email" required
-      value="{{ edit_user.email if edit_user else '' }}">
-    <input name="password" type="password" class="input input-bordered w-full"
-      placeholder="{% if edit_user %}New password (leave blank to keep){% else %}Password{% endif %}"
-      {% if not edit_user %}required{% endif %}>
+  <div class="card bg-base-100 border border-base-300 shadow-sm">
+    <div class="card-body gap-4">
+      <h2 class="card-title text-base">Account</h2>
+      {{ input_field("name", "Full name", edit_user.name if edit_user else '', required=true) }}
+      {{ input_field("email", "Email address", edit_user.email if edit_user else '', type="email", required=true) }}
+      {% if edit_user %}
+      {{ input_field("password", "Password", "", type="password", hint="Leave blank to keep the current password.") }}
+      {% else %}
+      {{ input_field("password", "Password", "", type="password", required=true) }}
+      {% endif %}
+    </div>
   </div>
 
-  <div class="card bg-base-100 p-4 shadow">
-    <h2 class="font-semibold mb-3">Role</h2>
-    <select name="role" class="select select-bordered w-full">
-      <option value="user" {% if current_role == 'user' %}selected{% endif %}>User — callouts & defibs (no delete)</option>
-      <option value="admin" {% if current_role == 'admin' %}selected{% endif %}>Admin — full access</option>
-    </select>
+  <div class="card bg-base-100 border border-base-300 shadow-sm">
+    <div class="card-body gap-4">
+      <h2 class="card-title text-base">Role</h2>
+      <div class="form-control w-full">
+        <label class="label py-1" for="role"><span class="label-text font-medium">Access level</span></label>
+        <select id="role" name="role" class="select select-bordered w-full">
+          <option value="user" {% if current_role == 'user' %}selected{% endif %}>User — callouts & defibs (no delete)</option>
+          <option value="admin" {% if current_role == 'admin' %}selected{% endif %}>Admin — full access</option>
+        </select>
+      </div>
+    </div>
   </div>
 
-  <div class="card bg-base-100 p-4 shadow">
-    <h2 class="font-semibold mb-3">Email report subscriptions</h2>
-    <div class="space-y-2">
+  <div class="card bg-base-100 border border-base-300 shadow-sm">
+    <div class="card-body gap-3">
+      <h2 class="card-title text-base">Email report subscriptions</h2>
+      <p class="text-sm text-base-content/60 -mt-2">Choose which automated reports this user receives.</p>
       {% for key, label in report_flag_options %}
-      <label class="label cursor-pointer justify-start gap-2 py-1 min-h-0">
-        <input type="checkbox" name="{{ key }}" class="checkbox checkbox-sm"
-          {% if report_flags.get(key) %}checked{% endif %}>
-        <span class="label-text text-sm">{{ label }}</span>
-      </label>
+      {{ checkbox_field(key, label, report_flags.get(key)) }}
       {% endfor %}
     </div>
   </div>
 
-  <button class="btn btn-primary w-full">{% if edit_user %}Update user{% else %}Create user{% endif %}</button>
+  <button type="submit" class="btn btn-primary">{% if edit_user %}Update user{% else %}Create user{% endif %}</button>
 </form>
 {% endblock %}

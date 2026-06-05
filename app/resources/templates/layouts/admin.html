@@ -1,48 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="corporate">
+<html lang="en" data-theme="rathdrum">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token }}">
   <title>{% block title %}Admin{% endblock %} - Rathdrum CFR</title>
-  <link rel="stylesheet" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600">
+  <link rel="stylesheet" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700">
   <link rel="stylesheet" href="/static/assets/app.css">
   <script type="module" src="/static/assets/app.js"></script>
 </head>
 <body class="min-h-screen bg-base-200">
 <div class="drawer lg:drawer-open">
   <input id="admin-drawer" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content flex flex-col">
-    <div class="navbar bg-neutral text-neutral-content lg:hidden sticky top-0 z-30">
-      <label for="admin-drawer" class="btn btn-square btn-ghost drawer-button" aria-label="Open menu">☰</label>
-      <span class="font-semibold">Rathdrum CFR</span>
-    </div>
-    <main class="flex-1 p-3 sm:p-6">
-      {% if success %}<div class="alert alert-success mb-4"><span>{{ success }}</span></div>{% endif %}
-      {% if error %}<div class="alert alert-error mb-4"><span>{{ error }}</span></div>{% endif %}
+  <div class="drawer-content flex flex-col min-h-screen">
+    <header class="navbar bg-primary text-primary-content shadow-md lg:hidden sticky top-0 z-30">
+      <label for="admin-drawer" class="btn btn-square btn-ghost text-primary-content drawer-button" aria-label="Open menu">☰</label>
+      <span class="font-semibold text-lg">Rathdrum CFR</span>
+    </header>
+    <main class="flex-1 w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+      {% if success %}<div class="alert alert-success mb-4 shadow-sm"><span>{{ success }}</span></div>{% endif %}
+      {% if error %}<div class="alert alert-error mb-4 shadow-sm"><span>{{ error }}</span></div>{% endif %}
       {% block content %}{% endblock %}
     </main>
   </div>
   <div class="drawer-side z-40">
     <label for="admin-drawer" class="drawer-overlay" aria-label="Close menu"></label>
-    <aside class="menu bg-neutral text-neutral-content min-h-full w-72 p-4 gap-1">
-      <p class="font-bold text-lg mb-2">Rathdrum CFR</p>
-      <li><a href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
-      {% if can_manage_callouts %}<li><a href="{{ url_for('admin.callouts.index') }}">Callouts</a></li>{% endif %}
-      {% if can_manage_defibs %}<li><a href="{{ url_for('admin.defibs.index') }}">Defibrillators</a></li>{% endif %}
-      {% if is_admin %}
-      <li class="menu-title mt-2 text-neutral-content/60">Admin only</li>
-      <li><a href="{{ url_for('admin.members.index') }}">Members</a></li>
-      <li><a href="{{ url_for('admin.training.index') }}">Training</a></li>
-      <li><a href="{{ url_for('admin.users.index') }}">Users</a></li>
-      <li><a href="{{ url_for('admin.ampds.index') }}">AMPDS Codes</a></li>
-      {% endif %}
-      <li class="mt-4">
+    <aside class="flex min-h-full w-72 flex-col border-r border-base-300 bg-base-100 text-base-content">
+      <div class="bg-primary px-5 py-5 text-primary-content">
+        <p class="text-lg font-bold leading-tight">Rathdrum CFR</p>
+        <p class="text-xs opacity-90 mt-0.5">Community First Response</p>
+      </div>
+      <ul class="menu menu-md flex-1 gap-0.5 p-3">
+        <li>
+          <a href="{{ url_for('admin.dashboard') }}" class="{% if route_is(request, 'admin.dashboard') %}active{% endif %}">Dashboard</a>
+        </li>
+        {% if can_manage_callouts %}
+        <li>
+          <a href="{{ url_for('admin.callouts.index') }}" class="{% if route_is(request, 'admin.callouts.*') %}active{% endif %}">Callouts</a>
+        </li>
+        {% endif %}
+        {% if can_manage_defibs %}
+        <li>
+          <a href="{{ url_for('admin.defibs.index') }}" class="{% if route_is(request, 'admin.defibs.*') %}active{% endif %}">Defibrillators</a>
+        </li>
+        {% endif %}
+        {% if is_admin %}
+        <li class="menu-title mt-3 text-base-content/50">Administration</li>
+        <li>
+          <a href="{{ url_for('admin.members.index') }}" class="{% if route_is(request, 'admin.members.*') %}active{% endif %}">Members</a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin.training.index') }}" class="{% if route_is(request, 'admin.training.*') %}active{% endif %}">Training</a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin.users.index') }}" class="{% if route_is(request, 'admin.users.*') %}active{% endif %}">Users</a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin.ampds.index') }}" class="{% if route_is(request, 'admin.ampds.*') %}active{% endif %}">AMPDS codes</a>
+        </li>
+        {% endif %}
+      </ul>
+      <div class="border-t border-base-300 p-3">
+        {% if user %}
+        <p class="truncate px-3 text-xs text-base-content/60 mb-2" title="{{ user.email }}">{{ user.name }}</p>
+        {% endif %}
         <form method="post" action="{{ url_for('auth.logout') }}">
           <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-          <button class="btn btn-ghost btn-sm w-full justify-start">Logout</button>
+          <button type="submit" class="btn btn-ghost btn-sm w-full justify-start">Sign out</button>
         </form>
-      </li>
+      </div>
     </aside>
   </div>
 </div>

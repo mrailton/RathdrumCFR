@@ -1,0 +1,64 @@
+{% macro input_field(name, label, value='', type='text', required=false, placeholder='', hint='', extra_class='') %}
+<div class="form-control w-full {{ extra_class }}">
+  <label class="label py-1" for="{{ name }}">
+    <span class="label-text font-medium">{{ label }}{% if required %} <span class="text-error">*</span>{% endif %}</span>
+  </label>
+  <input
+    id="{{ name }}"
+    name="{{ name }}"
+    type="{{ type }}"
+    class="input input-bordered w-full"
+    value="{{ value }}"
+    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+    {% if required %}required{% endif %}
+  >
+  {% if hint %}
+  <label class="label py-0"><span class="label-text-alt text-base-content/60">{{ hint }}</span></label>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro select_field(name, label, options, selected='', required=false, hint='', multiple=false, size='') %}
+<div class="form-control w-full">
+  <label class="label py-1" for="{{ name }}">
+    <span class="label-text font-medium">{{ label }}{% if required %} <span class="text-error">*</span>{% endif %}</span>
+  </label>
+  <select
+    id="{{ name }}"
+    name="{{ name }}"
+    class="select select-bordered w-full"
+    {% if required %}required{% endif %}
+    {% if multiple %}multiple size="{{ size or 6 }}"{% endif %}
+  >
+    {% for opt in options %}
+    {% if opt is mapping %}
+    <option value="{{ opt.value }}" {% if selected == opt.value or (selected is iterable and opt.value in selected) %}selected{% endif %}>{{ opt.label }}</option>
+    {% else %}
+    <option value="{{ opt }}" {% if selected == opt %}selected{% endif %}>{{ opt }}</option>
+    {% endif %}
+    {% endfor %}
+  </select>
+  {% if hint %}
+  <label class="label py-0"><span class="label-text-alt text-base-content/60">{{ hint }}</span></label>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro textarea_field(name, label, value='', required=false, rows=3, hint='') %}
+<div class="form-control w-full">
+  <label class="label py-1" for="{{ name }}">
+    <span class="label-text font-medium">{{ label }}{% if required %} <span class="text-error">*</span>{% endif %}</span>
+  </label>
+  <textarea id="{{ name }}" name="{{ name }}" class="textarea textarea-bordered w-full" rows="{{ rows }}" {% if required %}required{% endif %}>{{ value }}</textarea>
+  {% if hint %}
+  <label class="label py-0"><span class="label-text-alt text-base-content/60">{{ hint }}</span></label>
+  {% endif %}
+</div>
+{% endmacro %}
+
+{% macro checkbox_field(name, label, checked=false) %}
+<label class="label cursor-pointer justify-start gap-3 py-2 min-h-0 w-full rounded-lg border border-base-300 bg-base-200/50 px-3">
+  <input type="checkbox" name="{{ name }}" class="checkbox checkbox-primary checkbox-sm" {% if checked %}checked{% endif %}>
+  <span class="label-text">{{ label }}</span>
+</label>
+{% endmacro %}

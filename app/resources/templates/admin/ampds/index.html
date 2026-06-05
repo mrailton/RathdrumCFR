@@ -1,29 +1,49 @@
 {% extends "layouts/admin.html" %}
-{% block title %}AMPDS{% endblock %}
+{% from "components/macros.html" import input_field, checkbox_field %}
+{% block title %}AMPDS codes{% endblock %}
 {% block content %}
-<h1 class="text-xl font-bold mb-4">AMPDS codes</h1>
-<form method="post" class="card bg-base-100 p-4 mb-4 grid gap-2 max-w-xl">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-  <input name="code" class="input input-bordered" placeholder="Code" required>
-  <input name="description" class="input input-bordered" placeholder="Description" required>
-  <label class="label gap-2 justify-start"><input type="checkbox" name="arrest_code" class="checkbox"> Arrest code</label>
-  <label class="label gap-2 justify-start"><input type="checkbox" name="far_code" class="checkbox"> FAR code</label>
-  <button class="btn btn-primary btn-sm w-fit">Add code</button>
+<div class="mb-6">
+  <h1 class="text-2xl font-bold">AMPDS codes</h1>
+  <p class="text-sm text-base-content/70 mt-1">Callout classification codes used on incident forms.</p>
+</div>
+
+<form method="post" class="card bg-base-100 border border-base-300 shadow-sm mb-6 max-w-xl">
+  <div class="card-body gap-4">
+    <h2 class="card-title text-base">Add code</h2>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    {{ input_field("code", "Code", required=true) }}
+    {{ input_field("description", "Description", required=true) }}
+    {{ checkbox_field("arrest_code", "Cardiac arrest code") }}
+    {{ checkbox_field("far_code", "FAR code") }}
+    <button type="submit" class="btn btn-primary btn-sm w-fit">Add code</button>
+  </div>
 </form>
-<div class="overflow-x-auto bg-base-100 rounded-box shadow">
-  <table class="table table-sm">
-    {% for c in codes %}
-    <tr>
-      <td>{{ c.code }}</td>
-      <td>{{ c.description }}</td>
-      <td>
-        <form method="post" action="{{ url_for('admin.ampds.delete', code_id=c.id) }}">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-          <button class="btn btn-xs btn-error">Delete</button>
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
+
+<div class="overflow-x-auto rounded-box border border-base-300 bg-base-100 shadow-sm">
+  <table class="table">
+    <thead>
+      <tr class="bg-base-200/80">
+        <th>Code</th>
+        <th>Description</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in codes %}
+      <tr class="hover">
+        <td class="font-mono font-medium">{{ c.code }}</td>
+        <td>{{ c.description }}</td>
+        <td class="text-right">
+          <form method="post" action="{{ url_for('admin.ampds.delete', code_id=c.id) }}" class="inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button type="submit" class="btn btn-error btn-xs">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3" class="text-center text-base-content/60 py-8">No codes defined.</td></tr>
+      {% endfor %}
+    </tbody>
   </table>
 </div>
 {% endblock %}

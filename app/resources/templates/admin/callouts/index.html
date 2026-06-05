@@ -1,17 +1,35 @@
 {% extends "layouts/admin.html" %}
 {% block title %}Callouts{% endblock %}
 {% block content %}
-<div class="flex justify-between mb-4">
-  <h1 class="text-xl font-bold">Callouts</h1>
-  <a href="{{ url_for('admin.callouts.create') }}" class="btn btn-primary btn-sm">New</a>
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold">Callouts</h1>
+    <p class="text-sm text-base-content/70 mt-1">Incident records and response statistics.</p>
+  </div>
+  <a href="{{ url_for('admin.callouts.create') }}" class="btn btn-primary btn-sm">New callout</a>
 </div>
 {% set stats = {"Total": stats.total, "Mobilised": stats.mobilised, "Attended": stats.attended} %}
 {% include "components/stats_grid.html" %}
-<div class="overflow-x-auto bg-base-100 rounded-box shadow mt-4">
-  <table class="table table-sm">
+<div class="overflow-x-auto rounded-box border border-base-300 bg-base-100 shadow-sm mt-6">
+  <table class="table">
+    <thead>
+      <tr class="bg-base-200/80">
+        <th>CAD number</th>
+        <th>Date</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
     <tbody>
       {% for c in callouts %}
-      <tr><td>{{ c.incident_number }}</td><td>{{ c.incident_date }}</td><td><a href="{{ url_for('admin.callouts.show', callout_id=c.id) }}">View</a></td></tr>
+      <tr class="hover">
+        <td class="font-medium">{{ c.incident_number }}</td>
+        <td>{{ c.incident_date }}</td>
+        <td class="text-right">
+          <a href="{{ url_for('admin.callouts.show', callout_id=c.id) }}" class="btn btn-ghost btn-xs">View</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3" class="text-center text-base-content/60 py-8">No callouts in this period.</td></tr>
       {% endfor %}
     </tbody>
   </table>

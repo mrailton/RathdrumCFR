@@ -1,8 +1,8 @@
-<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3">
+<div class="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
   {% for label, value in stats.items() %}
-  <div class="stat bg-base-100 rounded-box shadow-sm p-3">
-    <div class="stat-title text-xs">{{ label }}</div>
-    <div class="stat-value text-2xl">{{ value }}</div>
+  <div class="stat rounded-box border border-base-300 bg-base-100 shadow-sm px-4 py-3">
+    <div class="stat-title text-xs font-medium uppercase tracking-wide text-base-content/60">{{ label }}</div>
+    <div class="stat-value text-2xl font-bold text-primary">{{ value }}</div>
   </div>
   {% endfor %}
 </div>

@@ -1,19 +1,35 @@
 {% extends "layouts/admin.html" %}
 {% block title %}Defibrillators{% endblock %}
 {% block content %}
-<div class="flex justify-between mb-4">
-  <h1 class="text-xl font-bold">Defibrillators</h1>
-  <a href="{{ url_for('admin.defibs.create') }}" class="btn btn-primary btn-sm">New</a>
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold">Defibrillators</h1>
+    <p class="text-sm text-base-content/70 mt-1">Locations, inspections, and public map visibility.</p>
+  </div>
+  <a href="{{ url_for('admin.defibs.create') }}" class="btn btn-primary btn-sm">New defibrillator</a>
 </div>
-<div class="overflow-x-auto bg-base-100 rounded-box shadow">
-  <table class="table table-sm">
+<div class="overflow-x-auto rounded-box border border-base-300 bg-base-100 shadow-sm">
+  <table class="table">
+    <thead>
+      <tr class="bg-base-200/80">
+        <th>Name</th>
+        <th>Location</th>
+        <th>On map</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
     <tbody>
       {% for d in defibs %}
-      <tr>
-        <td>{{ d.name or d.location }}</td>
-        <td>{% if d.display_on_map %}Map{% endif %}</td>
-        <td><a href="{{ url_for('admin.defibs.show', defib_id=d.id) }}">View</a></td>
+      <tr class="hover">
+        <td class="font-medium">{{ d.name or '—' }}</td>
+        <td>{{ d.location }}</td>
+        <td>{% if d.display_on_map %}<span class="badge badge-success badge-sm">Yes</span>{% else %}<span class="badge badge-ghost badge-sm">No</span>{% endif %}</td>
+        <td class="text-right">
+          <a href="{{ url_for('admin.defibs.show', defib_id=d.id) }}" class="btn btn-ghost btn-xs">View</a>
+        </td>
       </tr>
+      {% else %}
+      <tr><td colspan="4" class="text-center text-base-content/60 py-8">No defibrillators yet.</td></tr>
       {% endfor %}
     </tbody>
   </table>

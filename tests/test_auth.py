@@ -6,7 +6,7 @@ from tests.conftest import TEST_PASSWORD, extract_csrf
 def test_login_page(client):
     response = client.get("/admin/login")
     assert response.status_code == 200
-    assert "Admin login" in response.text
+    assert "Admin sign in" in response.text
     assert extract_csrf(response.text)
 
 

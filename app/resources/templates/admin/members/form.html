@@ -1,17 +1,32 @@
 {% extends "layouts/admin.html" %}
+{% from "components/macros.html" import input_field %}
 {% block title %}{% if member %}Edit{% else %}New{% endif %} Member{% endblock %}
 {% block content %}
-<form method="post" action="{% if member %}{{ url_for('admin.members.update', member_id=member.id) }}{% else %}{{ url_for('admin.members.store') }}{% endif %}" class="card bg-base-100 shadow p-4 space-y-3 max-w-2xl">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-  <input name="name" class="input input-bordered w-full" value="{{ member.name if member else '' }}" required>
-  <select name="status" class="select select-bordered w-full">
-    {% for s in statuses %}<option value="{{ s }}" {% if member and member.status == s %}selected{% endif %}>{{ s|title }}</option>{% endfor %}
-  </select>
-  <input name="title" class="input input-bordered w-full" value="{{ member.title if member else 'Responder' }}">
-  <input name="phone" class="input input-bordered w-full" value="{{ member.phone if member else '' }}">
-  <input name="email" class="input input-bordered w-full" value="{{ member.email if member else '' }}">
-  <input name="cfr_certificate_expiry" type="date" class="input input-bordered w-full" value="{{ member.cfr_certificate_expiry if member and member.cfr_certificate_expiry else '' }}">
-  <input name="garda_vetting_date" type="date" class="input input-bordered w-full" value="{{ member.garda_vetting_date if member and member.garda_vetting_date else '' }}">
-  <button class="btn btn-primary w-full">Save</button>
+<div class="mb-6">
+  <h1 class="text-2xl font-bold">{% if member %}Edit member{% else %}New member{% endif %}</h1>
+  <p class="text-sm text-base-content/70 mt-1"><a href="{{ url_for('admin.members.index') }}" class="link link-primary">← Back to members</a></p>
+</div>
+
+<form method="post" action="{% if member %}{{ url_for('admin.members.update', member_id=member.id) }}{% else %}{{ url_for('admin.members.store') }}{% endif %}" class="card bg-base-100 border border-base-300 shadow-sm max-w-2xl">
+  <div class="card-body gap-4">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    {{ input_field("name", "Full name", member.name if member else '', required=true) }}
+    <div class="form-control w-full">
+      <label class="label py-1" for="status"><span class="label-text font-medium">Status</span></label>
+      <select id="status" name="status" class="select select-bordered w-full">
+        {% for s in statuses %}
+        <option value="{{ s }}" {% if member and member.status == s %}selected{% endif %}>{{ s|title }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    {{ input_field("title", "Role / title", member.title if member else 'Responder') }}
+    {{ input_field("phone", "Phone", member.phone if member else '', type="tel") }}
+    {{ input_field("email", "Email", member.email if member else '', type="email") }}
+    {{ input_field("cfr_certificate_expiry", "CFR certificate expiry", member.cfr_certificate_expiry if member and member.cfr_certificate_expiry else '', type="date") }}
+    {{ input_field("garda_vetting_date", "Garda vetting date", member.garda_vetting_date if member and member.garda_vetting_date else '', type="date") }}
+    <div class="card-actions justify-end pt-2">
+      <button type="submit" class="btn btn-primary">Save member</button>
+    </div>
+  </div>
 </form>
 {% endblock %}

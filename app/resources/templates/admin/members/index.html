@@ -1,16 +1,35 @@
 {% extends "layouts/admin.html" %}
 {% block title %}Members{% endblock %}
 {% block content %}
-<div class="flex justify-between items-center mb-4">
-  <h1 class="text-xl font-bold">Members</h1>
-  <a href="{{ url_for('admin.members.create') }}" class="btn btn-primary btn-sm">New</a>
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
+  <div>
+    <h1 class="text-2xl font-bold">Members</h1>
+    <p class="text-sm text-base-content/70 mt-1">CFR responders and training records.</p>
+  </div>
+  <a href="{{ url_for('admin.members.create') }}" class="btn btn-primary btn-sm">New member</a>
 </div>
-<div class="overflow-x-auto bg-base-100 rounded-box shadow">
-  <table class="table table-sm">
-    <thead><tr><th>Name</th><th>Status</th><th></th></tr></thead>
+<div class="overflow-x-auto rounded-box border border-base-300 bg-base-100 shadow-sm">
+  <table class="table">
+    <thead>
+      <tr class="bg-base-200/80">
+        <th>Name</th>
+        <th>Status</th>
+        <th>Phone</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
     <tbody>
       {% for m in members %}
-      <tr><td>{{ m.name }}</td><td>{{ m.status }}</td><td><a class="link" href="{{ url_for('admin.members.show', member_id=m.id) }}">View</a></td></tr>
+      <tr class="hover">
+        <td class="font-medium">{{ m.name }}</td>
+        <td><span class="badge badge-ghost badge-sm">{{ m.status|title }}</span></td>
+        <td>{{ m.phone or '—' }}</td>
+        <td class="text-right">
+          <a href="{{ url_for('admin.members.show', member_id=m.id) }}" class="btn btn-ghost btn-xs">View</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="text-center text-base-content/60 py-8">No members yet.</td></tr>
       {% endfor %}
     </tbody>
   </table>

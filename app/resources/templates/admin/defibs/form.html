@@ -1,13 +1,24 @@
 {% extends "layouts/admin.html" %}
+{% from "components/macros.html" import input_field, checkbox_field %}
+{% block title %}{% if defib %}Edit{% else %}New{% endif %} Defibrillator{% endblock %}
 {% block content %}
-<form method="post" action="{% if defib %}{{ url_for('admin.defibs.update', defib_id=defib.id) }}{% else %}{{ url_for('admin.defibs.store') }}{% endif %}" class="card bg-base-100 p-4 space-y-3 max-w-2xl">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-  <input name="name" class="input input-bordered w-full" placeholder="Name" value="{{ defib.name if defib else '' }}">
-  <input name="location" class="input input-bordered w-full" placeholder="Location" value="{{ defib.location if defib else '' }}" required>
-  <input name="coordinates" class="input input-bordered w-full" placeholder="lat,lng" value="{{ defib.coordinates if defib else '' }}">
-  <label class="label cursor-pointer justify-start gap-2"><input type="checkbox" name="display_on_map" class="checkbox" {% if defib and defib.display_on_map %}checked{% endif %}><span>Display on map</span></label>
-  <input name="model" class="input input-bordered w-full" value="{{ defib.model if defib else '' }}" required>
-  <input name="owner" class="input input-bordered w-full" value="{{ defib.owner if defib else 'RathdrumCFR' }}">
-  <button class="btn btn-primary w-full">Save</button>
+<div class="mb-6">
+  <h1 class="text-2xl font-bold">{% if defib %}Edit defibrillator{% else %}New defibrillator{% endif %}</h1>
+  <p class="text-sm text-base-content/70 mt-1"><a href="{{ url_for('admin.defibs.index') }}" class="link link-primary">← Back to defibrillators</a></p>
+</div>
+
+<form method="post" action="{% if defib %}{{ url_for('admin.defibs.update', defib_id=defib.id) }}{% else %}{{ url_for('admin.defibs.store') }}{% endif %}" class="card bg-base-100 border border-base-300 shadow-sm max-w-2xl">
+  <div class="card-body gap-4">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    {{ input_field("name", "Display name", defib.name if defib else '') }}
+    {{ input_field("location", "Location", defib.location if defib else '', required=true) }}
+    {{ input_field("coordinates", "Coordinates (lat,lng)", defib.coordinates if defib else '', hint="Used for the public map.") }}
+    {{ checkbox_field("display_on_map", "Show on public map", defib.display_on_map if defib else false) }}
+    {{ input_field("model", "Model", defib.model if defib else '', required=true) }}
+    {{ input_field("owner", "Owner", defib.owner if defib else 'RathdrumCFR') }}
+    <div class="card-actions justify-end pt-2">
+      <button type="submit" class="btn btn-primary">Save defibrillator</button>
+    </div>
+  </div>
 </form>
 {% endblock %}

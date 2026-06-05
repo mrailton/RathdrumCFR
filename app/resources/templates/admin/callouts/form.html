@@ -1,10 +1,14 @@
 {% extends "layouts/admin.html" %}
 {% block title %}{% if callout %}Edit{% else %}New{% endif %} Callout{% endblock %}
 {% block content %}
+<div class="mb-6">
+  <h1 class="text-2xl font-bold">{% if callout %}Edit callout{% else %}New callout{% endif %}</h1>
+  <p class="text-sm text-base-content/70 mt-1"><a href="{{ url_for('admin.callouts.index') }}" class="link link-primary">← Back to callouts</a></p>
+</div>
 <form
   method="post"
   action="{% if callout %}{{ url_for('admin.callouts.update', callout_id=callout.id) }}{% else %}{{ url_for('admin.callouts.store') }}{% endif %}"
-  class="card bg-base-100 p-4 space-y-4 max-w-2xl"
+  class="card bg-base-100 border border-base-300 shadow-sm max-w-2xl"
   x-data="calloutForm({
     mobilised: '{{ '1' if callout and callout.mobilised else '0' }}',
     medical_facility: '{{ '1' if callout and callout.medical_facility else '0' }}',
@@ -17,8 +21,11 @@
     number_of_shocks_given: '{{ callout.number_of_shocks_given if callout else 0 }}',
   })"
 >
+  <div class="card-body gap-5">
   <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
+  <div class="space-y-4">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-base-content/50">Incident</h2>
   <label class="form-control w-full">
     <span class="label-text font-medium">CAD number</span>
     <input name="incident_number" class="input input-bordered w-full" required
@@ -56,7 +63,10 @@
       {% endfor %}
     </select>
   </label>
+  </div>
 
+  <div class="space-y-4">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-base-content/50">Response</h2>
   <label class="form-control w-full">
     <span class="label-text font-medium">Mobilised?</span>
     <select name="mobilised" class="select select-bordered w-full" required x-model="mobilised">
@@ -151,10 +161,12 @@
 
   <label class="form-control w-full">
     <span class="label-text font-medium">Notes</span>
-    <textarea name="notes" class="textarea textarea-bordered w-full" rows="3">{{ callout.notes if callout and callout.notes else '' }}</textarea>
+    <textarea name="notes" class="textarea textarea-bordered w-full mt-1" rows="3">{{ callout.notes if callout and callout.notes else '' }}</textarea>
   </label>
+  </div>
 
-  <button class="btn btn-primary w-full" type="submit">Save callout</button>
+  <button class="btn btn-primary w-full sm:w-auto" type="submit">Save callout</button>
+  </div>
 </form>
 
 <style>[x-cloak] { display: none !important; }</style>

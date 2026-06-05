@@ -1,14 +1,36 @@
 {% extends "layouts/admin.html" %}
 {% block title %}{{ callout.incident_number }}{% endblock %}
 {% block content %}
-<h1 class="text-xl font-bold">{{ callout.incident_number }}</h1>
-<p>{{ callout.incident_date }} · AMPDS {{ callout.ampds_code }}</p>
-<p>Mobilised: {{ callout.mobilised }} · Attended: {{ callout.attended }}</p>
-<a href="{{ url_for('admin.callouts.edit', callout_id=callout.id) }}" class="btn btn-sm">Edit</a>
-{% if can_delete_callouts %}
-<form method="post" action="{{ url_for('admin.callouts.delete', callout_id=callout.id) }}" class="mt-4" onsubmit="return confirm('Delete this callout?')">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-  <button class="btn btn-error btn-sm">Delete</button>
-</form>
-{% endif %}
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+  <div>
+    <p class="text-sm"><a href="{{ url_for('admin.callouts.index') }}" class="link link-primary">← Callouts</a></p>
+    <h1 class="text-2xl font-bold mt-1">{{ callout.incident_number }}</h1>
+    <p class="text-base-content/70 mt-1">{{ callout.incident_date }} · AMPDS {{ callout.ampds_code }}</p>
+  </div>
+  <div class="flex flex-wrap gap-2">
+    <a href="{{ url_for('admin.callouts.edit', callout_id=callout.id) }}" class="btn btn-primary btn-sm">Edit</a>
+    {% if can_delete_callouts %}
+    <form method="post" action="{{ url_for('admin.callouts.delete', callout_id=callout.id) }}" onsubmit="return confirm('Delete this callout?')">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <button type="submit" class="btn btn-error btn-sm">Delete</button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card bg-base-100 border border-base-300 shadow-sm max-w-2xl">
+  <div class="card-body gap-3 text-sm">
+    <div class="grid grid-cols-2 gap-2">
+      <span class="text-base-content/60">Mobilised</span><span class="font-medium">{{ 'Yes' if callout.mobilised else 'No' }}</span>
+      <span class="text-base-content/60">Attended</span><span class="font-medium">{{ 'Yes' if callout.attended else 'No' }}</span>
+      <span class="text-base-content/60">Age / gender</span><span class="font-medium">{{ callout.age }} · {{ callout.gender }}</span>
+    </div>
+    {% if callout.notes %}
+    <div class="pt-2 border-t border-base-300">
+      <p class="text-base-content/60 mb-1">Notes</p>
+      <p>{{ callout.notes }}</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

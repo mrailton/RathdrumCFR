@@ -1,14 +1,37 @@
 {% extends "layouts/admin.html" %}
 {% block title %}{{ member.name }}{% endblock %}
 {% block content %}
-<h1 class="text-xl font-bold">{{ member.name }}</h1>
-<p class="opacity-80">{{ member.status }} · {{ member.phone or '' }}</p>
-<a class="btn btn-sm mt-2" href="{{ url_for('admin.members.edit', member_id=member.id) }}">Edit</a>
-<h2 class="font-semibold mt-4">Notes</h2>
-<ul class="space-y-2 mt-2">{% for n in member.notes %}<li class="bg-base-100 p-2 rounded">{{ n.note }}</li>{% endfor %}</ul>
-<form method="post" action="{{ url_for('admin.members.notes.store', member_id=member.id) }}" class="mt-3 flex gap-2">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-  <input name="note" class="input input-bordered flex-1" required>
-  <button class="btn btn-sm">Add</button>
-</form>
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+  <div>
+    <p class="text-sm"><a href="{{ url_for('admin.members.index') }}" class="link link-primary">← Members</a></p>
+    <h1 class="text-2xl font-bold mt-1">{{ member.name }}</h1>
+    <p class="text-base-content/70 mt-1">
+      <span class="badge badge-ghost">{{ member.status|title }}</span>
+      {% if member.phone %} · {{ member.phone }}{% endif %}
+      {% if member.email %} · {{ member.email }}{% endif %}
+    </p>
+  </div>
+  <a class="btn btn-primary btn-sm" href="{{ url_for('admin.members.edit', member_id=member.id) }}">Edit member</a>
+</div>
+
+<div class="card bg-base-100 border border-base-300 shadow-sm">
+  <div class="card-body gap-4">
+    <h2 class="card-title text-base">Notes</h2>
+    <ul class="space-y-2">
+      {% for n in member.notes %}
+      <li class="rounded-lg bg-base-200/60 px-3 py-2 text-sm">{{ n.note }}</li>
+      {% else %}
+      <li class="text-sm text-base-content/60">No notes yet.</li>
+      {% endfor %}
+    </ul>
+    <form method="post" action="{{ url_for('admin.members.notes.store', member_id=member.id) }}" class="flex flex-col sm:flex-row gap-2 pt-2">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label class="form-control flex-1">
+        <span class="label-text font-medium">Add note</span>
+        <input name="note" class="input input-bordered w-full mt-1" required>
+      </label>
+      <button type="submit" class="btn btn-primary btn-sm sm:self-end">Add</button>
+    </form>
+  </div>
+</div>
 {% endblock %}
