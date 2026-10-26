@@ -1,68 +1,55 @@
-# Stage 1: Build assets
-FROM node:20-alpine AS assets-builder
+# 1. PHP dependencies only (cached on composer.json / composer.lock)
+FROM serversideup/php:8.4-cli AS deps
+USER root
+ENV ADMIN_EMAIL=nobody@domain.com
+RUN install-php-extensions intl
 WORKDIR /app
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
 
-# Install minimal PHP and Composer just to fetch vendor dependencies
-RUN apk add --no-cache php84 php84-phar php84-mbstring php84-openssl php84-tokenizer php84-ctype php84-dom php84-xml php84-xmlwriter php84-simplexml php84-zip curl composer
-
-COPY composer.* ./
-RUN composer install --no-interaction --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
-
+# 2. Frontend assets (needs vendor for the PHP package's JS)
+FROM node:22-alpine AS assets
+WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
+COPY --from=deps /app/vendor ./vendor
 COPY . .
 RUN npm run build
 
-# Stage 2: Application
-FROM php:8.4-fpm-bullseye
+# 3. Optimised autoloader (needs app source)
+FROM deps AS vendor
+COPY . .
+RUN composer dump-autoload --no-dev --optimize --classmap-authoritative
+
+# 4. Runtime
+FROM serversideup/php:8.4-fpm-nginx AS runtime
+
+ENV SSL_MODE=off \
+    PHP_OPCACHE_ENABLE=1 \
+    PHP_FPM_PM_CONTROL=ondemand \
+    PHP_FPM_PM_MAX_CHILDREN=10 \
+    PHP_FPM_PROCESS_IDLE_TIMEOUT=30s
 
 WORKDIR /var/www/html
+COPY --chown=www-data:www-data . .
+COPY --chown=www-data:www-data --from=vendor /app/vendor ./vendor
+COPY --chown=www-data:www-data --from=assets /app/public/build ./public/build
 
-# Install system dependencies, build PHP extensions, and clean up in one layer
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        git \
-        curl \
-        zip \
-        unzip \
-        nginx \
-        supervisor \
-        mariadb-client \
-        libpng-dev \
-        libonig-dev \
-        libxml2-dev \
-        libzip-dev \
-        libicu-dev \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl opcache \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
-    && apt-get purge -y libpng-dev libonig-dev libxml2-dev libzip-dev libicu-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/pear
+USER root
+RUN install-php-extensions intl
+COPY --chmod=755 docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+USER www-data
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Copy composer files first for better layer caching
-COPY composer.json composer.lock ./
-RUN composer install --no-interaction --no-dev --no-scripts --no-autoloader \
-    && rm -rf /root/.composer/cache
-
-# Copy application code
-COPY . .
-COPY --from=assets-builder /app/public/build ./public/build
-
-# Generate optimized autoloader
-RUN composer dump-autoload --optimize --no-scripts
-
-# Setup configurations
-COPY docker/nginx.conf /etc/nginx/nginx.conf
-COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY docker/php.ini /usr/local/etc/php/conf.d/app-php.ini
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-
-RUN chmod +x /usr/local/bin/entrypoint.sh \
-    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["/init"]
+
+# 5. Test (CI only, never deployed)
+FROM runtime AS test
+ENTRYPOINT []
+CMD []
+USER root
+ENV ADMIN_EMAIL=nobody@domain.com
+RUN composer install --prefer-dist --no-interaction && chown -R www-data:www-data vendor
+USER www-data
