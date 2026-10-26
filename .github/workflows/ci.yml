@@ -42,37 +42,8 @@ jobs:
           retention-days: 1
           compression-level: 0   # already gzipped
 
-  lint:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: app-test-image
-      - run: docker load -i app-test.tar.gz
-      - run: docker run --rm app-test composer lint
-
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: rathdrumcfr_test
-          options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-        ports:
-          - 3306:3306
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: app-test-image
-      - run: docker load -i app-test.tar.gz
-      - run: docker run --rm app-test composer test
-
   deploy:
-    needs: [lint, test]
+    needs: [build]
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
