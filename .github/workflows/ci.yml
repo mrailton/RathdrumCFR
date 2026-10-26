@@ -42,7 +42,7 @@ jobs:
           retention-days: 1
           compression-level: 0   # already gzipped
 
-  ddeploy:
+  deploy:
     needs: [ build ]
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
